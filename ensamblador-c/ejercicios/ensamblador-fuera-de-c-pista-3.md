@@ -1,0 +1,1 @@
+El build son tres pasos que el script ya tiene escritos: `gcc -c suma.s -o suma.o`, `gcc -c main.c -o main.o` y por último `clang main.o suma.o -o prog`. Cada `gcc -c` produce un `.o`; el enlace lo hace el `clang` final.

@@ -1,0 +1,5 @@
+[
+  { "nombre": "activo true", "entrada": "Ana\ntrue\n", "esperado": "<li className=\"usuario activo\">Ana</li>" },
+  { "nombre": "activo false", "entrada": "Luis\nfalse\n", "esperado": "<li className=\"usuario\">Luis</li>" },
+  { "nombre": "nombre con espacios", "entrada": "María de la Cruz\nfalse\n", "esperado": "<li className=\"usuario\">María de la Cruz</li>" }
+]

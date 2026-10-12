@@ -1,0 +1,1 @@
+Cada botón lleva un `onClick`. Usa la actualización funcional `setN((x) => x + 1)` en el botón sumar y `setN((x) => x - 1)` en el botón restar. El orden de los botones en el árbol define el número de `clic`.

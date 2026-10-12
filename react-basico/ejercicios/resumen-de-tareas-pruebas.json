@@ -1,0 +1,7 @@
+[
+  { "nombre": "tres tareas con una hecha", "entrada": "3\ncomprar:si\nlimpiar:no\nnadar:no\n", "esperado": "<div><button>mostrar todas</button><p>Hechas: 1 de 3</p><ul><li key=\"comprar\" className=\"tarea hecha\">comprar</li><li key=\"limpiar\" className=\"tarea pendiente\">limpiar</li><li key=\"nadar\" className=\"tarea pendiente\">nadar</li></ul></div>" },
+  { "nombre": "lista vacía", "entrada": "0\n", "esperado": "<div><button>mostrar todas</button><p>Hechas: 0 de 0</p><ul></ul></div>" },
+  { "nombre": "alternar el filtro", "entrada": "3\ncomprar:si\nlimpiar:no\nnadar:no\nclic 1\n", "esperado": "<div><button>mostrar todas</button><p>Hechas: 1 de 3</p><ul><li key=\"comprar\" className=\"tarea hecha\">comprar</li><li key=\"limpiar\" className=\"tarea pendiente\">limpiar</li><li key=\"nadar\" className=\"tarea pendiente\">nadar</li></ul></div>\n<div><button>mostrar todas</button><p>Hechas: 1 de 3</p><ul><li key=\"limpiar\" className=\"tarea pendiente\">limpiar</li><li key=\"nadar\" className=\"tarea pendiente\">nadar</li></ul></div>" },
+  { "nombre": "todas hechas con el filtro activo", "entrada": "2\nlavar:si\npagar:si\nclic 1\n", "esperado": "<div><button>mostrar todas</button><p>Hechas: 2 de 2</p><ul><li key=\"lavar\" className=\"tarea hecha\">lavar</li><li key=\"pagar\" className=\"tarea hecha\">pagar</li></ul></div>\n<div><button>mostrar todas</button><p>Hechas: 2 de 2</p><ul></ul></div>" },
+  { "nombre": "entrada vacía", "entrada": "", "esperado": "<div><button>mostrar todas</button><p>Hechas: 0 de 0</p><ul></ul></div>" }
+]

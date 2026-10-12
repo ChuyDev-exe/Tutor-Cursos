@@ -1,0 +1,5 @@
+[
+  { "nombre": "dos elementos", "entrada": "perro gato\n", "esperado": "<ul><li key=\"perro\">perro</li><li key=\"gato\">gato</li></ul>" },
+  { "nombre": "un elemento", "entrada": "solo\n", "esperado": "<ul><li key=\"solo\">solo</li></ul>" },
+  { "nombre": "lista vacía", "entrada": "", "esperado": "<ul></ul>" }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "nombre": "reiniciar tras escribir",
+    "entrada": "inicio\ncambiar 1 hola\nclic 1\n",
+    "esperado": "<div><input value=\"inicio\"></input><p>texto: inicio · largo: 6</p><button>reiniciar</button></div>\n<div><input value=\"hola\"></input><p>texto: hola · largo: 4</p><button>reiniciar</button></div>\n<div><input value=\"inicio\"></input><p>texto: inicio · largo: 6</p><button>reiniciar</button></div>"
+  },
+  {
+    "nombre": "texto con espacios",
+    "entrada": "\ncambiar 1 hola mundo\n",
+    "esperado": "<div><input value=\"\"></input><p>texto:  · largo: 0</p><button>reiniciar</button></div>\n<div><input value=\"hola mundo\"></input><p>texto: hola mundo · largo: 10</p><button>reiniciar</button></div>"
+  },
+  {
+    "nombre": "cadena vacía tras escribir",
+    "entrada": "abc\ncambiar 1\n",
+    "esperado": "<div><input value=\"abc\"></input><p>texto: abc · largo: 3</p><button>reiniciar</button></div>\n<div><input value=\"\"></input><p>texto:  · largo: 0</p><button>reiniciar</button></div>"
+  },
+  {
+    "nombre": "entrada vacía usa cadena vacía",
+    "entrada": "",
+    "esperado": "<div><input value=\"\"></input><p>texto:  · largo: 0</p><button>reiniciar</button></div>"
+  }
+]

@@ -1,0 +1,5 @@
+[
+  { "nombre": "dos párrafos", "entrada": "Noticias\nHola\nMundo\n", "esperado": "<div className=\"tarjeta\"><h2 className=\"titulo\">Noticias</h2><div className=\"cuerpo\"><p>Hola</p><p>Mundo</p></div></div>" },
+  { "nombre": "un párrafo", "entrada": "Aviso\nSolo uno\n", "esperado": "<div className=\"tarjeta\"><h2 className=\"titulo\">Aviso</h2><div className=\"cuerpo\"><p>Solo uno</p></div></div>" },
+  { "nombre": "tres párrafos", "entrada": "Bienvenida\nUno\nDos\nTres\n", "esperado": "<div className=\"tarjeta\"><h2 className=\"titulo\">Bienvenida</h2><div className=\"cuerpo\"><p>Uno</p><p>Dos</p><p>Tres</p></div></div>" }
+]

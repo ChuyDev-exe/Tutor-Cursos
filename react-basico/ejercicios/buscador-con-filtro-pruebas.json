@@ -1,0 +1,27 @@
+[
+  {
+    "nombre": "filtro parcial",
+    "entrada": "pan gato agua\ncambiar 1 ga\n",
+    "esperado": "<div><input value=\"\"></input><p>pan, gato, agua</p><p>coincidencias: 3</p></div>\n<div><input value=\"ga\"></input><p>gato</p><p>coincidencias: 1</p></div>"
+  },
+  {
+    "nombre": "sin coincidencias",
+    "entrada": "pan gato\ncambiar 1 xyz\n",
+    "esperado": "<div><input value=\"\"></input><p>pan, gato</p><p>coincidencias: 2</p></div>\n<div><input value=\"xyz\"></input><p>sin resultados</p><p>coincidencias: 0</p></div>"
+  },
+  {
+    "nombre": "un solo producto",
+    "entrada": "sol\ncambiar 1 so\n",
+    "esperado": "<div><input value=\"\"></input><p>sol</p><p>coincidencias: 1</p></div>\n<div><input value=\"so\"></input><p>sol</p><p>coincidencias: 1</p></div>"
+  },
+  {
+    "nombre": "vaciar el texto tras escribir",
+    "entrada": "pan gato\ncambiar 1 pa\ncambiar 1\n",
+    "esperado": "<div><input value=\"\"></input><p>pan, gato</p><p>coincidencias: 2</p></div>\n<div><input value=\"pa\"></input><p>pan</p><p>coincidencias: 1</p></div>\n<div><input value=\"\"></input><p>pan, gato</p><p>coincidencias: 2</p></div>"
+  },
+  {
+    "nombre": "entrada vacía no hay productos",
+    "entrada": "",
+    "esperado": "<div><input value=\"\"></input><p>sin resultados</p><p>coincidencias: 0</p></div>"
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "nombre": "agregar y quitar pan",
+    "entrada": "agua\nclic 1\nclic 2\n",
+    "esperado": "<div><ul><li key=\"agua\">agua</li></ul><button>agregar pan</button><button>quitar pan</button><button>agregar agua</button></div>\n<div><ul><li key=\"agua\">agua</li><li key=\"pan\">pan</li></ul><button>agregar pan</button><button>quitar pan</button><button>agregar agua</button></div>\n<div><ul><li key=\"agua\">agua</li></ul><button>agregar pan</button><button>quitar pan</button><button>agregar agua</button></div>"
+  },
+  {
+    "nombre": "lista vacía al empezar",
+    "entrada": "\nclic 3\nclic 1\n",
+    "esperado": "<div><ul></ul><button>agregar pan</button><button>quitar pan</button><button>agregar agua</button></div>\n<div><ul><li key=\"agua\">agua</li></ul><button>agregar pan</button><button>quitar pan</button><button>agregar agua</button></div>\n<div><ul><li key=\"agua\">agua</li><li key=\"pan\">pan</li></ul><button>agregar pan</button><button>quitar pan</button><button>agregar agua</button></div>"
+  },
+  {
+    "nombre": "agregar un duplicado",
+    "entrada": "pan\nclic 1\nclic 3\n",
+    "esperado": "<div><ul><li key=\"pan\">pan</li></ul><button>agregar pan</button><button>quitar pan</button><button>agregar agua</button></div>\n<div><ul><li key=\"pan\">pan</li></ul><button>agregar pan</button><button>quitar pan</button><button>agregar agua</button></div>\n<div><ul><li key=\"pan\">pan</li><li key=\"agua\">agua</li></ul><button>agregar pan</button><button>quitar pan</button><button>agregar agua</button></div>"
+  },
+  {
+    "nombre": "quitar un elemento inexistente",
+    "entrada": "agua\nclic 2\n",
+    "esperado": "<div><ul><li key=\"agua\">agua</li></ul><button>agregar pan</button><button>quitar pan</button><button>agregar agua</button></div>\n<div><ul><li key=\"agua\">agua</li></ul><button>agregar pan</button><button>quitar pan</button><button>agregar agua</button></div>"
+  },
+  {
+    "nombre": "entrada vacía usa lista vacía",
+    "entrada": "",
+    "esperado": "<div><ul></ul><button>agregar pan</button><button>quitar pan</button><button>agregar agua</button></div>"
+  }
+]

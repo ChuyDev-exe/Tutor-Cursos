@@ -1,0 +1,1 @@
+Para añadir usa `[...actual, id]`, para quitar `filter` y para mover una copia con `slice()` que intercambia los dos elementos. Nunca `push`, `splice` ni `sort` sobre la lista original: la primera línea de la salida la delataría.

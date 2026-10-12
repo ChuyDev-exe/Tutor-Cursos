@@ -1,0 +1,1 @@
+La plantilla ya tiene los tres operandos: `%w0` es la salida (la variable `r`) y `%w1`, `%w2` son las entradas (`a` y `b`). Lo que falta es la instrucción que los relaciona, escrita con las vistas de 32 bits.

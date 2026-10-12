@@ -1,0 +1,17 @@
+[
+  {
+    "nombre": "claro con dos clics",
+    "entrada": "claro\nclic 1\nclic 1\n",
+    "esperado": "<span className=\"claro\">tema: claro</span><button>alternar</button>\n<span className=\"oscuro\">tema: oscuro</span><button>alternar</button>\n<span className=\"claro\">tema: claro</span><button>alternar</button>"
+  },
+  {
+    "nombre": "oscuro sin clics",
+    "entrada": "oscuro\n",
+    "esperado": "<span className=\"oscuro\">tema: oscuro</span><button>alternar</button>"
+  },
+  {
+    "nombre": "entrada vacía usa claro",
+    "entrada": "",
+    "esperado": "<span className=\"claro\">tema: claro</span><button>alternar</button>"
+  }
+]

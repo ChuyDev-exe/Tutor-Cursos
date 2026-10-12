@@ -1,0 +1,5 @@
+[
+  { "nombre": "3 y 4 suma 7", "entrada": "3 4\n", "esperado": "suma=7" },
+  { "nombre": "ceros", "entrada": "0 0\n", "esperado": "suma=0" },
+  { "nombre": "negativo y positivo", "entrada": "-10 5\n", "esperado": "suma=-5" }
+]

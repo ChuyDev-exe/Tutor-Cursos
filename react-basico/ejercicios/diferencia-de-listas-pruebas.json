@@ -1,0 +1,8 @@
+[
+  { "nombre": "sin cambios", "entrada": "a b c\na b c\n", "esperado": "añadidos:\nquitados:\nmovidos:" },
+  { "nombre": "lista vacía pasa a completa", "entrada": "\nx y\n", "esperado": "añadidos: x y\nquitados:\nmovidos:" },
+  { "nombre": "mezcla de añadido, quitado y movidos", "entrada": "a b c\nc a x\n", "esperado": "añadidos: x\nquitados: b\nmovidos: c a" },
+  { "nombre": "solo se mueven los que cambian de sitio", "entrada": "a b c d\na c d\n", "esperado": "añadidos:\nquitados: b\nmovidos: c d" },
+  { "nombre": "la siguiente lista queda vacía", "entrada": "a b\n\n", "esperado": "añadidos:\nquitados: a b\nmovidos:" },
+  { "nombre": "entrada vacía", "entrada": "", "esperado": "añadidos:\nquitados:\nmovidos:" }
+]

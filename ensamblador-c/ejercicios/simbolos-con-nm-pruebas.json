@@ -1,0 +1,5 @@
+[
+  { "nombre": "simbolo T de _suma", "entrada": "", "contiene": "T _suma" },
+  { "nombre": "ignora texto en stdin", "entrada": "x\n", "contiene": "T _suma" },
+  { "nombre": "ignora linea vacia", "entrada": "\n", "contiene": "T _suma" }
+]

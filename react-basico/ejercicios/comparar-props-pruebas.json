@@ -1,0 +1,8 @@
+[
+  { "nombre": "mismas props con orden distinto", "entrada": "a=1 b=2\nb=2 a=1\n", "esperado": "si" },
+  { "nombre": "valor cambiado", "entrada": "a=1 b=2\na=1 b=3\n", "esperado": "no" },
+  { "nombre": "clave quitada", "entrada": "a=1 b=2\na=1\n", "esperado": "no" },
+  { "nombre": "clave añadida", "entrada": "a=1\na=1 c=9\n", "esperado": "no" },
+  { "nombre": "valor con otro signo igual", "entrada": "ruta=a=b\nruta=a=b\n", "esperado": "si" },
+  { "nombre": "entrada vacía", "entrada": "", "esperado": "si" }
+]

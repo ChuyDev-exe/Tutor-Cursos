@@ -1,0 +1,5 @@
+[
+  { "nombre": "saludo a Ana", "entrada": "Ana\n", "esperado": "<p id=\"saludo\">Hola, Ana</p>" },
+  { "nombre": "saludo a Luis", "entrada": "Luis\n", "esperado": "<p id=\"saludo\">Hola, Luis</p>" },
+  { "nombre": "nombre con espacios", "entrada": "Ana María\n", "esperado": "<p id=\"saludo\">Hola, Ana María</p>" }
+]

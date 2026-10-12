@@ -1,0 +1,1 @@
+El efecto con deps `[sumar]` se ejecuta en el montaje y cada vez que `sumar` es otra referencia. Cambiar solo `n` no cambia esa referencia.

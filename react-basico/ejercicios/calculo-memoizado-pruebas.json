@@ -1,0 +1,22 @@
+[
+  {
+    "nombre": "filtro inicial sin eventos",
+    "entrada": "pa\npan paella gato\n",
+    "esperado": "<div><input value=\"pa\"></input><p>pan paella</p></div>\ncalculos=1"
+  },
+  {
+    "nombre": "varios cambios de texto",
+    "entrada": "pa\npan paella gato\ncambiar 1 ga\ncambiar 1 pa\n",
+    "esperado": "<div><input value=\"pa\"></input><p>pan paella</p></div>\n<div><input value=\"ga\"></input><p>gato</p></div>\n<div><input value=\"pa\"></input><p>pan paella</p></div>\ncalculos=3"
+  },
+  {
+    "nombre": "entrada vacía",
+    "entrada": "",
+    "esperado": "<div><input value=\"\"></input><p></p></div>\ncalculos=1"
+  },
+  {
+    "nombre": "mismo texto no recalcula",
+    "entrada": "pa\npan\ncambiar 1 pa\n",
+    "esperado": "<div><input value=\"pa\"></input><p>pan</p></div>\n<div><input value=\"pa\"></input><p>pan</p></div>\ncalculos=1"
+  }
+]

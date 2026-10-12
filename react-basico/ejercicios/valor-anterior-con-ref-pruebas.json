@@ -1,0 +1,22 @@
+[
+  {
+    "nombre": "primer render muestra guion",
+    "entrada": "5\n",
+    "esperado": "<div><p>actual: 5 · anterior: -</p><button>sumar</button></div>"
+  },
+  {
+    "nombre": "dos clics acumulan el anterior",
+    "entrada": "5\nclic 1\nclic 1\n",
+    "esperado": "<div><p>actual: 5 · anterior: -</p><button>sumar</button></div>\n<div><p>actual: 6 · anterior: 5</p><button>sumar</button></div>\n<div><p>actual: 7 · anterior: 6</p><button>sumar</button></div>"
+  },
+  {
+    "nombre": "valor inicial negativo",
+    "entrada": "-3\nclic 1\n",
+    "esperado": "<div><p>actual: -3 · anterior: -</p><button>sumar</button></div>\n<div><p>actual: -2 · anterior: -3</p><button>sumar</button></div>"
+  },
+  {
+    "nombre": "entrada vacía usa cero",
+    "entrada": "",
+    "esperado": "<div><p>actual: 0 · anterior: -</p><button>sumar</button></div>"
+  }
+]

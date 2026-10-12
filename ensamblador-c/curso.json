@@ -1,0 +1,752 @@
+{
+  "$schema": "../vscode-tutor-ext/schemas/curso.schema.json",
+  "id": "ensamblador-c",
+  "titulo": "Ensamblador y C: de instrucciones a ejecutables",
+  "descripcion": "Aprende ensamblador desde cero: el pipeline de compilación, la arquitectura x86-64 de Linux y la ABI de ARM64 en macOS, cómo mezclar ensamblador con C, cómo trabaja el enlazador y cómo usar make. Con ejercicios ejecutables en macOS (as, clang, nm, ar, make) y teoría de comandos para GNU/Linux.",
+  "nivel": "intermedio",
+  "version": "1.0.0",
+  "manual": "MANUAL.md",
+  "setup": "setup.sh",
+  "requisitos": [
+    {
+      "comando": "gcc",
+      "nombre": "GCC / Clang",
+      "versionMinima": "9.0",
+      "obligatorio": true,
+      "instalar": {
+        "darwin": "xcode-select --install",
+        "linux": "sudo apt install build-essential",
+        "win32": "wsl --install"
+      }
+    },
+    {
+      "comando": "make",
+      "nombre": "GNU Make",
+      "versionMinima": "3.81",
+      "obligatorio": true,
+      "instalar": {
+        "darwin": "xcode-select --install",
+        "linux": "sudo apt install make",
+        "win32": "wsl --install"
+      }
+    }
+  ],
+  "capitulos": [
+    {
+      "id": "c1",
+      "titulo": "1. Del código fuente al ejecutable",
+      "descripcion": "Qué hace cada paso del pipeline: as ensambla, nm inspecciona símbolos, clang enlaza y ejecuta. Secciones y símbolos de un archivo objeto.",
+      "archivo": "capitulos/01-pipeline.md",
+      "tags": ["pipeline", "as", "nm", "secciones", "simbolos"],
+      "minutos": 20,
+      "aprobacion": 70,
+      "evaluacionRequerida": true,
+      "ejercicios": [
+        {
+          "id": "c1-e1",
+          "titulo": "Hola desde ensamblador",
+          "enunciado": "ejercicios/hola-desde-ensamblador-enunciado.md",
+          "solucion": "ejercicios/hola-desde-ensamblador-solucion.md",
+          "pistas": [
+            "ejercicios/hola-desde-ensamblador-pista-1.md",
+            "ejercicios/hola-desde-ensamblador-pista-2.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/hola-desde-ensamblador-plantilla.sh",
+          "pruebas": "ejercicios/hola-desde-ensamblador-pruebas.json"
+        },
+        {
+          "id": "c1-e2",
+          "titulo": "Simbolos con nm",
+          "enunciado": "ejercicios/simbolos-con-nm-enunciado.md",
+          "solucion": "ejercicios/simbolos-con-nm-solucion.md",
+          "pistas": [
+            "ejercicios/simbolos-con-nm-pista-1.md",
+            "ejercicios/simbolos-con-nm-pista-2.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/simbolos-con-nm-plantilla.sh",
+          "pruebas": "ejercicios/simbolos-con-nm-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c1-q1",
+          "tipo": "unica",
+          "pregunta": "¿En qué orden hace el trabajo la toolchain al pasar de un archivo .s a un programa?",
+          "opciones": [
+            "as ensambla a .o; clang enlaza a ejecutable",
+            "clang ensambla a .o; as enlaza a ejecutable",
+            "as enlaza directamente a ejecutable",
+            "make ensambla; ld escribe el .s"
+          ],
+          "respuesta": 0,
+          "explicacion": "as traduce mnemónicos a código máquina en un archivo objeto (.o). Después el enlazador (llamado por clang) une los .o y produce el ejecutable."
+        },
+        {
+          "id": "c1-q2",
+          "tipo": "vf",
+          "pregunta": "El comando `as suma.s -o suma.o` produce un archivo objeto con código máquina, pero todavía no es un programa que se pueda ejecutar.",
+          "respuesta": true,
+          "explicacion": "El .o contiene la traducción de las instrucciones, pero falta enlazar: resolver las llamadas a funciones externas y dar dirección final al programa."
+        },
+        {
+          "id": "c1-q3",
+          "tipo": "unica",
+          "codigo": "$ nm suma.o\n0000000000000000 T _suma",
+          "pregunta": "¿Qué indica la letra T junto a _suma?",
+          "opciones": [
+            "El símbolo está definido en la sección de código (texto)",
+            "El símbolo es externo y falta definirlo",
+            "El símbolo pertenece a los datos inicializados",
+            "El archivo tiene un error de sintaxis"
+          ],
+          "respuesta": 0,
+          "explicacion": "En nm, T mayúscula significa símbolo definido y global en la sección de texto (código). U significaría que se usa pero no está definido en este archivo."
+        },
+        {
+          "id": "c1-q4",
+          "tipo": "multiple",
+          "pregunta": "Un archivo objeto agrupa su contenido en secciones. ¿Cuáles de estas son secciones habituales? (marca todos los correctos)",
+          "opciones": ["texto (código)", "datos inicializados", "pila de ejecución", "no inicializados (.bss)"],
+          "respuestas": [0, 1, 3],
+          "explicacion": "El código va en texto, las variables con valor inicial en datos, las variables sin inicializar en .bss. La pila no es una sección del archivo: se crea al ejecutar el programa."
+        },
+        {
+          "id": "c1-q5",
+          "tipo": "texto",
+          "pregunta": "¿Qué comando convierte un archivo .s en un archivo objeto .o? (solo el nombre)",
+          "aceptadas": ["as", "as()", "assembler"],
+          "explicacion": "as es el ensamblador: recibe mnemónicos y escribe código máquina en un .o."
+        },
+        {
+          "id": "c1-q6",
+          "tipo": "unica",
+          "codigo": "$ cat suma.s\n.globl _suma\n_suma:\n    add x0, x0, x1\n    ret",
+          "pregunta": "¿Qué imprime `nm suma.o | grep suma` tras ensamblar ese archivo en macOS?",
+          "opciones": [
+            "Una línea con T _suma",
+            "Una línea con U _suma",
+            "Nada, porque _suma es una etiqueta interna",
+            "error: unknown instruction"
+          ],
+          "respuesta": 0,
+          "explicacion": ".globl marca la etiqueta como global, así que nm la muestra y, al estar en la sección de código, con T. En Mach-O los símbolos llevan guion bajo."
+        },
+        {
+          "id": "c1-q7",
+          "tipo": "vf",
+          "pregunta": "En macOS (formato Mach-O), los símbolos de funciones escritas en C o ensamblador aparecen con un guion bajo al principio, por ejemplo _suma.",
+          "respuesta": true,
+          "explicacion": "Es una convención de Mach-O. En ELF de Linux el mismo símbolo aparece como suma, sin guion."
+        },
+        {
+          "id": "c1-q8",
+          "tipo": "unica",
+          "pregunta": "¿Para qué sirve `objdump -d`?",
+          "opciones": [
+            "Desensambla un archivo objeto y muestra las instrucciones en mnemónicos",
+            "Ensambla .s a .o",
+            "Enlaza varios .o en un ejecutable",
+            "Borra los símbolos de un binario"
+          ],
+          "respuesta": 0,
+          "explicacion": "objdump -d hace el proceso inverso de as: recupera mnemónicos desde el código máquina. Es la herramienta clásica para inspeccionar qué contiene un binario."
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "titulo": "2. x86-64 y la ABI de GNU/Linux",
+      "descripcion": "Registros, pila y convención de llamada System V de x86-64; sintaxis AT&T, formato ELF y los comandos de Linux (as, ld, gcc, readelf). Capítulo teórico: se estudia y se evalúa, sin ejercicios de escritura.",
+      "archivo": "capitulos/02-x86-linux.md",
+      "tags": ["x86-64", "abi", "sysv", "elf", "att", "linux"],
+      "minutos": 18,
+      "aprobacion": 70,
+      "evaluacionRequerida": true,
+      "ejercicios": [],
+      "evaluacion": [
+        {
+          "id": "c2-q1",
+          "tipo": "unica",
+          "pregunta": "En la ABI System V de x86-64 (GNU/Linux), ¿en qué registro llega el PRIMER argumento entero de una función?",
+          "opciones": ["rdi", "rax", "rsi", "rsp"],
+          "respuesta": 0,
+          "explicacion": "Los enteros van en rdi, rsi, rdx, rcx, r8, r9 en ese orden. rax guarda el valor de retorno y rsp es el puntero de pila."
+        },
+        {
+          "id": "c2-q2",
+          "tipo": "vf",
+          "pregunta": "En x86-64, la pila crece hacia direcciones de memoria más bajas (se contrae al hacer push).",
+          "respuesta": true,
+          "explicacion": "rsp empieza alto y baja con cada push. En ARM64 la pila también crece hacia abajo, pero el registro es sp."
+        },
+        {
+          "id": "c2-q3",
+          "tipo": "unica",
+          "codigo": "movq %rdi, %rax",
+          "pregunta": "Esta instrucción está en sintaxis AT&T. ¿Qué hace?",
+          "opciones": [
+            "Copia el valor de rdi en rax",
+            "Copia el valor de rax en rdi",
+            "Suma rdi y rax dejando el resultado en rdi",
+            "Compara rdi con rax"
+          ],
+          "respuesta": 0,
+          "explicacion": "En AT&T el orden es origen, destino: lo que está en %rdi se guarda en %rax. En Intel sería mov rax, rdi."
+        },
+        {
+          "id": "c2-q4",
+          "tipo": "multiple",
+          "pregunta": "Tienes suma.s y quieres un ejecutable en GNU/Linux con las herramientas básicas. ¿Qué pasos son correctos? (marca todos los correctos)",
+          "opciones": [
+            "as suma.s -o suma.o",
+            "ld suma.o -o suma",
+            "gcc suma.s -o suma (usa as y ld por ti)",
+            "nm suma.s -o suma"
+          ],
+          "respuestas": [0, 1, 2],
+          "explicacion": "as ensambla y ld enlaza; gcc puede hacer ambas cosas de una vez. nm solo inspecciona símbolos, no genera ejecutables."
+        },
+        {
+          "id": "c2-q5",
+          "tipo": "texto",
+          "pregunta": "¿Cómo se llama la familia de la convención de llamada que usa x86-64 en GNU/Linux? (nombre completo abreviado, p. ej. «SysV»)",
+          "aceptadas": ["sysv", "system v", "system v amd64", "sysv amd64", "system v amd64 abi", "abi sysv", "abi system v"],
+          "explicacion": "System V AMD64 ABI. Define qué registros llevan argumentos, dónde va el retorno y cómo se usa la pila."
+        },
+        {
+          "id": "c2-q6",
+          "tipo": "unica",
+          "pregunta": "La instrucción `ret` en x86-64 ¿qué hace exactamente?",
+          "opciones": [
+            "Saca la dirección guardada en la pila y salta a ella",
+            "Termina el proceso con código 0",
+            "Vuelve al principio de main",
+            "Libera la memoria de la pila"
+          ],
+          "respuesta": 0,
+          "explicacion": "call apila la dirección de retorno; ret la desapila y salta ahí. Por eso la pila debe estar alineada y equilibrada al volver."
+        },
+        {
+          "id": "c2-q7",
+          "tipo": "vf",
+          "pregunta": "El formato de los binarios y archivos objeto en GNU/Linux se llama ELF; en macOS se llama Mach-O.",
+          "respuesta": true,
+          "explicacion": "Por eso las mismas instrucciones producen archivos con estructura distinta según el sistema. readelf analiza ELF; en macOS se usa objdump o nm."
+        },
+        {
+          "id": "c2-q8",
+          "tipo": "unica",
+          "codigo": "add %rsi, %rdi\nmov %rdi, %rax",
+          "pregunta": "Si rdi=5 y rsi=7, ¿qué valor queda en rax tras ejecutar ambas líneas?",
+          "opciones": ["12", "7", "5", "2"],
+          "respuesta": 0,
+          "explicacion": "add %rsi, %rdi suma 7 en rdi (rdi=12). Luego mov %rdi, %rax copia 12 a rax, el registro de retorno."
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "titulo": "3. Tu primer programa en ARM64",
+      "descripcion": "Registros de AArch64, prólogo y epílogo con x29/x30, etiquetas, adr/adrp y llamadas a printf y scanf con la convención de argumentos de macOS.",
+      "archivo": "capitulos/03-arm64-macos.md",
+      "tags": ["arm64", "aarch64", "prologo", "printf", "scanf", "abi"],
+      "minutos": 25,
+      "aprobacion": 70,
+      "evaluacionRequerida": true,
+      "ejercicios": [
+        {
+          "id": "c3-e1",
+          "titulo": "Doble de un entero",
+          "enunciado": "ejercicios/doble-de-un-entero-enunciado.md",
+          "solucion": "ejercicios/doble-de-un-entero-solucion.md",
+          "pistas": [
+            "ejercicios/doble-de-un-entero-pista-1.md",
+            "ejercicios/doble-de-un-entero-pista-2.md",
+            "ejercicios/doble-de-un-entero-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/doble-de-un-entero-plantilla.sh",
+          "pruebas": "ejercicios/doble-de-un-entero-pruebas.json"
+        },
+        {
+          "id": "c3-e2",
+          "titulo": "Suma de dos enteros",
+          "enunciado": "ejercicios/suma-de-dos-enteros-enunciado.md",
+          "solucion": "ejercicios/suma-de-dos-enteros-solucion.md",
+          "pistas": [
+            "ejercicios/suma-de-dos-enteros-pista-1.md",
+            "ejercicios/suma-de-dos-enteros-pista-2.md",
+            "ejercicios/suma-de-dos-enteros-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/suma-de-dos-enteros-plantilla.sh",
+          "pruebas": "ejercicios/suma-de-dos-enteros-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c3-q1",
+          "tipo": "unica",
+          "codigo": "_main:\n    stp x29, x30, [sp, -16]!\n    adrp x0, saludo@PAGE\n    bl _printf\n    ldp x29, x30, [sp], #16\n    ret",
+          "pregunta": "¿Por qué hay que guardar x30 en el prólogo antes de llamar a otras funciones?",
+          "opciones": [
+            "Porque bl sobreescribe x30 con la dirección de retorno; sin guardarla, el ret vuelve a una dirección perdida",
+            "Porque x30 guarda el primer argumento de printf",
+            "Porque sin x30 las instrucciones adrp no funcionan",
+            "Porque x30 es el puntero de pila y debe alinearse"
+          ],
+          "respuesta": 0,
+          "explicacion": "bl escribe en x30 la dirección de la siguiente instrucción. Si no la guardas en la pila, al ejecutar ret la función salta a una dirección inválida y el programa se cuelga."
+        },
+        {
+          "id": "c3-q2",
+          "tipo": "texto",
+          "pregunta": "En AArch64, ¿en qué registro se devuelve el resultado entero de una función? (nombre del registro completo)",
+          "aceptadas": ["x0", "w0", "registro x0", "registro w0"],
+          "explicacion": "x0 es el registro de retorno (y también el primer argumento). w0 son sus 32 bits bajos."
+        },
+        {
+          "id": "c3-q3",
+          "tipo": "vf",
+          "pregunta": "En AArch64, el registro sp es el puntero de pila y la pila crece hacia direcciones más bajas, igual que en x86-64.",
+          "respuesta": true,
+          "explicacion": "sp baja al hacer stp con preincremento negativo o sub sp, sp, #N. El epílogo lo devuelve a su sitio."
+        },
+        {
+          "id": "c3-q4",
+          "tipo": "multiple",
+          "pregunta": "Después de llamar a una función con bl, ¿qué registros puede modificar libremente la función llamada (volátiles)? (marca todos los correctos)",
+          "opciones": ["x0", "x1", "x19", "x2"],
+          "respuestas": [0, 1, 3],
+          "explicacion": "x0 a x18 son volátiles: una función no los conserva. x19 a x28 son de callee-saved: si los usas, debes guardarlos y restaurarlos."
+        },
+        {
+          "id": "c3-q5",
+          "tipo": "unica",
+          "codigo": "add x0, x0, x1",
+          "pregunta": "¿Qué resultado queda en x0?",
+          "opciones": [
+            "La suma del valor que ya tenía x0 más el de x1",
+            "La resta de x0 menos x1",
+            "x1 copiado a x0 sin cambiarlo",
+            "El valor 0"
+          ],
+          "respuesta": 0,
+          "explicacion": "El formato es add destino, origen1, origen2: destino = origen1 + origen2. Aquí x0 = x0 + x1."
+        },
+        {
+          "id": "c3-q6",
+          "tipo": "unica",
+          "codigo": "sub x8, x29, #4      @ dirección donde vive n\nstr x8, [sp]         @ primer argumento\nadrp x0, fmt@PAGE\nadd x0, x0, fmt@PAGEOFF\nbl _scanf",
+          "pregunta": "¿Dónde va el argumento adicional de scanf (la dirección &n) en macOS con chip Apple?",
+          "opciones": [
+            "En la pila, en [sp+0]; el puntero al formato va en x0",
+            "En x1, como en la ABI de Linux",
+            "En x29",
+            "scanf no admite punteros en ensamblador"
+          ],
+          "respuesta": 0,
+          "explicacion": "En la ABI de macOS con chip Apple, los argumentos de las funciones variadicas como printf y scanf se guardan en la pila empezando en [sp+0], no en los registros x1, x2…"
+        },
+        {
+          "id": "c3-q7",
+          "tipo": "texto",
+          "pregunta": "¿Qué par de instrucciones se usa para cargar la dirección de una etiqueta en un registro? (escribe las dos separadas por espacio, en orden)",
+          "aceptadas": ["adrp add", "adrp, add"],
+          "explicacion": "adrp carga la dirección de la página y add suma el desplazamiento dentro de la página. Juntas forman el par estándar para alcanzar strings y datos."
+        },
+        {
+          "id": "c3-q8",
+          "tipo": "unica",
+          "pregunta": "En una instrucción como `mov w1, #5`, ¿qué es w1?",
+          "opciones": [
+            "Los 32 bits bajos del registro de 64 bits x1",
+            "Un registro distinto e independiente de x1",
+            "El registro de flags",
+            "Un puntero de pila"
+          ],
+          "respuesta": 0,
+          "explicacion": "w y x nombran las dos vistas del mismo registro: w son los 32 bits bajos. Escribir en w1 pone a cero la parte alta de x1."
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "titulo": "4. Agregar ensamblador a C",
+      "descripcion": "Dos direcciones de mezcla: C llama a funciones escritas en ensamblador y el ensamblador llama a funciones de C. Ensamblador en línea con __asm__, y archivos .s aparte compilados con gcc -c.",
+      "archivo": "capitulos/04-asm-y-c.md",
+      "tags": ["c", "asm", "inline", "extern", "simbolos", "gcc -c"],
+      "minutos": 25,
+      "aprobacion": 70,
+      "evaluacionRequerida": true,
+      "ejercicios": [
+        {
+          "id": "c4-e1",
+          "titulo": "Sumar con ensamblador en C",
+          "enunciado": "ejercicios/sumar-con-ensamblador-en-c-enunciado.md",
+          "solucion": "ejercicios/sumar-con-ensamblador-en-c-solucion.md",
+          "pistas": [
+            "ejercicios/sumar-con-ensamblador-en-c-pista-1.md",
+            "ejercicios/sumar-con-ensamblador-en-c-pista-2.md"
+          ],
+          "lenguaje": "c",
+          "plantilla": "ejercicios/sumar-con-ensamblador-en-c-plantilla.c",
+          "pruebas": "ejercicios/sumar-con-ensamblador-en-c-pruebas.json"
+        },
+        {
+          "id": "c4-e2",
+          "titulo": "Ensamblador fuera de C",
+          "enunciado": "ejercicios/ensamblador-fuera-de-c-enunciado.md",
+          "solucion": "ejercicios/ensamblador-fuera-de-c-solucion.md",
+          "pistas": [
+            "ejercicios/ensamblador-fuera-de-c-pista-1.md",
+            "ejercicios/ensamblador-fuera-de-c-pista-2.md",
+            "ejercicios/ensamblador-fuera-de-c-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/ensamblador-fuera-de-c-plantilla.sh",
+          "pruebas": "ejercicios/ensamblador-fuera-de-c-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c4-q1",
+          "tipo": "unica",
+          "pregunta": "En C escribes `int suma(int a, int b);` y la defines en un archivo .s de macOS con chip Apple. ¿Cómo se debe llamar la etiqueta en ese archivo?",
+          "opciones": ["_suma", "suma", "SUMA", "int_suma"],
+          "respuesta": 0,
+          "explicacion": "Mach-O antepone guion bajo a los símbolos C. En Linux (ELF) sería suma, sin guion. Por eso la etiqueta que define la función lleva _."
+        },
+        {
+          "id": "c4-q2",
+          "tipo": "vf",
+          "pregunta": "`gcc -c suma.s -o suma.o` solo ensambla el archivo; el resultado aún no es un programa ejecutable.",
+          "respuesta": true,
+          "explicacion": "La opción -c detiene el proceso después de generar el .o. Para tener el programa falta enlazar, por ejemplo `clang main.o suma.o -o prog`."
+        },
+        {
+          "id": "c4-q3",
+          "tipo": "unica",
+          "codigo": "$ nm suma.o\n0000000000000000 T _suma\n         U _printf",
+          "pregunta": "¿Qué significa la línea U _printf?",
+          "opciones": [
+            "El archivo usa _printf pero la función se define en otro sitio",
+            "_printf está definida en este archivo",
+            "El compilador encontró un error de tipos",
+            "_printf es una etiqueta local"
+          ],
+          "respuesta": 0,
+          "explicacion": "U (undefined) marca un símbolo externo: está referenciado aquí y el enlazador tendrá que encontrarlo en otro .o o en una biblioteca."
+        },
+        {
+          "id": "c4-q4",
+          "tipo": "multiple",
+          "pregunta": "Para mezclar C y ensamblador en ficheros separados, ¿cuáles de estos pasos son correctos? (marca todos los correctos)",
+          "opciones": [
+            "Compilar el .c con `gcc -c main.c -o main.o`",
+            "Compilar el .s con `gcc -c suma.s -o suma.o`",
+            "Enlazar los dos .o con `clang main.o suma.o -o prog`",
+            "Borrar el main de C para que no haya dos puntos de entrada"
+          ],
+          "respuestas": [0, 1, 2],
+          "explicacion": "Cada fichero se compila a su .o y después se enlazan juntos. main debe quedarse: es el punto de entrada; el ensamblador define funciones auxiliares."
+        },
+        {
+          "id": "c4-q5",
+          "tipo": "texto",
+          "pregunta": "En el ensamblador en línea de gcc/clang, ¿qué palabra usas entre los dos dos puntos para declarar qué registros destruye la instrucción? (en inglés, una palabra)",
+          "aceptadas": ["clobber", "clobbers"],
+          "explicacion": "La tercera zona de la plantilla son los clobbers: registros que la instrucción modifica y que el compilador no ve en los operandos."
+        },
+        {
+          "id": "c4-q6",
+          "tipo": "unica",
+          "codigo": "__asm__ volatile(\"add %w0, %w1, %w2\"\n                : \"=r\"(r) : \"r\"(a), \"r\"(b));",
+          "pregunta": "¿Qué hace la instrucción de ensamblador en términos de las variables de C?",
+          "opciones": [
+            "r = a + b, usando versiones de 32 bits de los operandos",
+            "a = b + r",
+            "r = a - b",
+            "Solo compara a y b"
+          ],
+          "respuesta": 0,
+          "explicacion": "%w0 es la salida r, %w1 y %w2 las entradas a y b. add destino, op1, op2 deja la suma en r."
+        },
+        {
+          "id": "c4-q7",
+          "tipo": "vf",
+          "pregunta": "En una función escrita en ensamblador que C llama con la ABI de macOS, los argumentos enteros llegan en x0, x1, x2… y el resultado se devuelve en x0.",
+          "respuesta": true,
+          "explicacion": "Las funciones normales (no variadicas) usan esos registros. La excepción de este curso son printf y scanf, que llevan sus argumentos extra en la pila."
+        },
+        {
+          "id": "c4-q8",
+          "tipo": "unica",
+          "codigo": "$ cat suma.s\n_suma:\n    add x0, x0, x1\n    ret",
+          "pregunta": "Compilas ese archivo y C hace `printf(\"%d\", suma(2, 3))`. ¿Qué imprime?",
+          "opciones": ["5", "2", "3", "Error de compilación"],
+          "respuesta": 0,
+          "explicacion": "x0=2 (primer argumento), x1=3; add deja 5 en x0, que es el registro de retorno. printf recibe 5."
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "titulo": "5. El enlazador y las bibliotecas",
+      "descripcion": "Qué resuelve ld: símbolos definidos y externos, errores típicos (undefined y duplicate symbol), bibliotecas estáticas con ar y opciones -L y -l.",
+      "archivo": "capitulos/05-linker.md",
+      "tags": ["ld", "enlazador", "ar", "bibliotecas", "undefined", "duplicate"],
+      "minutos": 20,
+      "aprobacion": 70,
+      "evaluacionRequerida": true,
+      "ejercicios": [
+        {
+          "id": "c5-e1",
+          "titulo": "Biblioteca estatica",
+          "enunciado": "ejercicios/biblioteca-estatica-enunciado.md",
+          "solucion": "ejercicios/biblioteca-estatica-solucion.md",
+          "pistas": [
+            "ejercicios/biblioteca-estatica-pista-1.md",
+            "ejercicios/biblioteca-estatica-pista-2.md",
+            "ejercicios/biblioteca-estatica-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/biblioteca-estatica-plantilla.sh",
+          "pruebas": "ejercicios/biblioteca-estatica-pruebas.json"
+        },
+        {
+          "id": "c5-e2",
+          "titulo": "Errores de enlace",
+          "enunciado": "ejercicios/errores-de-enlace-enunciado.md",
+          "solucion": "ejercicios/errores-de-enlace-solucion.md",
+          "pistas": [
+            "ejercicios/errores-de-enlace-pista-1.md",
+            "ejercicios/errores-de-enlace-pista-2.md",
+            "ejercicios/errores-de-enlace-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/errores-de-enlace-plantilla.sh",
+          "pruebas": "ejercicios/errores-de-enlace-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c5-q1",
+          "tipo": "unica",
+          "codigo": "Undefined symbols for architecture arm64:\n  \"_no_existe\", referenced from:\n      _llamada in a.o",
+          "pregunta": "¿Qué ocurrió aquí?",
+          "opciones": [
+            "Se llamó a _no_existe pero ningún .o ni biblioteca la define",
+            "Hay dos definiciones de _no_existe",
+            "El archivo a.o no está ensamblado",
+            "Falta la opción -c al compilar"
+          ],
+          "respuesta": 0,
+          "explicacion": "El enlazador encontró una referencia sin definición: o falta el .o que la contiene, o no se pasó la biblioteca con -l."
+        },
+        {
+          "id": "c5-q2",
+          "tipo": "vf",
+          "pregunta": "El error «duplicate symbol» aparece cuando el mismo símbolo está definido (no solo usado) en dos archivos objeto que se enlazan juntos.",
+          "respuesta": true,
+          "explicacion": "El enlazador no sabe cuál de las dos definiciones usar y se niega. Hay que eliminar una o separarlos en bibliotecas."
+        },
+        {
+          "id": "c5-q3",
+          "tipo": "unica",
+          "pregunta": "¿Qué comando crea una biblioteca estática a partir de suma.o?",
+          "opciones": [
+            "ar rcs libmath.a suma.o",
+            "ld libmath.a suma.o",
+            "gcc -shared suma.o",
+            "nm libmath.a suma.o"
+          ],
+          "respuesta": 0,
+          "explicacion": "ar empaqueta varios .o en un archivo (la biblioteca estática). Luego se enlaza con -L. -lmath."
+        },
+        {
+          "id": "c5-q4",
+          "tipo": "multiple",
+          "pregunta": "Al enlazar, ¿qué tareas son propias del enlazador? (marca todos los correctos)",
+          "opciones": [
+            "Resolver las direcciones finales de cada función",
+            "Completar las referencias a símbolos externos",
+            "Unir las secciones de código de todos los .o",
+            "Traducir mnemónicos a código máquina"
+          ],
+          "respuestas": [0, 1, 2],
+          "explicacion": "as ya tradujo mnemónicos al generar cada .o. El enlazador coloca todo en un espacio de direcciones y conecta los símbolos que faltan."
+        },
+        {
+          "id": "c5-q5",
+          "tipo": "texto",
+          "pregunta": "¿Qué comando muestra la tabla de símbolos de un binario o de un .o? (solo el nombre)",
+          "aceptadas": ["nm", "nm()"],
+          "explicacion": "nm lista los símbolos con su dirección y tipo (T, U, D…). Es la primera herramienta para diagnosticar problemas de enlace."
+        },
+        {
+          "id": "c5-q6",
+          "tipo": "unica",
+          "codigo": "clang main.o -L./lib -lmath -o prog",
+          "pregunta": "Con esa línea, ¿qué archivo busca -lmath?",
+          "opciones": [
+            "libmath.a (o libmath.dylib) dentro de ./lib",
+            "math.a en el directorio actual",
+            "main.o con el nombre cambiado",
+            "El archivo math.o compilado otra vez"
+          ],
+          "respuesta": 0,
+          "explicacion": "-L añade rutas de búsqueda y -lmath añade el prefijo lib y la extensión: busca libmath.a o libmath.dylib en esas rutas."
+        },
+        {
+          "id": "c5-q7",
+          "tipo": "unica",
+          "codigo": "$ nm suma.o\n0000000000000000 T _suma\n         U _printf",
+          "pregunta": "Si enlazas solo suma.o sin ningún otro archivo, ¿qué error aparecerá?",
+          "opciones": [
+            "Undefined symbols for _printf",
+            "duplicate symbol _printf",
+            "No hay error: suma.o basta",
+            "error: unknown directive"
+          ],
+          "respuesta": 0,
+          "explicacion": "U indica una referencia sin resolver. Al enlazar sin nada que defina _printf, el enlazador reporta undefined symbols."
+        },
+        {
+          "id": "c5-q8",
+          "tipo": "vf",
+          "pregunta": "El enlazador produce el archivo final (executable o biblioteca) a partir de uno o más archivos objeto y bibliotecas.",
+          "respuesta": true,
+          "explicacion": "Ese es su trabajo: transformar .o independientes en un programa completo con todas las referencias resueltas."
+        }
+      ]
+    },
+    {
+      "id": "c6",
+      "titulo": "6. make y portabilidad",
+      "descripcion": "Makefiles con reglas y dependencias, el requisito de las tabulaciones, objetivos personalizados, y las diferencias entre ELF de Linux y Mach-O de macOS, con una tabla de comandos para ambos sistemas.",
+      "archivo": "capitulos/06-make-portabilidad.md",
+      "tags": ["make", "makefile", "elf", "mach-o", "portabilidad", "comandos"],
+      "minutos": 20,
+      "aprobacion": 70,
+      "evaluacionRequerida": true,
+      "ejercicios": [
+        {
+          "id": "c6-e1",
+          "titulo": "Makefile basico",
+          "enunciado": "ejercicios/makefile-basico-enunciado.md",
+          "solucion": "ejercicios/makefile-basico-solucion.md",
+          "pistas": [
+            "ejercicios/makefile-basico-pista-1.md",
+            "ejercicios/makefile-basico-pista-2.md",
+            "ejercicios/makefile-basico-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/makefile-basico-plantilla.sh",
+          "pruebas": "ejercicios/makefile-basico-pruebas.json"
+        },
+        {
+          "id": "c6-e2",
+          "titulo": "Target de simbolos",
+          "enunciado": "ejercicios/target-de-simbolos-enunciado.md",
+          "solucion": "ejercicios/target-de-simbolos-solucion.md",
+          "pistas": [
+            "ejercicios/target-de-simbolos-pista-1.md",
+            "ejercicios/target-de-simbolos-pista-2.md",
+            "ejercicios/target-de-simbolos-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/target-de-simbolos-plantilla.sh",
+          "pruebas": "ejercicios/target-de-simbolos-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c6-q1",
+          "tipo": "unica",
+          "codigo": "prog: main.o suma.o\n    clang main.o suma.o -o prog",
+          "pregunta": "Si la segunda línea empieza con espacios y no con una tabulación, ¿qué hace make?",
+          "opciones": [
+            "Falla con un error de sintaxis (missing separator)",
+            "Ignora la línea y enlaza automáticamente",
+            "Convierte los espacios en tabulaciones",
+            "Recompila solo main.o"
+          ],
+          "respuesta": 0,
+          "explicacion": "Las recetas de make deben empezar con un TAB. Con espacios, make no reconoce la receta y se detiene con «missing separator»."
+        },
+        {
+          "id": "c6-q2",
+          "tipo": "vf",
+          "pregunta": "Si solo cambias main.c y vuelves a ejecutar make, make recompila main.o y reenlaza, pero no recompila suma.o.",
+          "respuesta": true,
+          "explicacion": "make compara fechas: suma.o es más reciente que suma.c, así que no hace nada con él. Esa es su utilidad: reconstruir solo lo que cambió."
+        },
+        {
+          "id": "c6-q3",
+          "tipo": "unica",
+          "pregunta": "¿Cuál es la pareja correcta de formato binario con sistema?",
+          "opciones": [
+            "ELF en GNU/Linux, Mach-O en macOS",
+            "Mach-O en GNU/Linux, ELF en macOS",
+            "PE en ambos sistemas",
+            "COFF en GNU/Linux y Mach-O en Windows"
+          ],
+          "respuesta": 0,
+          "explicacion": "Linux usa ELF y macOS usa Mach-O. Por eso nm y objdump muestran símbolos con guion bajo solo en macOS."
+        },
+        {
+          "id": "c6-q4",
+          "tipo": "multiple",
+          "pregunta": "¿Qué comandos sirven para inspeccionar un binario? (marca todos los correctos)",
+          "opciones": ["nm", "objdump -d", "as", "ld"],
+          "respuestas": [0, 1],
+          "explicacion": "nm muestra símbolos y objdump -d desensambla. as y ld son de construcción: crean, no inspeccionan."
+        },
+        {
+          "id": "c6-q5",
+          "tipo": "texto",
+          "pregunta": "Borraste todos los .o y quieres que make vuelva a construir todo con el Makefile del directorio. ¿Qué comando ejecutas? (solo el nombre)",
+          "aceptadas": ["make", "make()"],
+          "explicacion": "make reconstruye lo que falte según las reglas del Makefile; con los .o borrados, recompila y reenlaza todo."
+        },
+        {
+          "id": "c6-q6",
+          "tipo": "unica",
+          "pregunta": "Si un Makefile contiene varios objetivos y ejecutas `make` sin argumentos, ¿cuál se construye?",
+          "opciones": [
+            "El primer objetivo del archivo",
+            "Todos los objetivos en orden alfabético",
+            "El último objetivo",
+            "Ninguno: hay que indicar el objetivo siempre"
+          ],
+          "respuesta": 0,
+          "explicacion": "El objetivo por defecto es el primero que aparece. Por eso los Makefiles suelen poner al principio el ejecutable y los auxiliares después (como clean)."
+        },
+        {
+          "id": "c6-q7",
+          "tipo": "vf",
+          "pregunta": "Un ejecutable compilado para x86-64 GNU/Linux no corre en macOS con chip Apple sin un emulador o traducción extra.",
+          "respuesta": true,
+          "explicacion": "Son arquitectura (x86-64 frente a arm64) y formato (ELF frente a Mach-O) distintos. Hay que compilar en la plataforma de destino."
+        },
+        {
+          "id": "c6-q8",
+          "tipo": "unica",
+          "codigo": "$ make simbolos\n0000000000000000 T _suma",
+          "pregunta": "¿Qué hace la regla de un objetivo llamado simbolos en un Makefile de este curso?",
+          "opciones": [
+            "Ejecuta comandos auxiliares, aquí mostrar los símbolos con nm",
+            "Compila el archivo simbolos.s",
+            "Borra los archivos .o",
+            "Enlaza un ejecutable llamado simbolos"
+          ],
+          "respuesta": 0,
+          "explicacion": "Los objetivos no tienen por qué ser archivos: simbolos puede ejecutar nm y otras utilidades como inspección rápida."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1702 @@
+{
+  "$schema": "../vscode-tutor-ext/schemas/curso.schema.json",
+  "id": "react-basico",
+  "titulo": "React desde cero",
+  "descripcion": "Aprende React de lo básico a lo avanzado: elementos, componentes, props, estado, listas, hooks, contexto, formularios, rendimiento y conciliación, con ejercicios y evaluaciones en JavaScript puro, sin instalar paquetes.",
+  "nivel": "principiante",
+  "version": "1.1.0",
+  "manual": "MANUAL.md",
+  "setup": "setup.sh",
+  "requisitos": [
+    {
+      "comando": "node",
+      "nombre": "Node.js",
+      "versionMinima": "16.0.0",
+      "obligatorio": true,
+      "instalar": {
+        "darwin": "brew install node",
+        "linux": "sudo apt install nodejs",
+        "win32": "winget install OpenJS.NodeJS.LTS"
+      }
+    }
+  ],
+  "capitulos": [
+    {
+      "id": "c1",
+      "titulo": "1. Elementos: qué es JSX por dentro",
+      "descripcion": "JSX se convierte en llamadas a h(); un elemento es un objeto con type, props y children.",
+      "archivo": "capitulos/01-elementos-jsx.md",
+      "tags": [
+        "jsx",
+        "elementos",
+        "h"
+      ],
+      "minutos": 20,
+      "aprobacion": 70,
+      "ejercicios": [
+        {
+          "id": "c1-e1",
+          "titulo": "Saludo con elemento",
+          "enunciado": "ejercicios/saludo-con-elemento-enunciado.md",
+          "solucion": "ejercicios/saludo-con-elemento-solucion.md",
+          "pistas": [
+            "ejercicios/saludo-con-elemento-pista-1.md",
+            "ejercicios/saludo-con-elemento-pista-2.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/saludo-con-elemento-plantilla.js",
+          "pruebas": "ejercicios/saludo-con-elemento-pruebas.json"
+        },
+        {
+          "id": "c1-e2",
+          "titulo": "Etiqueta con tipo",
+          "enunciado": "ejercicios/etiqueta-con-tipo-enunciado.md",
+          "solucion": "ejercicios/etiqueta-con-tipo-solucion.md",
+          "pistas": [
+            "ejercicios/etiqueta-con-tipo-pista-1.md",
+            "ejercicios/etiqueta-con-tipo-pista-2.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/etiqueta-con-tipo-plantilla.js",
+          "pruebas": "ejercicios/etiqueta-con-tipo-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c1-q1",
+          "tipo": "unica",
+          "pregunta": "¿En qué se convierte esta línea de JSX cuando el compilador la procesa? <p id=\"saludo\">Hola</p>",
+          "opciones": [
+            "h(\"p\", { id: \"saludo\" }, \"Hola\")",
+            "Una cadena de texto llamada \"HTML\"",
+            "document.createElement(\"p\")",
+            "Una petición al servidor"
+          ],
+          "respuesta": 0,
+          "explicacion": "JSX es azúcar sintáctico: cada etiqueta se transforma en una llamada a la función h (createElement)."
+        },
+        {
+          "id": "c1-q2",
+          "tipo": "vf",
+          "pregunta": "Un elemento de React es un objeto con tres propiedades: type, props y children.",
+          "respuesta": true,
+          "explicacion": "Ese objeto es todo lo que React necesita: qué mostrar (type), con qué datos (props) y qué contiene (children)."
+        },
+        {
+          "id": "c1-q3",
+          "tipo": "unica",
+          "pregunta": "¿Qué imprime este código con el mini React del curso?",
+          "codigo": "const el = h(\"h1\", { className: \"titulo\" }, \"Hola\");\nconsole.log(renderToString(el));",
+          "opciones": [
+            "<h1 className=\"titulo\">Hola</h1>",
+            "<h1 class=\"titulo\">Hola</h1>",
+            "Hola",
+            "[object Object]"
+          ],
+          "respuesta": 0,
+          "explicacion": "El mini renderizador escribe las props tal cual. En react-dom/server real, className se escribe como class."
+        },
+        {
+          "id": "c1-q4",
+          "tipo": "multiple",
+          "pregunta": "Cuando renderToString recibe un hijo con estos valores, ¿cuáles no se dibujan? (marca todos los correctos)",
+          "opciones": [
+            "false",
+            "null",
+            "undefined",
+            "0"
+          ],
+          "respuestas": [
+            0,
+            1,
+            2
+          ],
+          "explicacion": "false, null y undefined significan «no muestres nada». El 0 sí se dibuja: es un número."
+        },
+        {
+          "id": "c1-q5",
+          "tipo": "texto",
+          "pregunta": "¿Cómo se llama la función del mini React que convierte un elemento en texto HTML? (solo el nombre)",
+          "aceptadas": [
+            "renderToString",
+            "renderToString()"
+          ],
+          "explicacion": "renderToString escribe el árbol de elementos como una cadena de texto, igual que react-dom/server."
+        },
+        {
+          "id": "c1-q6",
+          "tipo": "unica",
+          "pregunta": "¿Qué imprime este código?",
+          "codigo": "const el = h(\"a\", { href: \"/docs\" }, \"leer\");\nconsole.log(renderToString(el));",
+          "opciones": [
+            "<a href=\"/docs\">leer</a>",
+            "<a>leer</a>",
+            "leer",
+            "href=\"/docs\""
+          ],
+          "respuesta": 0,
+          "explicacion": "Las props se escriben como atributos de la etiqueta: href aparece con su valor dentro de la apertura."
+        },
+        {
+          "id": "c1-q7",
+          "tipo": "vf",
+          "pregunta": "El objeto que devuelve h() es solo dato: no se ve en pantalla hasta que renderToString (o React) lo procesa.",
+          "respuesta": true,
+          "explicacion": "h() construye el árbol en memoria. Recién al recorrerlo se obtiene el HTML o se pinta en el navegador."
+        },
+        {
+          "id": "c1-q8",
+          "tipo": "multiple",
+          "pregunta": "En el mini React del curso, ¿qué valores puede tener la propiedad type de un elemento? (marca todos los correctos)",
+          "opciones": [
+            "Una cadena de texto como \"p\" o \"div\"",
+            "Una función de componente",
+            "Un número",
+            "Una lista de textos"
+          ],
+          "respuestas": [
+            0,
+            1
+          ],
+          "explicacion": "El tipo es la etiqueta (cadena) o el componente (función). Un número o una lista no dicen qué elemento crear."
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "titulo": "2. Componentes, props y composición",
+      "descripcion": "Un componente es una función que recibe props y devuelve elementos. Se componen entre sí.",
+      "archivo": "capitulos/02-componentes-props.md",
+      "tags": [
+        "componentes",
+        "props",
+        "children"
+      ],
+      "minutos": 20,
+      "aprobacion": 70,
+      "evaluacionRequerida": true,
+      "ejercicios": [
+        {
+          "id": "c2-e1",
+          "titulo": "Usuario con bandera",
+          "enunciado": "ejercicios/usuario-con-bandera-enunciado.md",
+          "solucion": "ejercicios/usuario-con-bandera-solucion.md",
+          "pistas": [
+            "ejercicios/usuario-con-bandera-pista-1.md",
+            "ejercicios/usuario-con-bandera-pista-2.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/usuario-con-bandera-plantilla.js",
+          "pruebas": "ejercicios/usuario-con-bandera-pruebas.json"
+        },
+        {
+          "id": "c2-e2",
+          "titulo": "Tarjeta con children",
+          "enunciado": "ejercicios/tarjeta-con-children-enunciado.md",
+          "solucion": "ejercicios/tarjeta-con-children-solucion.md",
+          "pistas": [
+            "ejercicios/tarjeta-con-children-pista-1.md",
+            "ejercicios/tarjeta-con-children-pista-2.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/tarjeta-con-children-plantilla.js",
+          "pruebas": "ejercicios/tarjeta-con-children-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c2-q1",
+          "tipo": "unica",
+          "pregunta": "¿Qué recibe un componente de React como primer argumento?",
+          "opciones": [
+            "Un objeto con las props",
+            "El nombre del componente como texto",
+            "Un string ya convertido en HTML",
+            "La lista de archivos del proyecto"
+          ],
+          "respuesta": 0,
+          "explicacion": "Las props (propiedades) son los datos de entrada del componente, reunidos en un objeto."
+        },
+        {
+          "id": "c2-q2",
+          "tipo": "vf",
+          "pregunta": "En props.children están los elementos anidados que se escriben dentro del componente.",
+          "respuesta": true,
+          "explicacion": "children es una prop especial: contiene lo que el componente envuelve. Suele ser un array."
+        },
+        {
+          "id": "c2-q3",
+          "tipo": "unica",
+          "pregunta": "¿Qué imprime este código?",
+          "codigo": "function Etiqueta({ texto }) {\n  return h(\"span\", {}, texto);\n}\nconsole.log(renderToString(h(Etiqueta, { texto: \"ok\" })));",
+          "opciones": [
+            "<span>ok</span>",
+            "ok",
+            "<Etiqueta>ok</Etiqueta>",
+            "[object Object]"
+          ],
+          "respuesta": 0,
+          "explicacion": "renderToString llama al componente y pinta lo que devuelve: un span con su contenido."
+        },
+        {
+          "id": "c2-q4",
+          "tipo": "multiple",
+          "pregunta": "¿Cuáles son formas normales de renderizado condicional en React? (marca todos los correctos)",
+          "opciones": [
+            "El operador &&",
+            "Un ternario ? :",
+            "Un if que devuelve null o un elemento",
+            "El bucle while dentro del return"
+          ],
+          "respuestas": [
+            0,
+            1,
+            2
+          ],
+          "explicacion": "React devuelve elementos o nada. while es un bucle, no una forma de renderizado condicional."
+        },
+        {
+          "id": "c2-q5",
+          "tipo": "texto",
+          "pregunta": "¿Cómo se llama el objeto con los datos de entrada de un componente? (solo la palabra)",
+          "aceptadas": [
+            "props",
+            "las props",
+            "propiedades"
+          ],
+          "explicacion": "props es el nombre técnico de los datos que un componente recibe."
+        },
+        {
+          "id": "c2-q6",
+          "tipo": "unica",
+          "pregunta": "¿Qué imprime este código?",
+          "codigo": "function Ok({ texto }) {\n  return h(\"strong\", {}, texto);\n}\nconsole.log(renderToString(h(Ok, { texto: \"hey\" })));",
+          "opciones": [
+            "<strong>hey</strong>",
+            "hey",
+            "<Ok>hey</Ok>",
+            "[object Object]"
+          ],
+          "respuesta": 0,
+          "explicacion": "renderToString llama al componente y pinta lo que devuelve: una etiqueta strong con su contenido."
+        },
+        {
+          "id": "c2-q7",
+          "tipo": "multiple",
+          "pregunta": "¿Cuáles son buenas prácticas al diseñar un componente? (marca todos los correctos)",
+          "opciones": [
+            "Recibe datos por props y devuelve elementos",
+            "Modifica sus props para guardar cambios",
+            "Se divide en piezas pequeñas que se componen entre sí",
+            "Escribe el HTML directamente con document.write"
+          ],
+          "respuestas": [
+            0,
+            2
+          ],
+          "explicacion": "Las props son de solo lectura y la composición ensambla piezas pequeñas. document.write no forma parte del modelo de React."
+        },
+        {
+          "id": "c2-q8",
+          "tipo": "texto",
+          "pregunta": "¿Cómo se llama la prop especial que contiene los elementos anidados dentro de un componente? (solo la palabra)",
+          "aceptadas": [
+            "children",
+            "props.children",
+            "el objeto children",
+            "la prop children"
+          ],
+          "explicacion": "children reúne lo que el componente envuelve; suele llegar como array."
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "titulo": "3. Estado: useState y useReducer",
+      "descripcion": "El estado cambia con el tiempo. Reglas: nunca mutarlo; un reducer recibe estado y acción y devuelve el nuevo estado.",
+      "archivo": "capitulos/03-estado.md",
+      "tags": [
+        "estado",
+        "reducer",
+        "acciones"
+      ],
+      "minutos": 25,
+      "aprobacion": 70,
+      "evaluacionRequerida": true,
+      "ejercicios": [
+        {
+          "id": "c3-e1",
+          "titulo": "Contador con reducer",
+          "enunciado": "ejercicios/contador-con-reducer-enunciado.md",
+          "solucion": "ejercicios/contador-con-reducer-solucion.md",
+          "pistas": [
+            "ejercicios/contador-con-reducer-pista-1.md",
+            "ejercicios/contador-con-reducer-pista-2.md",
+            "ejercicios/contador-con-reducer-pista-3.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/contador-con-reducer-plantilla.js",
+          "pruebas": "ejercicios/contador-con-reducer-pruebas.json"
+        },
+        {
+          "id": "c3-e2",
+          "titulo": "Estado con dos campos",
+          "enunciado": "ejercicios/estado-con-dos-campos-enunciado.md",
+          "solucion": "ejercicios/estado-con-dos-campos-solucion.md",
+          "pistas": [
+            "ejercicios/estado-con-dos-campos-pista-1.md",
+            "ejercicios/estado-con-dos-campos-pista-2.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/estado-con-dos-campos-plantilla.js",
+          "pruebas": "ejercicios/estado-con-dos-campos-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c3-q1",
+          "tipo": "unica",
+          "pregunta": "¿Qué es un reducer?",
+          "opciones": [
+            "Una función (estado, acción) que devuelve el nuevo estado",
+            "Una variable global accesible desde cualquier parte",
+            "Un componente que solo muestra texto",
+            "Una lista de efectos secundarios"
+          ],
+          "respuesta": 0,
+          "explicacion": "El reducer concentra la lógica de cambio: recibe el estado actual y una acción, y calcula el siguiente estado."
+        },
+        {
+          "id": "c3-q2",
+          "tipo": "vf",
+          "pregunta": "En React no se modifica el estado directamente; se calcula un valor nuevo y se guarda.",
+          "respuesta": true,
+          "explicacion": "Mutar el estado impide que React detecte el cambio. Se crea un objeto o array nuevo."
+        },
+        {
+          "id": "c3-q3",
+          "tipo": "unica",
+          "pregunta": "¿Qué imprime este código?",
+          "codigo": "function reducer(estado, accion) {\n  if (accion.tipo === \"sumar\") return estado + accion.valor;\n  return estado;\n}\nconsole.log(reducer(2, { tipo: \"sumar\", valor: 3 }));",
+          "opciones": [
+            "2",
+            "3",
+            "5",
+            "undefined"
+          ],
+          "respuesta": 2,
+          "explicacion": "La acción coincide con sumar: 2 + 3 = 5. Si el tipo no coincide, el reducer devuelve el estado sin cambiar."
+        },
+        {
+          "id": "c3-q4",
+          "tipo": "multiple",
+          "pregunta": "¿Cuáles son acciones típicas de un contador con reducer? (marca todos los correctos)",
+          "opciones": [
+            "incrementar",
+            "restar",
+            "poner el valor directo",
+            "borrar el navegador"
+          ],
+          "respuestas": [
+            0,
+            1,
+            2
+          ],
+          "explicacion": "Las acciones describen intenciones de la interfaz. Borrar el navegador no es una acción de estado."
+        },
+        {
+          "id": "c3-q5",
+          "tipo": "unica",
+          "pregunta": "Con estado inicial 0 y acciones incrementar, incrementar, restar, ¿cuál es el valor final?",
+          "opciones": [
+            "0",
+            "1",
+            "2",
+            "3"
+          ],
+          "respuesta": 1,
+          "explicacion": "0 → 1 → 2 → 1. Las acciones se aplican en orden, una tras otra."
+        },
+        {
+          "id": "c3-q6",
+          "tipo": "texto",
+          "pregunta": "¿Cómo se llama el hook de React que recibe un reducer? (sin paréntesis)",
+          "aceptadas": [
+            "useReducer"
+          ],
+          "explicacion": "useReducer entrega el estado actual y una función para despachar acciones, como dispatch(accion)."
+        },
+        {
+          "id": "c3-q7",
+          "tipo": "unica",
+          "pregunta": "¿Qué imprime este código?",
+          "codigo": "const estado = { n: 1 };\nconst nuevo = { ...estado, n: estado.n + 1 };\nconsole.log(estado.n, nuevo.n);",
+          "opciones": [
+            "1 2",
+            "2 2",
+            "2 1",
+            "Error en tiempo de ejecución"
+          ],
+          "respuesta": 0,
+          "explicacion": "El spread crea un objeto nuevo: el original sigue con n = 1 y el nuevo queda con n = 2."
+        },
+        {
+          "id": "c3-q8",
+          "tipo": "vf",
+          "pregunta": "Un reducer es una función pura: con las mismas acciones, en el mismo orden, produce siempre el mismo estado final.",
+          "respuesta": true,
+          "explicacion": "Por eso un reducer no lee el reloj, no hace peticiones y no modifica lo que recibe: solo calcula el siguiente estado."
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "titulo": "4. Listas, keys e inmutabilidad",
+      "descripcion": "Renderizar arrays con map, identificar cada elemento con key y actualizar listas sin mutarlas.",
+      "archivo": "capitulos/04-listas-keys.md",
+      "tags": [
+        "listas",
+        "keys",
+        "map",
+        "inmutabilidad"
+      ],
+      "minutos": 25,
+      "aprobacion": 70,
+      "ejercicios": [
+        {
+          "id": "c4-e1",
+          "titulo": "Lista con claves",
+          "enunciado": "ejercicios/lista-con-claves-enunciado.md",
+          "solucion": "ejercicios/lista-con-claves-solucion.md",
+          "pistas": [
+            "ejercicios/lista-con-claves-pista-1.md",
+            "ejercicios/lista-con-claves-pista-2.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/lista-con-claves-plantilla.js",
+          "pruebas": "ejercicios/lista-con-claves-pruebas.json"
+        },
+        {
+          "id": "c4-e2",
+          "titulo": "Carrito sin mutar",
+          "enunciado": "ejercicios/carrito-sin-mutar-enunciado.md",
+          "solucion": "ejercicios/carrito-sin-mutar-solucion.md",
+          "pistas": [
+            "ejercicios/carrito-sin-mutar-pista-1.md",
+            "ejercicios/carrito-sin-mutar-pista-2.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/carrito-sin-mutar-plantilla.js",
+          "pruebas": "ejercicios/carrito-sin-mutar-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c4-q1",
+          "tipo": "unica",
+          "pregunta": "¿Para qué sirve la prop key en una lista de elementos?",
+          "opciones": [
+            "Para identificar cada elemento entre un render y el siguiente",
+            "Para dar color al texto",
+            "Para ordenar la lista alfabéticamente",
+            "Solo es necesaria en HTML, no en React"
+          ],
+          "respuesta": 0,
+          "explicacion": "Con key, React sabe qué elemento cambió, qué se movió y qué se eliminó sin volver a pintarlo todo."
+        },
+        {
+          "id": "c4-q2",
+          "tipo": "vf",
+          "pregunta": "Modificar un array con push() y reutilizarlo después puede impedir que React detecte el cambio.",
+          "respuesta": true,
+          "explicacion": "push modifica el mismo array. React compara referencias: si no cambia, no redibuja."
+        },
+        {
+          "id": "c4-q3",
+          "tipo": "unica",
+          "pregunta": "¿Qué imprime este código?",
+          "codigo": "const nums = [1, 2, 3];\nconst dobles = nums.map((n) => n * 2);\nconsole.log(nums[0], dobles[0]);",
+          "opciones": [
+            "1 2",
+            "2 2",
+            "1 1",
+            "Error en tiempo de ejecución"
+          ],
+          "respuesta": 0,
+          "explicacion": "map devuelve un array nuevo. El original nums sigue intacto: su primer elemento es 1."
+        },
+        {
+          "id": "c4-q4",
+          "tipo": "multiple",
+          "pregunta": "¿Qué métodos de array devuelven un array nuevo sin tocar el original? (marca todos los correctos)",
+          "opciones": [
+            "map",
+            "filter",
+            "slice",
+            "push"
+          ],
+          "respuestas": [
+            0,
+            1,
+            2
+          ],
+          "explicacion": "map, filter y slice crean un array nuevo. push modifica el array sobre el que se llama."
+        },
+        {
+          "id": "c4-q5",
+          "tipo": "texto",
+          "pregunta": "¿Qué método de array elimina elementos sin mutar el original? (solo el nombre)",
+          "aceptadas": [
+            "filter",
+            "filter()"
+          ],
+          "explicacion": "filter crea un array nuevo con los elementos que pasan la condición; el original queda igual."
+        },
+        {
+          "id": "c4-q6",
+          "tipo": "unica",
+          "pregunta": "¿Qué imprime este código?",
+          "codigo": "const lista = [3, 1, 2];\nconst ordenada = lista.slice().sort((a, b) => a - b);\nconsole.log(lista.join(\",\"), ordenada.join(\",\"));",
+          "opciones": [
+            "3,1,2 1,2,3",
+            "1,2,3 1,2,3",
+            "3,1,2 3,1,2",
+            "Error en tiempo de ejecución"
+          ],
+          "respuesta": 0,
+          "explicacion": "sort muta el array sobre el que se llama. Al hacerlo sobre slice(), la copia se ordena y lista conserva su orden original."
+        },
+        {
+          "id": "c4-q7",
+          "tipo": "multiple",
+          "pregunta": "¿Qué puede pasar si repites la misma key en una lista? (marca todos los correctos)",
+          "opciones": [
+            "React puede pintar los datos en la fila equivocada al reordenar",
+            "La lista deja de dibujarse por completo",
+            "Se pierde la identidad de los elementos entre renders",
+            "React avisa por consola en modo desarrollo"
+          ],
+          "respuestas": [
+            0,
+            2,
+            3
+          ],
+          "explicacion": "Con keys repetidas la identidad es ambigua: hay errores visibles al reordenar, pérdida de correspondencia y advertencia en desarrollo. La lista sigue dibujándose."
+        },
+        {
+          "id": "c4-q8",
+          "tipo": "texto",
+          "pregunta": "¿Qué método transforma cada elemento de un array y devuelve un array nuevo? (solo el nombre)",
+          "aceptadas": [
+            "map",
+            "map()"
+          ],
+          "explicacion": "map recorre el array original y devuelve otro con los resultados, sin tocar el primero."
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "titulo": "5. Hooks: reglas y useState",
+      "descripcion": "Reglas de los hooks, useState a fondo, actualizaciones funcionales y estado derivado.",
+      "archivo": "capitulos/05-hooks-usestate.md",
+      "tags": [
+        "hooks",
+        "useState",
+        "estado",
+        "reglas"
+      ],
+      "minutos": 25,
+      "aprobacion": 70,
+      "evaluacionRequerida": true,
+      "ejercicios": [
+        {
+          "id": "c5-e1",
+          "titulo": "Contador con hooks",
+          "enunciado": "ejercicios/contador-con-hooks-enunciado.md",
+          "solucion": "ejercicios/contador-con-hooks-solucion.md",
+          "pistas": [
+            "ejercicios/contador-con-hooks-pista-1.md",
+            "ejercicios/contador-con-hooks-pista-2.md",
+            "ejercicios/contador-con-hooks-pista-3.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/contador-con-hooks-plantilla.js",
+          "pruebas": "ejercicios/contador-con-hooks-pruebas.json"
+        },
+        {
+          "id": "c5-e2",
+          "titulo": "Estado con objeto",
+          "enunciado": "ejercicios/estado-con-objeto-enunciado.md",
+          "solucion": "ejercicios/estado-con-objeto-solucion.md",
+          "pistas": [
+            "ejercicios/estado-con-objeto-pista-1.md",
+            "ejercicios/estado-con-objeto-pista-2.md",
+            "ejercicios/estado-con-objeto-pista-3.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/estado-con-objeto-plantilla.js",
+          "pruebas": "ejercicios/estado-con-objeto-pruebas.json"
+        },
+        {
+          "id": "c5-e3",
+          "titulo": "Resumen de tareas",
+          "enunciado": "ejercicios/resumen-de-tareas-enunciado.md",
+          "solucion": "ejercicios/resumen-de-tareas-solucion.md",
+          "pistas": [
+            "ejercicios/resumen-de-tareas-pista-1.md",
+            "ejercicios/resumen-de-tareas-pista-2.md",
+            "ejercicios/resumen-de-tareas-pista-3.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/resumen-de-tareas-plantilla.js",
+          "pruebas": "ejercicios/resumen-de-tareas-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c5-q1",
+          "tipo": "unica",
+          "pregunta": "¿Qué devuelve la llamada a useState(0)?",
+          "opciones": [
+            "Un par: el valor actual y la función de actualización",
+            "El componente completo con sus props",
+            "Una cadena de texto con el valor",
+            "La lista de efectos pendientes"
+          ],
+          "respuesta": 0,
+          "explicacion": "useState devuelve un array con dos posiciones: el valor guardado y la función para calcular el siguiente valor."
+        },
+        {
+          "id": "c5-q2",
+          "tipo": "vf",
+          "pregunta": "Un hook puede ir dentro de un if cuando el componente a veces no necesita estado.",
+          "respuesta": false,
+          "explicacion": "Los hooks van siempre en el mismo orden y fuera de condicionales. Si el orden cambia, React lee la memoria equivocada."
+        },
+        {
+          "id": "c5-q3",
+          "tipo": "unica",
+          "pregunta": "¿Qué imprime este código?",
+          "codigo": "const [n, setN] = useState(5);\nsetN((x) => x + 1);\nsetN((x) => x + 1);\nconsole.log(n);",
+          "opciones": [
+            "5",
+            "6",
+            "7",
+            "Error en tiempo de ejecución"
+          ],
+          "respuesta": 0,
+          "explicacion": "n es el valor del render actual. setN programa el siguiente render; dentro del mismo render n sigue valiendo 5."
+        },
+        {
+          "id": "c5-q4",
+          "tipo": "multiple",
+          "pregunta": "¿Cuáles son reglas de los hooks? (marca todos los correctos)",
+          "opciones": [
+            "Llamarlos siempre en el mismo orden",
+            "No ponerlos dentro de un if",
+            "No ponerlos dentro de un bucle",
+            "Pasarles el nombre del componente como primer argumento"
+          ],
+          "respuestas": [
+            0,
+            1,
+            2
+          ],
+          "explicacion": "Las tres primeras son reglas obligatorias. Los hooks reciben sus datos por argumentos, no el nombre del componente."
+        },
+        {
+          "id": "c5-q5",
+          "tipo": "texto",
+          "pregunta": "¿Cómo se llama el hook que guarda estado y devuelve un par [valor, funcionDeActualizacion]? (solo el nombre, sin paréntesis)",
+          "aceptadas": [
+            "useState",
+            "use state"
+          ],
+          "explicacion": "useState es el hook del estado. Empieza por use porque es un hook de React."
+        },
+        {
+          "id": "c5-q6",
+          "tipo": "unica",
+          "pregunta": "¿Qué imprime este código?",
+          "codigo": "const e = { n: 2, veces: 3 };\nconst nuevo = { ...e, n: e.n + 1 };\nconsole.log(nuevo.n, nuevo.veces);",
+          "opciones": [
+            "3 3",
+            "2 3",
+            "3 0",
+            "Error en tiempo de ejecución"
+          ],
+          "respuesta": 0,
+          "explicacion": "La copia superficial conserva los campos que no se mencionan. veces sigue valiendo 3 y n pasa a valer 3."
+        },
+        {
+          "id": "c5-q7",
+          "tipo": "vf",
+          "pregunta": "El número de tareas hechas es un valor derivado: se calcula en cada render y no se guarda en el estado.",
+          "respuesta": true,
+          "explicacion": "Guardarlo crearía dos datos que pueden desincronizarse. Se calcula con filter mientras se renderiza."
+        },
+        {
+          "id": "c5-q8",
+          "tipo": "multiple",
+          "pregunta": "En el andamiaje de los ejercicios, ¿qué hace ejecutar(Componente, props, eventos)? (marca todos los correctos)",
+          "opciones": [
+            "Imprime una línea por cada render",
+            "Convierte las líneas de eventos con parsearEventos",
+            "Imprime el render inicial antes de procesar los eventos",
+            "Ordena las props alfabéticamente"
+          ],
+          "respuestas": [
+            0,
+            2
+          ],
+          "explicacion": "ejecutar imprime el HTML de cada render, empezando por el inicial y siguiendo tras cada evento. Convertir las líneas es tarea de parsearEventos."
+        }
+      ]
+    },
+    {
+      "id": "c6",
+      "titulo": "6. useEffect: montaje, dependencias y limpieza",
+      "descripcion": "Efectos secundarios: cuándo se ejecutan, cómo se comparan las dependencias y para qué sirve la función de limpieza.",
+      "archivo": "capitulos/06-useeffect.md",
+      "tags": [
+        "useEffect",
+        "efectos",
+        "dependencias",
+        "limpieza"
+      ],
+      "minutos": 25,
+      "aprobacion": 70,
+      "evaluacionRequerida": true,
+      "ejercicios": [
+        {
+          "id": "c6-e1",
+          "titulo": "Efecto de montaje",
+          "enunciado": "ejercicios/efecto-de-montaje-enunciado.md",
+          "solucion": "ejercicios/efecto-de-montaje-solucion.md",
+          "pistas": [
+            "ejercicios/efecto-de-montaje-pista-1.md",
+            "ejercicios/efecto-de-montaje-pista-2.md",
+            "ejercicios/efecto-de-montaje-pista-3.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/efecto-de-montaje-plantilla.js",
+          "pruebas": "ejercicios/efecto-de-montaje-pruebas.json"
+        },
+        {
+          "id": "c6-e2",
+          "titulo": "Efecto con dependencias",
+          "enunciado": "ejercicios/efecto-con-dependencias-enunciado.md",
+          "solucion": "ejercicios/efecto-con-dependencias-solucion.md",
+          "pistas": [
+            "ejercicios/efecto-con-dependencias-pista-1.md",
+            "ejercicios/efecto-con-dependencias-pista-2.md",
+            "ejercicios/efecto-con-dependencias-pista-3.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/efecto-con-dependencias-plantilla.js",
+          "pruebas": "ejercicios/efecto-con-dependencias-pruebas.json"
+        },
+        {
+          "id": "c6-e3",
+          "titulo": "Suscripcion con limpieza",
+          "enunciado": "ejercicios/suscripcion-con-limpieza-enunciado.md",
+          "solucion": "ejercicios/suscripcion-con-limpieza-solucion.md",
+          "pistas": [
+            "ejercicios/suscripcion-con-limpieza-pista-1.md",
+            "ejercicios/suscripcion-con-limpieza-pista-2.md",
+            "ejercicios/suscripcion-con-limpieza-pista-3.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/suscripcion-con-limpieza-plantilla.js",
+          "pruebas": "ejercicios/suscripcion-con-limpieza-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c6-q1",
+          "tipo": "unica",
+          "pregunta": "¿Cuándo se ejecuta un efecto con una lista de dependencias vacía?",
+          "opciones": [
+            "Solo la primera vez, al montar el componente",
+            "En cada render del componente",
+            "Solo cuando el estado cambia a un número negativo",
+            "Nunca: una lista vacía desactiva el efecto"
+          ],
+          "respuesta": 0,
+          "explicacion": "La lista vacía no cambia nunca, así que el efecto corre una sola vez, después del primer render."
+        },
+        {
+          "id": "c6-q2",
+          "tipo": "vf",
+          "pregunta": "Un efecto con la lista [n] corre al montar y después cada vez que n cambia.",
+          "respuesta": true,
+          "explicacion": "Al montar no hay valor anterior, así que corre. Después corre solo si n cambia, comparando con Object.is."
+        },
+        {
+          "id": "c6-q3",
+          "tipo": "unica",
+          "pregunta": "¿Cuántas veces se imprime «montado» con este código y dos clics en el botón?",
+          "codigo": "useEffect(() => {\n  console.log(\"montado\");\n}, []);",
+          "opciones": [
+            "1",
+            "2",
+            "3",
+            "ninguna"
+          ],
+          "respuesta": 0,
+          "explicacion": "La lista de dependencias está vacía: el efecto corre solo al montar, aunque el estado cambie después."
+        },
+        {
+          "id": "c6-q4",
+          "tipo": "multiple",
+          "pregunta": "¿Para qué sirve la función de limpieza de un efecto? (marca todos los correctos)",
+          "opciones": [
+            "Deshacer lo que hizo el efecto, como quitar un temporizador",
+            "Cancelar una suscripción antes de la siguiente",
+            "Calcular el valor derivado que se muestra en el render",
+            "Ejecutarse antes de volver a correr el efecto"
+          ],
+          "respuestas": [
+            0,
+            1,
+            3
+          ],
+          "explicacion": "La limpieza deshace el trabajo anterior y corre antes del siguiente efecto. Los valores derivados se calculan en el render, no en el efecto."
+        },
+        {
+          "id": "c6-q5",
+          "tipo": "texto",
+          "pregunta": "¿Cómo se llama el hook que ejecuta código después del render? (solo el nombre, sin paréntesis)",
+          "aceptadas": [
+            "useEffect",
+            "use effect"
+          ],
+          "explicacion": "useEffect es el hook de los efectos. Su primer argumento es la función y el segundo la lista de dependencias."
+        },
+        {
+          "id": "c6-q6",
+          "tipo": "unica",
+          "pregunta": "¿Qué imprime este componente en su primera ejecución, sin eventos?",
+          "codigo": "function Contador() {\n  const [n] = useState(0);\n  useEffect(() => { console.log(\"valor: \" + n); }, [n]);\n  return h(\"p\", {}, n);\n}",
+          "opciones": [
+            "Primero el HTML y después valor: 0",
+            "Primero valor: 0 y después el HTML",
+            "Solo el HTML, porque el efecto no corre sin clics",
+            "Nada: el componente no tiene botón"
+          ],
+          "respuesta": 0,
+          "explicacion": "El andamiaje imprime el HTML del render y después los console.log de los efectos de ese render."
+        },
+        {
+          "id": "c6-q7",
+          "tipo": "vf",
+          "pregunta": "Calcular el resumen de tareas dentro de un useEffect es la forma recomendada en React.",
+          "respuesta": false,
+          "explicacion": "El resumen es un valor derivado: se calcula en el render. Los efectos son para sincronizar con algo fuera de React."
+        },
+        {
+          "id": "c6-q8",
+          "tipo": "multiple",
+          "pregunta": "¿Cuáles son formas válidas de lista de dependencias? (marca todos los correctos)",
+          "opciones": [
+            "[] para que corra solo al montar",
+            "[a, b] para que corra cuando a o b cambian",
+            "Sin lista para que corra en cada render",
+            "Con un número, para que corra esa cantidad de veces"
+          ],
+          "respuestas": [
+            0,
+            1,
+            2
+          ],
+          "explicacion": "Esas son las tres formas. Una lista de dependencias es un array: un número no sirve como lista."
+        }
+      ]
+    },
+    {
+      "id": "c7",
+      "titulo": "7. useContext: estado compartido",
+      "descripcion": "Contexto: llevar datos por todo el árbol sin encadenar props, con createContext, Provider y useContext.",
+      "archivo": "capitulos/07-usecontext.md",
+      "tags": [
+        "useContext",
+        "contexto",
+        "provider"
+      ],
+      "minutos": 20,
+      "aprobacion": 70,
+      "evaluacionRequerida": true,
+      "ejercicios": [
+        {
+          "id": "c7-e1",
+          "titulo": "Tema con contexto",
+          "enunciado": "ejercicios/tema-con-contexto-enunciado.md",
+          "solucion": "ejercicios/tema-con-contexto-solucion.md",
+          "pistas": [
+            "ejercicios/tema-con-contexto-pista-1.md",
+            "ejercicios/tema-con-contexto-pista-2.md",
+            "ejercicios/tema-con-contexto-pista-3.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/tema-con-contexto-plantilla.js",
+          "pruebas": "ejercicios/tema-con-contexto-pruebas.json"
+        },
+        {
+          "id": "c7-e2",
+          "titulo": "Carrito con contexto",
+          "enunciado": "ejercicios/carrito-con-contexto-enunciado.md",
+          "solucion": "ejercicios/carrito-con-contexto-solucion.md",
+          "pistas": [
+            "ejercicios/carrito-con-contexto-pista-1.md",
+            "ejercicios/carrito-con-contexto-pista-2.md",
+            "ejercicios/carrito-con-contexto-pista-3.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/carrito-con-contexto-plantilla.js",
+          "pruebas": "ejercicios/carrito-con-contexto-pruebas.json"
+        },
+        {
+          "id": "c7-e3",
+          "titulo": "Contador con proveedor",
+          "enunciado": "ejercicios/contador-con-proveedor-enunciado.md",
+          "solucion": "ejercicios/contador-con-proveedor-solucion.md",
+          "pistas": [
+            "ejercicios/contador-con-proveedor-pista-1.md",
+            "ejercicios/contador-con-proveedor-pista-2.md",
+            "ejercicios/contador-con-proveedor-pista-3.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/contador-con-proveedor-plantilla.js",
+          "pruebas": "ejercicios/contador-con-proveedor-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c7-q1",
+          "tipo": "unica",
+          "pregunta": "¿Qué problema resuelve el contexto en React?",
+          "opciones": [
+            "El prop drilling: arrastrar props por componentes que no las usan",
+            "El orden de renderizado de los componentes",
+            "La conversión de JSX a objetos",
+            "El guardado de archivos en disco"
+          ],
+          "respuesta": 0,
+          "explicacion": "El contexto elimina el traspaso intermedio: el dato llega al consumidor sin que los niveles del medio lo reenvíen como props."
+        },
+        {
+          "id": "c7-q2",
+          "tipo": "vf",
+          "pregunta": "En el andamiaje de este curso, el Provider del contexto es transparente: no añade ninguna etiqueta al HTML.",
+          "respuesta": true,
+          "explicacion": "El Provider se expande como un Fragmento: solo publica el valor en el contexto, no crea un elemento visible."
+        },
+        {
+          "id": "c7-q3",
+          "tipo": "unica",
+          "pregunta": "¿Qué imprime este código?",
+          "codigo": "const Tema = createContext(\"claro\");\nfunction App() {\n  return h(\"p\", {}, useContext(Tema));\n}\nconsole.log(renderToString(h(App, {})));",
+          "opciones": [
+            "<p>claro</p>",
+            "<p></p>",
+            "Error: useContext se usa fuera de un componente",
+            "<p>undefined</p>"
+          ],
+          "respuesta": 0,
+          "explicacion": "Sin ningún Provider, useContext devuelve el valor por defecto pasado a createContext, que es \"claro\"."
+        },
+        {
+          "id": "c7-q4",
+          "tipo": "multiple",
+          "pregunta": "¿Para qué datos conviene usar contexto? (marca todos los correctos)",
+          "opciones": [
+            "El tema visual que necesita toda la app",
+            "El texto de un input controlado de un solo componente",
+            "El idioma de la interfaz",
+            "La prop que un padre pasa directamente a su único hijo"
+          ],
+          "respuestas": [
+            0,
+            2
+          ],
+          "explicacion": "El contexto sirve para datos que muchos componentes necesitan, como el tema o el idioma. Un input de un solo componente o una prop directa se resuelven con props y estado local."
+        },
+        {
+          "id": "c7-q5",
+          "tipo": "texto",
+          "pregunta": "¿Cómo se llama el hook que lee el valor de un contexto? (solo el nombre)",
+          "aceptadas": [
+            "useContext",
+            "useContext()"
+          ],
+          "explicacion": "useContext(Tema) devuelve el valor del Provider más cercano, o el valor por defecto si no hay Provider."
+        },
+        {
+          "id": "c7-q6",
+          "tipo": "unica",
+          "pregunta": "¿Qué imprime este código con Providers anidados del mismo contexto?",
+          "codigo": "const Tema = createContext(\"claro\");\nfunction Hijo() {\n  return h(\"span\", {}, useContext(Tema));\n}\nconst arbol = h(\n  Tema.Provider,\n  { value: \"oscuro\" },\n  h(Tema.Provider, { value: \"verde\" }, h(Hijo, {}))\n);\nconsole.log(renderToString(arbol));",
+          "opciones": [
+            "<span>verde</span>",
+            "<span>oscuro</span>",
+            "<span>claro</span>",
+            "<span></span>"
+          ],
+          "respuesta": 0,
+          "explicacion": "Con Providers anidados gana el más cercano al consumidor, que es el de \"verde\"."
+        },
+        {
+          "id": "c7-q7",
+          "tipo": "vf",
+          "pregunta": "El contexto no crea estado por sí mismo: el estado vive en el componente que publica el Provider y se actualiza con useState.",
+          "respuesta": true,
+          "explicacion": "El contexto solo transporta un valor. Quien lo publica guarda el dato en su estado y lo actualiza con setState; el Provider recibe el valor nuevo."
+        },
+        {
+          "id": "c7-q8",
+          "tipo": "unica",
+          "pregunta": "¿Qué lee un consumidor si ningún componente lo envuelve en el Provider del contexto?",
+          "opciones": [
+            "El valor por defecto que se pasó a createContext",
+            "null, siempre",
+            "Un objeto vacío {}",
+            "El estado del componente raíz"
+          ],
+          "respuesta": 0,
+          "explicacion": "Sin Provider arriba, useContext devuelve el valor por defecto del contexto."
+        }
+      ]
+    },
+    {
+      "id": "c8",
+      "titulo": "8. useMemo, useCallback y useRef",
+      "descripcion": "Memorización de valores y funciones, referencias mutables y cómo evitar cálculos repetidos.",
+      "archivo": "capitulos/08-memo-ref.md",
+      "tags": [
+        "useMemo",
+        "useCallback",
+        "useRef",
+        "rendimiento"
+      ],
+      "minutos": 25,
+      "aprobacion": 70,
+      "evaluacionRequerida": true,
+      "ejercicios": [
+        {
+          "id": "c8-e1",
+          "titulo": "Calculo memoizado",
+          "enunciado": "ejercicios/calculo-memoizado-enunciado.md",
+          "solucion": "ejercicios/calculo-memoizado-solucion.md",
+          "pistas": [
+            "ejercicios/calculo-memoizado-pista-1.md",
+            "ejercicios/calculo-memoizado-pista-2.md",
+            "ejercicios/calculo-memoizado-pista-3.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/calculo-memoizado-plantilla.js",
+          "pruebas": "ejercicios/calculo-memoizado-pruebas.json"
+        },
+        {
+          "id": "c8-e2",
+          "titulo": "Valor anterior con ref",
+          "enunciado": "ejercicios/valor-anterior-con-ref-enunciado.md",
+          "solucion": "ejercicios/valor-anterior-con-ref-solucion.md",
+          "pistas": [
+            "ejercicios/valor-anterior-con-ref-pista-1.md",
+            "ejercicios/valor-anterior-con-ref-pista-2.md",
+            "ejercicios/valor-anterior-con-ref-pista-3.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/valor-anterior-con-ref-plantilla.js",
+          "pruebas": "ejercicios/valor-anterior-con-ref-pruebas.json"
+        },
+        {
+          "id": "c8-e3",
+          "titulo": "Funcion estable con callback",
+          "enunciado": "ejercicios/funcion-estable-con-callback-enunciado.md",
+          "solucion": "ejercicios/funcion-estable-con-callback-solucion.md",
+          "pistas": [
+            "ejercicios/funcion-estable-con-callback-pista-1.md",
+            "ejercicios/funcion-estable-con-callback-pista-2.md",
+            "ejercicios/funcion-estable-con-callback-pista-3.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/funcion-estable-con-callback-plantilla.js",
+          "pruebas": "ejercicios/funcion-estable-con-callback-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c8-q1",
+          "tipo": "unica",
+          "pregunta": "¿Qué devuelve useMemo(() => valor, deps)?",
+          "opciones": [
+            "El valor guardado, recalculado solo cuando una de las deps cambia",
+            "Una función que hay que llamar para obtener el valor",
+            "El valor, recalculado en cada render",
+            "Un array con el valor y las deps"
+          ],
+          "respuesta": 0,
+          "explicacion": "useMemo guarda el resultado y lo reutiliza mientras las deps no cambien; no devuelve una función."
+        },
+        {
+          "id": "c8-q2",
+          "tipo": "vf",
+          "pregunta": "Un useCallback con deps vacías se crea una sola vez al montar y puede quedar con datos viejos si lee variables que luego cambian.",
+          "respuesta": true,
+          "explicacion": "Con deps [] la función se guarda al montar. Si lee una variable que cambia después, sigue viendo el valor antiguo: es una closure obsoleta."
+        },
+        {
+          "id": "c8-q3",
+          "tipo": "unica",
+          "pregunta": "¿Qué ocurre tras dos clics consecutivos en el botón de este componente?",
+          "codigo": "function Contador() {\n  const [n, setN] = useState(0);\n  const sumar = useCallback(() => setN(n + 1), []);\n  return h(\"button\", { onClick: sumar }, String(n));\n}\n// render inicial y dos clics sobre el botón",
+          "opciones": [
+            "Muestra 1 y no sube más: la función siempre ve n = 0",
+            "Muestra 2",
+            "Muestra 1 y después vuelve a 0",
+            "Error en tiempo de ejecución"
+          ],
+          "respuesta": 0,
+          "explicacion": "Con deps [] la función cierra sobre n = 0. El primer clic pone 1; los siguientes calculan 0 + 1 otra vez y el estado no avanza: es una closure obsoleta."
+        },
+        {
+          "id": "c8-q4",
+          "tipo": "multiple",
+          "pregunta": "Sobre useRef, ¿qué afirmaciones son correctas? (marca todas las correctas)",
+          "opciones": [
+            "Su objeto { current } persiste entre renders",
+            "Cambiar ref.current provoca un redibujado del componente",
+            "Sirve para guardar el valor anterior sin renders extra",
+            "useRef(inicial) devuelve el inicial, no un objeto"
+          ],
+          "respuestas": [
+            0,
+            2
+          ],
+          "explicacion": "useRef devuelve un objeto { current } estable que no dispara renders al cambiarlo; por eso sirve para el valor anterior. La opción sobre devolver el inicial es falsa."
+        },
+        {
+          "id": "c8-q5",
+          "tipo": "texto",
+          "pregunta": "¿Cómo se llama el hook que guarda la identidad de una función entre renders? (solo el nombre)",
+          "aceptadas": [
+            "useCallback",
+            "useCallback()"
+          ],
+          "explicacion": "useCallback guarda la función con sus deps; mientras no cambien, es la misma referencia."
+        },
+        {
+          "id": "c8-q6",
+          "tipo": "unica",
+          "pregunta": "¿Qué imprime la segunda vez que se ejecuta este componente?",
+          "codigo": "function Contador() {\n  const [n, setN] = useState(1);\n  const ref = useRef(0);\n  const anterior = ref.current;\n  ref.current = n;\n  return h(\"p\", {}, anterior + \"->\" + n);\n}\n// render inicial y después un clic que hace setN(n + 1)",
+          "opciones": [
+            "<p>1->2</p>",
+            "<p>0->1</p>",
+            "<p>2->2</p>",
+            "<p>0->2</p>"
+          ],
+          "respuesta": 0,
+          "explicacion": "En el primer render ref.current vale 0 y se guarda 1. En el segundo se lee 1 como anterior y se escribe 2: sale 1->2."
+        },
+        {
+          "id": "c8-q7",
+          "tipo": "vf",
+          "pregunta": "React.memo compara las props del componente superficialmente y omite el render si no cambian.",
+          "respuesta": true,
+          "explicacion": "React.memo hace una comparación superficial de las props. Si todas son iguales (Object.is), no vuelve a ejecutar el componente."
+        },
+        {
+          "id": "c8-q8",
+          "tipo": "multiple",
+          "pregunta": "¿Cuándo conviene memorizar? (marca todos los correctos)",
+          "opciones": [
+            "Cuando el cálculo es caro y depende de pocas entradas",
+            "Siempre, en todos los componentes, por defecto",
+            "Cuando la función se pasa a un componente memorizado y cambia de identidad sin necesidad",
+            "Cuando el texto de una etiqueta es un literal fijo"
+          ],
+          "respuestas": [
+            0,
+            2
+          ],
+          "explicacion": "Memorizar cuesta comparaciones: se hace cuando hay un problema medible. Un literal fijo no se recalcula y no necesita memo."
+        }
+      ]
+    },
+    {
+      "id": "c9",
+      "titulo": "9. Hooks personalizados",
+      "descripcion": "Extraer lógica con estado en tus propios hooks: useContador, useLista y useCampo.",
+      "archivo": "capitulos/09-hooks-personalizados.md",
+      "tags": [
+        "hooks personalizados",
+        "useContador",
+        "reutilización"
+      ],
+      "minutos": 20,
+      "aprobacion": 70,
+      "evaluacionRequerida": true,
+      "ejercicios": [
+        {
+          "id": "c9-e1",
+          "titulo": "Hook useContador",
+          "enunciado": "ejercicios/hook-use-contador-enunciado.md",
+          "solucion": "ejercicios/hook-use-contador-solucion.md",
+          "pistas": [
+            "ejercicios/hook-use-contador-pista-1.md",
+            "ejercicios/hook-use-contador-pista-2.md",
+            "ejercicios/hook-use-contador-pista-3.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/hook-use-contador-plantilla.js",
+          "pruebas": "ejercicios/hook-use-contador-pruebas.json"
+        },
+        {
+          "id": "c9-e2",
+          "titulo": "Hook useLista",
+          "enunciado": "ejercicios/hook-use-lista-enunciado.md",
+          "solucion": "ejercicios/hook-use-lista-solucion.md",
+          "pistas": [
+            "ejercicios/hook-use-lista-pista-1.md",
+            "ejercicios/hook-use-lista-pista-2.md",
+            "ejercicios/hook-use-lista-pista-3.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/hook-use-lista-plantilla.js",
+          "pruebas": "ejercicios/hook-use-lista-pruebas.json"
+        },
+        {
+          "id": "c9-e3",
+          "titulo": "Hook useCampo",
+          "enunciado": "ejercicios/hook-use-campo-enunciado.md",
+          "solucion": "ejercicios/hook-use-campo-solucion.md",
+          "pistas": [
+            "ejercicios/hook-use-campo-pista-1.md",
+            "ejercicios/hook-use-campo-pista-2.md",
+            "ejercicios/hook-use-campo-pista-3.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/hook-use-campo-plantilla.js",
+          "pruebas": "ejercicios/hook-use-campo-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c9-q1",
+          "tipo": "unica",
+          "pregunta": "¿Qué es un hook personalizado?",
+          "opciones": [
+            "Una función que usa otros hooks y reutiliza lógica con estado",
+            "Un componente que no devuelve JSX",
+            "Una función que solo puede vivir en index.js",
+            "Una librería externa que se instala con npm"
+          ],
+          "respuesta": 0,
+          "explicacion": "Un hook personalizado es una función tuya que llama a hooks de React. No es un componente ni un paquete."
+        },
+        {
+          "id": "c9-q2",
+          "tipo": "vf",
+          "pregunta": "Un hook personalizado debe empezar por «use» en su nombre para que React y las herramientas lo reconozcan.",
+          "respuesta": true,
+          "explicacion": "La convención use... marca que dentro hay hooks, y por eso se aplican a tu función las reglas de los hooks."
+        },
+        {
+          "id": "c9-q3",
+          "tipo": "unica",
+          "codigo": "function useContador(inicial) {\n  const [n, setN] = useState(inicial);\n  return { n, sumar: () => setN((x) => x + 1) };\n}\nfunction Contador() {\n  const { n } = useContador(1);\n  return h(\"p\", {}, n);\n}\nconsole.log(renderToString(h(Contador, {})));",
+          "pregunta": "¿Qué imprime este código con el mini React del curso?",
+          "opciones": [
+            "<p>1</p>",
+            "1",
+            "<Contador>1</Contador>",
+            "[object Object]"
+          ],
+          "respuesta": 0,
+          "explicacion": "El hook devuelve datos; el componente los usa dentro de un elemento h(\"p\", {}, n). renderToString pinta ese párrafo."
+        },
+        {
+          "id": "c9-q4",
+          "tipo": "multiple",
+          "pregunta": "¿Cuáles son reglas de los hooks, también de los personalizados? (marca todos los correctos)",
+          "opciones": [
+            "Se llaman siempre en el mismo orden en cada render",
+            "No se llaman dentro de un if, un for ni después de un return",
+            "Se pueden llamar en un bucle mientras el número de iteraciones no cambie",
+            "Solo valen en componentes; nunca dentro de otro hook personalizado"
+          ],
+          "respuestas": [
+            0,
+            1
+          ],
+          "explicacion": "El orden debe ser fijo y nada puede ser condicional. Los hooks personales sí se llaman dentro de otros hooks personales."
+        },
+        {
+          "id": "c9-q5",
+          "tipo": "texto",
+          "pregunta": "¿Qué palabra debe llevar al principio el nombre de un hook personalizado? (solo la palabra)",
+          "aceptadas": [
+            "use",
+            "use()"
+          ],
+          "explicacion": "La convención es nombrarlos useAlgo, por ejemplo useContador, useLista o useCampo."
+        },
+        {
+          "id": "c9-q6",
+          "tipo": "unica",
+          "codigo": "function Contador({ activo }) {\n  if (activo) {\n    const [n, setN] = useState(0);\n    return h(\"p\", {}, n);\n  }\n  return h(\"p\", {}, \"sin estado\");\n}",
+          "pregunta": "¿Por qué este componente viola las reglas de los hooks?",
+          "opciones": [
+            "El useState solo se ejecuta a veces: el orden de los hooks cambia entre renders",
+            "useState no puede usarse dentro de un componente con props",
+            "El componente necesita dos return para poder usar hooks",
+            "No hay ningún problema: el if no afecta a los hooks"
+          ],
+          "respuesta": 0,
+          "explicacion": "Los hooks deben llamarse siempre en el mismo orden. Un if puede saltarse el useState y React pierde la memoria de hooks."
+        },
+        {
+          "id": "c9-q7",
+          "tipo": "vf",
+          "pregunta": "Un hook personalizado devuelve JSX, por eso puede sustituir a un componente.",
+          "respuesta": false,
+          "explicacion": "El hook devuelve datos y funciones. El componente decide el JSX que los pinta."
+        },
+        {
+          "id": "c9-q8",
+          "tipo": "multiple",
+          "pregunta": "¿Qué gana un proyecto al extraer la lógica en hooks personalizados? (marca todos los correctos)",
+          "opciones": [
+            "Evita repetir useState y manejadores en varios componentes",
+            "Hace la lógica reutilizable y más fácil de probar por separado",
+            "Permite llamar a los hooks condicionalmente dentro del hook",
+            "Separa la lógica de estado de la decisión de cómo se pinta"
+          ],
+          "respuestas": [
+            0,
+            1,
+            3
+          ],
+          "explicacion": "La reutilización y la separación son el objetivo. Dentro del hook siguen prohibidas las llamadas condicionales."
+        }
+      ]
+    },
+    {
+      "id": "c10",
+      "titulo": "10. Formularios controlados",
+      "descripcion": "Inputs controlados, validación paso a paso y envío de formularios con estado en React.",
+      "archivo": "capitulos/10-formularios.md",
+      "tags": [
+        "formularios",
+        "inputs",
+        "validación",
+        "eventos"
+      ],
+      "minutos": 25,
+      "aprobacion": 70,
+      "evaluacionRequerida": true,
+      "ejercicios": [
+        {
+          "id": "c10-e1",
+          "titulo": "Formulario con validacion",
+          "enunciado": "ejercicios/formulario-con-validacion-enunciado.md",
+          "solucion": "ejercicios/formulario-con-validacion-solucion.md",
+          "pistas": [
+            "ejercicios/formulario-con-validacion-pista-1.md",
+            "ejercicios/formulario-con-validacion-pista-2.md",
+            "ejercicios/formulario-con-validacion-pista-3.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/formulario-con-validacion-plantilla.js",
+          "pruebas": "ejercicios/formulario-con-validacion-pruebas.json"
+        },
+        {
+          "id": "c10-e2",
+          "titulo": "Buscador con filtro",
+          "enunciado": "ejercicios/buscador-con-filtro-enunciado.md",
+          "solucion": "ejercicios/buscador-con-filtro-solucion.md",
+          "pistas": [
+            "ejercicios/buscador-con-filtro-pista-1.md",
+            "ejercicios/buscador-con-filtro-pista-2.md",
+            "ejercicios/buscador-con-filtro-pista-3.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/buscador-con-filtro-plantilla.js",
+          "pruebas": "ejercicios/buscador-con-filtro-pruebas.json"
+        },
+        {
+          "id": "c10-e3",
+          "titulo": "Encuesta con opciones",
+          "enunciado": "ejercicios/encuesta-con-opciones-enunciado.md",
+          "solucion": "ejercicios/encuesta-con-opciones-solucion.md",
+          "pistas": [
+            "ejercicios/encuesta-con-opciones-pista-1.md",
+            "ejercicios/encuesta-con-opciones-pista-2.md",
+            "ejercicios/encuesta-con-opciones-pista-3.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/encuesta-con-opciones-plantilla.js",
+          "pruebas": "ejercicios/encuesta-con-opciones-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c10-q1",
+          "tipo": "unica",
+          "pregunta": "En un input controlado, ¿de dónde sale el valor que se muestra en el input?",
+          "opciones": [
+            "Del estado del componente, pasado por la prop value",
+            "Del DOM, que lo guarda por su cuenta",
+            "De un atributo value escrito en el HTML estático",
+            "De una variable global compartida entre componentes"
+          ],
+          "respuesta": 0,
+          "explicacion": "El estado es la única fuente de verdad: value lo refleja y onChange lo actualiza en cada pulsación."
+        },
+        {
+          "id": "c10-q2",
+          "tipo": "vf",
+          "pregunta": "Si modificas un input directamente con document.getElementById, el cambio se conserva en el siguiente render de React.",
+          "respuesta": false,
+          "explicacion": "El render vuelve a pintar desde el estado. Lo escrito a mano en el DOM se pierde en el siguiente pintado."
+        },
+        {
+          "id": "c10-q3",
+          "tipo": "unica",
+          "codigo": "const [correo, setCorreo] = useState(\"ana@x\");\nconsole.log(renderToString(h(\"input\", { value: correo })));",
+          "pregunta": "¿Qué imprime este código con el mini React del curso?",
+          "opciones": [
+            "<input value=\"ana@x\"></input>",
+            "<input>ana@x</input>",
+            "ana@x",
+            "<input value=\"ana@x\">"
+          ],
+          "respuesta": 0,
+          "explicacion": "value se escribe como atributo de la etiqueta y el mini renderizador cierra siempre la etiqueta, también en input."
+        },
+        {
+          "id": "c10-q4",
+          "tipo": "multiple",
+          "pregunta": "¿Qué formas de renderizado condicional sirven para mostrar el error de un campo? (marca todos los correctos)",
+          "opciones": [
+            "error && h(\"p\", {}, error)",
+            "error ? h(\"p\", {}, error) : null",
+            "Un if antes del return que devuelve h(\"p\", {}, error)",
+            "document.write(error)"
+          ],
+          "respuestas": [
+            0,
+            1,
+            2
+          ],
+          "explicacion": "&&, el ternario y un if que devuelve elementos son formas válidas. document.write no forma parte del modelo de React."
+        },
+        {
+          "id": "c10-q5",
+          "tipo": "texto",
+          "pregunta": "¿Con qué prop del input se actualiza el estado en un campo controlado? (solo el nombre de la prop)",
+          "aceptadas": [
+            "onChange",
+            "onchange",
+            "onChange()"
+          ],
+          "explicacion": "onChange recibe el evento; su e.target.value es el texto escrito en cada pulsación."
+        },
+        {
+          "id": "c10-q6",
+          "tipo": "unica",
+          "codigo": "const [datos, setDatos] = useState({ nombre: \"ana\", correo: \"\" });\nsetDatos((d) => ({ ...d, correo: \"a@x\" }));",
+          "pregunta": "En el siguiente render, ¿qué valor tiene datos.nombre?",
+          "opciones": [
+            "Sigue siendo \"ana\": el spread copia los demás campos",
+            "Cadena vacía: el objeto nuevo empieza de cero",
+            "undefined: el objeto solo tiene correo",
+            "Se lanza un error porque no se puede actualizar un objeto"
+          ],
+          "respuesta": 0,
+          "explicacion": "El spread copia todas las propiedades y solo pisa la que cambia. El resto de los campos queda igual."
+        },
+        {
+          "id": "c10-q7",
+          "tipo": "vf",
+          "pregunta": "Una lista filtrada a partir del texto de un input es un valor derivado: se calcula en cada render y no necesita su propio estado.",
+          "respuesta": true,
+          "explicacion": "Si el valor sale de otros estados, guardarlo solo añade una fuente de verdad más que puede quedar desincronizada."
+        },
+        {
+          "id": "c10-q8",
+          "tipo": "unica",
+          "pregunta": "¿Qué ventaja tiene guardar varios campos de un formulario en un solo objeto de estado?",
+          "opciones": [
+            "Se puede actualizar un campo con spread sin tocar a los demás",
+            "No hace falta escribir onChange en los inputs",
+            "Los inputs se ordenan solos al enviarse",
+            "Se evita usar useState en el componente"
+          ],
+          "respuesta": 0,
+          "explicacion": "Un objeto con spread cambia solo el campo indicado y conserva el resto, con una sola fuente de verdad."
+        }
+      ]
+    },
+    {
+      "id": "c11",
+      "titulo": "11. Conciliación: cómo React actualiza la interfaz",
+      "descripcion": "El algoritmo de conciliación, el papel de las keys, React.memo y buenas prácticas de rendimiento.",
+      "archivo": "capitulos/11-conciliacion.md",
+      "tags": [
+        "conciliación",
+        "virtual DOM",
+        "React.memo",
+        "rendimiento"
+      ],
+      "minutos": 25,
+      "aprobacion": 70,
+      "evaluacionRequerida": true,
+      "ejercicios": [
+        {
+          "id": "c11-e1",
+          "titulo": "Diferencia de listas",
+          "enunciado": "ejercicios/diferencia-de-listas-enunciado.md",
+          "solucion": "ejercicios/diferencia-de-listas-solucion.md",
+          "pistas": [
+            "ejercicios/diferencia-de-listas-pista-1.md",
+            "ejercicios/diferencia-de-listas-pista-2.md",
+            "ejercicios/diferencia-de-listas-pista-3.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/diferencia-de-listas-plantilla.js",
+          "pruebas": "ejercicios/diferencia-de-listas-pruebas.json"
+        },
+        {
+          "id": "c11-e2",
+          "titulo": "Reordenar sin mutar",
+          "enunciado": "ejercicios/reordenar-sin-mutar-enunciado.md",
+          "solucion": "ejercicios/reordenar-sin-mutar-solucion.md",
+          "pistas": [
+            "ejercicios/reordenar-sin-mutar-pista-1.md",
+            "ejercicios/reordenar-sin-mutar-pista-2.md",
+            "ejercicios/reordenar-sin-mutar-pista-3.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/reordenar-sin-mutar-plantilla.js",
+          "pruebas": "ejercicios/reordenar-sin-mutar-pruebas.json"
+        },
+        {
+          "id": "c11-e3",
+          "titulo": "Comparar props",
+          "enunciado": "ejercicios/comparar-props-enunciado.md",
+          "solucion": "ejercicios/comparar-props-solucion.md",
+          "pistas": [
+            "ejercicios/comparar-props-pista-1.md",
+            "ejercicios/comparar-props-pista-2.md",
+            "ejercicios/comparar-props-pista-3.md"
+          ],
+          "lenguaje": "javascript",
+          "plantilla": "ejercicios/comparar-props-plantilla.js",
+          "pruebas": "ejercicios/comparar-props-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c11-q1",
+          "tipo": "unica",
+          "pregunta": "En la conciliación, ¿qué hace React cuando el type de un elemento cambia de un render al siguiente?",
+          "opciones": [
+            "Elimina el nodo del DOM y crea uno nuevo",
+            "Conserva el nodo y solo actualiza sus props",
+            "No hace nada hasta el siguiente evento",
+            "Añade el nodo nuevo al lado del viejo"
+          ],
+          "respuesta": 0,
+          "explicacion": "Si el type cambia, React no puede actualizar el nodo: lo reemplaza. Si el type es igual, conserva el nodo del DOM y actualiza solo las props cambiadas."
+        },
+        {
+          "id": "c11-q2",
+          "tipo": "vf",
+          "pregunta": "Usar el índice de la lista como key es estable aunque la lista se reordene.",
+          "respuesta": false,
+          "explicacion": "El índice cambia al reordenar o al insertar al principio. React asocia los datos viejos con las filas nuevas. Usa un identificador estable del dato."
+        },
+        {
+          "id": "c11-q3",
+          "tipo": "unica",
+          "codigo": "const Fila = React.memo(function Fila({ items }) {\n  return h(\"li\", {}, String(items.length));\n});\n// render 1: items = [\"a\"]\n// render 2: items = [\"a\"] pero es un array nuevo",
+          "pregunta": "¿React.memo vuelve a renderizar Fila en el segundo render?",
+          "opciones": [
+            "Sí: la comparación superficial compara la referencia del array y es distinta",
+            "No: el contenido del array es el mismo y eso es lo que se compara",
+            "No: React.memo solo compara el primer render",
+            "Sí, pero solo si el array tiene más de un elemento"
+          ],
+          "respuesta": 0,
+          "explicacion": "La comparación superficial usa Object.is propuesta a propuesta. Un array nuevo es otra referencia, así que memo no ahorra el render. Por eso conviene crear arrays y funciones fuera del render."
+        },
+        {
+          "id": "c11-q4",
+          "tipo": "multiple",
+          "pregunta": "¿Qué situaciones provocan renders innecesarios o empeoran la conciliación? (marca todos los correctos)",
+          "opciones": [
+            "Usar el índice de la lista como key",
+            "Crear una función nueva en cada render para un hijo con React.memo",
+            "Mutar un array del estado sin cambiar su referencia",
+            "Usar el id del dato como key de cada fila"
+          ],
+          "respuestas": [
+            0,
+            1,
+            2
+          ],
+          "explicacion": "Las tres primeras obligan a recrear o reejecutar de más. El id del dato como key es la práctica correcta: React identifica cada fila entre renders."
+        },
+        {
+          "id": "c11-q5",
+          "tipo": "texto",
+          "pregunta": "¿Con qué método de las clases de React se captura un error de render y se guarda un respaldo en el estado? (solo el nombre del método)",
+          "aceptadas": [
+            "getDerivedStateFromError",
+            "getderivedstatefromerror",
+            "getDerivedStateFromError()"
+          ],
+          "explicacion": "getDerivedStateFromError devuelve la copia de estado con el error. componentDidCatch se usa para registrar el fallo, no para pintar el respaldo."
+        },
+        {
+          "id": "c11-q6",
+          "tipo": "unica",
+          "codigo": "const anterior = [\"a\", \"b\", \"c\"];\nconst siguiente = [\"c\", \"a\", \"x\"];\nconst movidos = siguiente.filter(\n  (k) => anterior.includes(k) && anterior.indexOf(k) !== siguiente.indexOf(k)\n);\nconsole.log(movidos.join(\" \"));",
+          "pregunta": "¿Qué imprime este código?",
+          "opciones": [
+            "c a",
+            "a c",
+            "c",
+            "x"
+          ],
+          "respuesta": 0,
+          "explicacion": "Se recorre en orden de siguiente. c pasa de la posición 2 a la 0 y a de la 0 a la 1: los dos se movieron. x no está en la anterior, así que no cuenta como movido."
+        },
+        {
+          "id": "c11-q7",
+          "tipo": "vf",
+          "pregunta": "startTransition marca una actualización como de baja prioridad para que React atienda antes una pulsación urgente.",
+          "respuesta": true,
+          "explicacion": "La transición pospone lo no urgente, como filtrar una lista larga. React pinta primero lo que el usuario acaba de pulsar."
+        },
+        {
+          "id": "c11-q8",
+          "tipo": "unica",
+          "pregunta": "¿Qué error NO captura un límite de errores (error boundary)?",
+          "opciones": [
+            "Un error lanzado dentro de un manejador de onClick",
+            "Un error durante el render de un hijo por debajo del límite",
+            "Un error que impide pintar el árbol del hijo",
+            "Un error del render del componente hijo más profundo"
+          ],
+          "respuesta": 0,
+          "explicacion": "El límite de errores solo captura errores de render. Los errores de eventos, callbacks y promesas hay que capturarlos a mano con try/catch en ese mismo código."
+        }
+      ]
+    }
+  ]
+}

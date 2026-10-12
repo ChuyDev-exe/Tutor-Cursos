@@ -1,0 +1,5 @@
+[
+  { "nombre": "21 doble 42", "entrada": "21\n", "esperado": "doble=42" },
+  { "nombre": "7 doble 14", "entrada": "7\n", "esperado": "doble=14" },
+  { "nombre": "negativo -3", "entrada": "-3\n", "esperado": "doble=-6" }
+]

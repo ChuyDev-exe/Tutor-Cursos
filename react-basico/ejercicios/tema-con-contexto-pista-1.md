@@ -1,0 +1,1 @@
+Piensa en quién posee el dato (el estado del tema) y quién solo lo lee (la etiqueta).

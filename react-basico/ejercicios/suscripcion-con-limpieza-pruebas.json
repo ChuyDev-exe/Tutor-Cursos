@@ -1,0 +1,6 @@
+[
+  { "nombre": "montaje desconectado", "entrada": "", "esperado": "<div><p>no</p><button>alternar</button></div>\ndesconectado" },
+  { "nombre": "conectar", "entrada": "clic 1\n", "esperado": "<div><p>no</p><button>alternar</button></div>\ndesconectado\n<div><p>si</p><button>alternar</button></div>\nconectado" },
+  { "nombre": "conectar, desconectar y volver a conectar", "entrada": "clic 1\nclic 1\nclic 1\n", "esperado": "<div><p>no</p><button>alternar</button></div>\ndesconectado\n<div><p>si</p><button>alternar</button></div>\nconectado\n<div><p>no</p><button>alternar</button></div>\ndesconectado\ndesconectado\n<div><p>si</p><button>alternar</button></div>\nconectado" },
+  { "nombre": "dos clics vuelven al inicio", "entrada": "clic 1\nclic 1\n", "esperado": "<div><p>no</p><button>alternar</button></div>\ndesconectado\n<div><p>si</p><button>alternar</button></div>\nconectado\n<div><p>no</p><button>alternar</button></div>\ndesconectado\ndesconectado" }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "nombre": "una suma no dispara el mensaje",
+    "entrada": "2\nclic 1\n",
+    "esperado": "<div><p>valor: 0 tope: 2</p><button>sumar</button><button>subir tope</button></div>\nmanejador nuevo\n<div><p>valor: 1 tope: 2</p><button>sumar</button><button>subir tope</button></div>"
+  },
+  {
+    "nombre": "subir el tope reimprime el mensaje",
+    "entrada": "1\nclic 2\nclic 1\n",
+    "esperado": "<div><p>valor: 0 tope: 1</p><button>sumar</button><button>subir tope</button></div>\nmanejador nuevo\n<div><p>valor: 0 tope: 2</p><button>sumar</button><button>subir tope</button></div>\nmanejador nuevo\n<div><p>valor: 1 tope: 2</p><button>sumar</button><button>subir tope</button></div>"
+  },
+  {
+    "nombre": "tope cero bloquea la suma",
+    "entrada": "0\nclic 1\n",
+    "esperado": "<div><p>valor: 0 tope: 0</p><button>sumar</button><button>subir tope</button></div>\nmanejador nuevo\n<div><p>valor: 0 tope: 0</p><button>sumar</button><button>subir tope</button></div>"
+  }
+]

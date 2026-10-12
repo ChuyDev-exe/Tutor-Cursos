@@ -1,0 +1,27 @@
+[
+  {
+    "nombre": "enviar con los dos campos vacíos",
+    "entrada": "clic 1\n",
+    "esperado": "<div><input value=\"\"></input><input value=\"\"></input><button>enviar</button></div>\n<div><input value=\"\"></input><p>nombre requerido</p><input value=\"\"></input><p>correo invalido</p><button>enviar</button></div>"
+  },
+  {
+    "nombre": "correo sin arroba",
+    "entrada": "cambiar 1 ana\ncambiar 2 ana.com\nclic 1\n",
+    "esperado": "<div><input value=\"\"></input><input value=\"\"></input><button>enviar</button></div>\n<div><input value=\"ana\"></input><input value=\"\"></input><button>enviar</button></div>\n<div><input value=\"ana\"></input><input value=\"ana.com\"></input><button>enviar</button></div>\n<div><input value=\"ana\"></input><input value=\"ana.com\"></input><p>correo invalido</p><button>enviar</button></div>"
+  },
+  {
+    "nombre": "los dos campos válidos",
+    "entrada": "cambiar 1 ana\ncambiar 2 ana@x.com\nclic 1\n",
+    "esperado": "<div><input value=\"\"></input><input value=\"\"></input><button>enviar</button></div>\n<div><input value=\"ana\"></input><input value=\"\"></input><button>enviar</button></div>\n<div><input value=\"ana\"></input><input value=\"ana@x.com\"></input><button>enviar</button></div>\n<div><input value=\"ana\"></input><input value=\"ana@x.com\"></input><button>enviar</button><p>enviado: ana</p></div>"
+  },
+  {
+    "nombre": "escribir tras enviar apaga la bandera",
+    "entrada": "cambiar 1 ana\ncambiar 2 ana@x.com\nclic 1\ncambiar 1 beto\n",
+    "esperado": "<div><input value=\"\"></input><input value=\"\"></input><button>enviar</button></div>\n<div><input value=\"ana\"></input><input value=\"\"></input><button>enviar</button></div>\n<div><input value=\"ana\"></input><input value=\"ana@x.com\"></input><button>enviar</button></div>\n<div><input value=\"ana\"></input><input value=\"ana@x.com\"></input><button>enviar</button><p>enviado: ana</p></div>\n<div><input value=\"beto\"></input><input value=\"ana@x.com\"></input><button>enviar</button></div>"
+  },
+  {
+    "nombre": "corregir y reenviar",
+    "entrada": "clic 1\ncambiar 1 ana\ncambiar 2 ana@x.com\nclic 1\n",
+    "esperado": "<div><input value=\"\"></input><input value=\"\"></input><button>enviar</button></div>\n<div><input value=\"\"></input><p>nombre requerido</p><input value=\"\"></input><p>correo invalido</p><button>enviar</button></div>\n<div><input value=\"ana\"></input><p>nombre requerido</p><input value=\"\"></input><p>correo invalido</p><button>enviar</button></div>\n<div><input value=\"ana\"></input><p>nombre requerido</p><input value=\"ana@x.com\"></input><p>correo invalido</p><button>enviar</button></div>\n<div><input value=\"ana\"></input><input value=\"ana@x.com\"></input><button>enviar</button><p>enviado: ana</p></div>"
+  }
+]

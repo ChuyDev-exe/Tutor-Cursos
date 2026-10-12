@@ -1,0 +1,7 @@
+[
+  { "nombre": "dos sumas desde 0", "entrada": "0\nclic 1\nclic 1\n", "esperado": "<div><p>n: 0</p><p>veces: 0</p><button>sumar</button><button>reiniciar</button></div>\n<div><p>n: 1</p><p>veces: 1</p><button>sumar</button><button>reiniciar</button></div>\n<div><p>n: 2</p><p>veces: 2</p><button>sumar</button><button>reiniciar</button></div>" },
+  { "nombre": "reiniciar conserva el contador de veces", "entrada": "10\nclic 2\n", "esperado": "<div><p>n: 10</p><p>veces: 0</p><button>sumar</button><button>reiniciar</button></div>\n<div><p>n: 0</p><p>veces: 1</p><button>sumar</button><button>reiniciar</button></div>" },
+  { "nombre": "inicial negativo y suma", "entrada": "-5\nclic 1\n", "esperado": "<div><p>n: -5</p><p>veces: 0</p><button>sumar</button><button>reiniciar</button></div>\n<div><p>n: -4</p><p>veces: 1</p><button>sumar</button><button>reiniciar</button></div>" },
+  { "nombre": "lista de eventos vacía", "entrada": "7\n", "esperado": "<div><p>n: 7</p><p>veces: 0</p><button>sumar</button><button>reiniciar</button></div>" },
+  { "nombre": "entrada vacía", "entrada": "", "esperado": "<div><p>n: 0</p><p>veces: 0</p><button>sumar</button><button>reiniciar</button></div>" }
+]

@@ -1,0 +1,6 @@
+[
+  { "nombre": "dos incrementos", "entrada": "0\nincrementar\nincrementar\n", "esperado": "2" },
+  { "nombre": "restar desde 10", "entrada": "10\nrestar\n", "esperado": "9" },
+  { "nombre": "poner valor negativo", "entrada": "0\nponer -3\nincrementar\n", "esperado": "-2" },
+  { "nombre": "acción desconocida", "entrada": "5\nreiniciar\n", "esperado": "5" }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "nombre": "dos clics desde 5",
+    "entrada": "5\nclic 1\nclic 1\n",
+    "esperado": "<p>fuera: 100</p><p>dentro: 5</p><button>sumar</button>\n<p>fuera: 100</p><p>dentro: 6</p><button>sumar</button>\n<p>fuera: 100</p><p>dentro: 7</p><button>sumar</button>"
+  },
+  {
+    "nombre": "valor inicial negativo",
+    "entrada": "-2\n",
+    "esperado": "<p>fuera: 100</p><p>dentro: -2</p><button>sumar</button>"
+  },
+  {
+    "nombre": "entrada vacía usa cero",
+    "entrada": "",
+    "esperado": "<p>fuera: 100</p><p>dentro: 0</p><button>sumar</button>"
+  }
+]

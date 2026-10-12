@@ -1,0 +1,5 @@
+[
+  { "nombre": "etiqueta span", "entrada": "span Importante\n", "esperado": "<span className=\"etiqueta\">Importante</span>" },
+  { "nombre": "etiqueta h2", "entrada": "h2 Aviso\n", "esperado": "<h2 className=\"etiqueta\">Aviso</h2>" },
+  { "nombre": "texto con espacios", "entrada": "p Detalle menor\n", "esperado": "<p className=\"etiqueta\">Detalle menor</p>" }
+]

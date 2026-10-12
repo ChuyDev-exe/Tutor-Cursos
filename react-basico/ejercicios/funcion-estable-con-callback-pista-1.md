@@ -1,0 +1,1 @@
+`useCallback` guarda la función; sus deps son las variables de las que la función lee valores.

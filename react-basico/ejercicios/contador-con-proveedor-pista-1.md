@@ -1,0 +1,1 @@
+El valor que pasa a `createContext` es lo que lee quien no tiene ningún Provider por encima.

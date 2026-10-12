@@ -1,0 +1,9 @@
+[
+  { "nombre": "sin acciones", "entrada": "a b c\n", "esperado": "original: a b c\nlista: a b c" },
+  { "nombre": "quitar todo", "entrada": "a b c\nquitar a\nquitar b\nquitar c\n", "esperado": "original: a b c\nlista:" },
+  { "nombre": "mutación tentadora: añadir el primero y subirlo", "entrada": "a b c\nañadir a\nsubir a\n", "esperado": "original: a b c\nlista: a b c" },
+  { "nombre": "añadir al final y bajar el primero", "entrada": "a b\nañadir c\nbajar a\n", "esperado": "original: a b\nlista: b a c" },
+  { "nombre": "subir el último", "entrada": "a b c\nsubir c\n", "esperado": "original: a b c\nlista: a c b" },
+  { "nombre": "bajar el último y quitar uno que no está", "entrada": "a b\nbajar b\nquitar z\n", "esperado": "original: a b\nlista: a b" },
+  { "nombre": "entrada vacía", "entrada": "", "esperado": "original:\nlista:" }
+]

@@ -1,0 +1,1 @@
+El filtro solo depende de `valor` y de `lista`. Memoriza con exactamente esas dos deps.

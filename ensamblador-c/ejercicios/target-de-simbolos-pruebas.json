@@ -1,0 +1,5 @@
+[
+  { "nombre": "simbolos con 3 y 4", "entrada": "3 4\n", "contiene": "T _suma" },
+  { "nombre": "simbolos sin entrada", "entrada": "", "contiene": "T _suma" },
+  { "nombre": "simbolos con negativos", "entrada": "-10 5\n", "contiene": "T _suma" }
+]

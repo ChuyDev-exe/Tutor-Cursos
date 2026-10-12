@@ -1,0 +1,1 @@
+Usa `useContext(Carrito)` dentro de `Producto` y de `VerCarrito`. Para añadir sin mutar: `setItems((prev) => [...prev, nombre])`.

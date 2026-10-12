@@ -1,0 +1,7 @@
+[
+  { "nombre": "añadir al final", "entrada": "leer\nañadir comprar\n", "esperado": "[\"leer\",\"comprar\"]" },
+  { "nombre": "quitar del medio", "entrada": "a,b,c\nquitar b\n", "esperado": "[\"a\",\"c\"]" },
+  { "nombre": "producto repetido y quitar inexistente", "entrada": "x\nañadir x\nquitar z\n", "esperado": "[\"x\"]" },
+  { "nombre": "carrito inicial vacío", "entrada": "", "esperado": "[]" },
+  { "nombre": "mezclar añadir y quitar", "entrada": "pan,agua\nañadir leche\nquitar pan\n", "esperado": "[\"agua\",\"leche\"]" }
+]

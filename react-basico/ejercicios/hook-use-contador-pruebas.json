@@ -1,0 +1,27 @@
+[
+  {
+    "nombre": "dos sumas seguidas",
+    "entrada": "0\nclic 1\nclic 1\n",
+    "esperado": "<div><p>0</p><button>sumar</button><button>restar</button></div>\n<div><p>1</p><button>sumar</button><button>restar</button></div>\n<div><p>2</p><button>sumar</button><button>restar</button></div>"
+  },
+  {
+    "nombre": "inicial negativo y dos restas",
+    "entrada": "-3\nclic 2\nclic 2\n",
+    "esperado": "<div><p>-3</p><button>sumar</button><button>restar</button></div>\n<div><p>-4</p><button>sumar</button><button>restar</button></div>\n<div><p>-5</p><button>sumar</button><button>restar</button></div>"
+  },
+  {
+    "nombre": "secuencia mixta",
+    "entrada": "5\nclic 2\nclic 1\nclic 2\n",
+    "esperado": "<div><p>5</p><button>sumar</button><button>restar</button></div>\n<div><p>4</p><button>sumar</button><button>restar</button></div>\n<div><p>5</p><button>sumar</button><button>restar</button></div>\n<div><p>4</p><button>sumar</button><button>restar</button></div>"
+  },
+  {
+    "nombre": "restar por debajo de cero",
+    "entrada": "0\nclic 2\nclic 2\n",
+    "esperado": "<div><p>0</p><button>sumar</button><button>restar</button></div>\n<div><p>-1</p><button>sumar</button><button>restar</button></div>\n<div><p>-2</p><button>sumar</button><button>restar</button></div>"
+  },
+  {
+    "nombre": "entrada vacía usa el inicial 0",
+    "entrada": "",
+    "esperado": "<div><p>0</p><button>sumar</button><button>restar</button></div>"
+  }
+]

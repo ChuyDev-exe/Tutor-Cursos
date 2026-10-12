@@ -1,0 +1,5 @@
+[
+  { "nombre": "saludo tipico", "entrada": "", "esperado": "Hola desde ensamblador" },
+  { "nombre": "ignora texto en stdin", "entrada": "hola\n", "esperado": "Hola desde ensamblador" },
+  { "nombre": "ignora linea vacia", "entrada": "\n", "esperado": "Hola desde ensamblador" }
+]

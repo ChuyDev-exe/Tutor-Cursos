@@ -1,0 +1,1 @@
+El script escribe el archivo `.s` con un heredoc (`cat > archivo <<'ETIQUETA'`). La parte que tú completas es el cuerpo de `_main`, dentro de ese heredoc. El resto del script ya ensambla, enlaza y ejecuta.

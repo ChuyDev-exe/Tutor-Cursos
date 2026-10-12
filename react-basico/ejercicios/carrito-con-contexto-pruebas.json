@@ -1,0 +1,17 @@
+[
+  {
+    "nombre": "sin productos",
+    "entrada": "",
+    "esperado": "<p>carrito: vacio</p>"
+  },
+  {
+    "nombre": "añadir dos veces el mismo producto",
+    "entrada": "pan leche\nclic 1\nclic 1\n",
+    "esperado": "<p>carrito: vacio</p><button>añadir pan</button><button>añadir leche</button>\n<p>carrito: pan</p><button>añadir pan</button><button>añadir leche</button>\n<p>carrito: pan, pan</p><button>añadir pan</button><button>añadir leche</button>"
+  },
+  {
+    "nombre": "añadir varios productos",
+    "entrada": "pan leche agua\nclic 2\nclic 1\n",
+    "esperado": "<p>carrito: vacio</p><button>añadir pan</button><button>añadir leche</button><button>añadir agua</button>\n<p>carrito: leche</p><button>añadir pan</button><button>añadir leche</button><button>añadir agua</button>\n<p>carrito: leche, pan</p><button>añadir pan</button><button>añadir leche</button><button>añadir agua</button>"
+  }
+]

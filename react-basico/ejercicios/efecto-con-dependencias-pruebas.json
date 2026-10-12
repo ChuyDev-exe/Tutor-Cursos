@@ -1,0 +1,6 @@
+[
+  { "nombre": "sin eventos imprime montado y valor 0", "entrada": "", "esperado": "<div><p>0</p><button>sumar</button></div>\nmontado\nvalor: 0" },
+  { "nombre": "un clic", "entrada": "clic 1\n", "esperado": "<div><p>0</p><button>sumar</button></div>\nmontado\nvalor: 0\n<div><p>1</p><button>sumar</button></div>\nvalor: 1" },
+  { "nombre": "tres clics", "entrada": "clic 1\nclic 1\nclic 1\n", "esperado": "<div><p>0</p><button>sumar</button></div>\nmontado\nvalor: 0\n<div><p>1</p><button>sumar</button></div>\nvalor: 1\n<div><p>2</p><button>sumar</button></div>\nvalor: 2\n<div><p>3</p><button>sumar</button></div>\nvalor: 3" },
+  { "nombre": "montado no se repite", "entrada": "clic 1\nclic 1\n", "esperado": "<div><p>0</p><button>sumar</button></div>\nmontado\nvalor: 0\n<div><p>1</p><button>sumar</button></div>\nvalor: 1\n<div><p>2</p><button>sumar</button></div>\nvalor: 2" }
+]

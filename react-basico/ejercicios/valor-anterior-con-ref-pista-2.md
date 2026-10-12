@@ -1,0 +1,1 @@
+Primero guarda `const anterior = ref.current;` y solo después haz `ref.current = n;`. El orden importa.

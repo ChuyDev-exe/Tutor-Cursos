@@ -1,0 +1,22 @@
+[
+  {
+    "nombre": "enviar sin elegir",
+    "entrada": "clic 4\n",
+    "esperado": "<div><button className=\"opcion\">rojo</button><button className=\"opcion\">verde</button><button className=\"opcion\">azul</button><button>enviar</button><p>elige una opcion</p></div>\n<div><button className=\"opcion\">rojo</button><button className=\"opcion\">verde</button><button className=\"opcion\">azul</button><button>enviar</button><p>elige una opcion</p></div>"
+  },
+  {
+    "nombre": "elegir y enviar",
+    "entrada": "clic 2\nclic 4\n",
+    "esperado": "<div><button className=\"opcion\">rojo</button><button className=\"opcion\">verde</button><button className=\"opcion\">azul</button><button>enviar</button><p>elige una opcion</p></div>\n<div><button className=\"opcion\">rojo</button><button className=\"opcion activa\">verde</button><button className=\"opcion\">azul</button><button>enviar</button></div>\n<div><button className=\"opcion\">rojo</button><button className=\"opcion activa\">verde</button><button className=\"opcion\">azul</button><button>enviar</button><p>resultado: verde</p></div>"
+  },
+  {
+    "nombre": "cambiar de opción tras enviar",
+    "entrada": "clic 1\nclic 4\nclic 3\n",
+    "esperado": "<div><button className=\"opcion\">rojo</button><button className=\"opcion\">verde</button><button className=\"opcion\">azul</button><button>enviar</button><p>elige una opcion</p></div>\n<div><button className=\"opcion activa\">rojo</button><button className=\"opcion\">verde</button><button className=\"opcion\">azul</button><button>enviar</button></div>\n<div><button className=\"opcion activa\">rojo</button><button className=\"opcion\">verde</button><button className=\"opcion\">azul</button><button>enviar</button><p>resultado: rojo</p></div>\n<div><button className=\"opcion\">rojo</button><button className=\"opcion\">verde</button><button className=\"opcion activa\">azul</button><button>enviar</button></div>"
+  },
+  {
+    "nombre": "elegir sin enviar",
+    "entrada": "clic 3\n",
+    "esperado": "<div><button className=\"opcion\">rojo</button><button className=\"opcion\">verde</button><button className=\"opcion\">azul</button><button>enviar</button><p>elige una opcion</p></div>\n<div><button className=\"opcion\">rojo</button><button className=\"opcion\">verde</button><button className=\"opcion activa\">azul</button><button>enviar</button></div>"
+  }
+]

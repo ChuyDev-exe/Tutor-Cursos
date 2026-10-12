@@ -1,0 +1,6 @@
+[
+  { "nombre": "subir dos veces y alternar", "entrada": "0\nsubir\nsubir\nalternar\n", "esperado": "2 false" },
+  { "nombre": "bajar y fijar", "entrada": "5\nbajar\nfijar 10\n", "esperado": "10 true" },
+  { "nombre": "alternar dos veces", "entrada": "0\nalternar\nalternar\n", "esperado": "0 true" },
+  { "nombre": "fijar negativo y bajar", "entrada": "3\nfijar -2\nbajar\n", "esperado": "-3 true" }
+]

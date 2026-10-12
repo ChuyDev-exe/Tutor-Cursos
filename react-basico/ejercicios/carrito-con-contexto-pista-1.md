@@ -1,0 +1,1 @@
+El contexto lleva `{ items, anadir }`: cada consumidor lee solo lo que necesita.

@@ -1,0 +1,1 @@
+Para devolver varios elementos usa `Fragmento`. El Provider envuelve solo a `Cercano`, no a `Lejano`.

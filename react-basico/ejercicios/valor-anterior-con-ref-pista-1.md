@@ -1,0 +1,1 @@
+`useRef(inicial)` devuelve un objeto `{ current }`; ese objeto sobrevive a los renders.

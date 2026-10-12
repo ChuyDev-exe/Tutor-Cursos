@@ -1,0 +1,1 @@
+`useMemo(() => contar(valor, lista), [valor, lista])` devuelve el resultado guardado mientras esas deps no cambien.

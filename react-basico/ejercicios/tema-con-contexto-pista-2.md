@@ -1,0 +1,1 @@
+El canal es `createContext`. Publica con `h(Tema.Provider, { value: tema }, ...)` y lee con `useContext(Tema)`.

@@ -1,0 +1,5 @@
+[
+  { "nombre": "dup", "entrada": "dup\n", "contiene": "duplicate symbol" },
+  { "nombre": "undef", "entrada": "undef\n", "contiene": "Undefined symbols" },
+  { "nombre": "dup otra vez", "entrada": "dup\n", "contiene": "duplicate symbol" }
+]
