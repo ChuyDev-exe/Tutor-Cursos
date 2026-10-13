@@ -1,0 +1,6 @@
+[
+  { "nombre": "derecha, derecha, abajo", "entrada": "dds\n", "esperado": "x=120 y=110\nsalida: si" },
+  { "nombre": "arriba e izquierda restan", "entrada": "wwaa\n", "esperado": "x=80 y=80\nsalida: si" },
+  { "nombre": "sin teclas solo llega SDL_QUIT", "entrada": "\n", "esperado": "x=100 y=100\nsalida: si" },
+  { "nombre": "ida y vuelta, con letras ignoradas", "entrada": "dxaqd\n", "esperado": "x=110 y=100\nsalida: si" }
+]

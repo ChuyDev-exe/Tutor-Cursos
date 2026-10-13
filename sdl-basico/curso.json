@@ -1,0 +1,160 @@
+{
+  "$schema": "../vscode-tutor-ext/schemas/curso.schema.json",
+  "id": "sdl-basico",
+  "titulo": "SDL2: primeros pasos para juegos en C",
+  "descripcion": "Conoce cómo es un juego con SDL2: ventana, bucle de juego, eventos de teclado y choques entre rectángulos, con ejercicios que se prueban sin abrir ventanas. Para quien ya programa en C básico y quiere empezar con gráficos y juegos.",
+  "nivel": "principiante",
+  "version": "1.0.0",
+  "manual": "MANUAL.md",
+  "setup": "setup.sh",
+  "requisitos": [
+    {
+      "comando": "gcc",
+      "nombre": "GCC / Clang",
+      "versionMinima": "9.0",
+      "obligatorio": true,
+      "instalar": {
+        "darwin": "xcode-select --install",
+        "linux": "sudo apt install build-essential",
+        "win32": "wsl --install"
+      }
+    },
+    {
+      "comando": "sdl2-config",
+      "nombre": "SDL2 (biblioteca y cabeceras)",
+      "versionMinima": "2.0.10",
+      "obligatorio": true,
+      "instalar": {
+        "darwin": "brew install sdl2",
+        "linux": "sudo apt install libsdl2-dev",
+        "win32": "wsl --install"
+      }
+    },
+    {
+      "comando": "bash",
+      "nombre": "Bash",
+      "obligatorio": true,
+      "instalar": {
+        "darwin": "viene con macOS",
+        "linux": "sudo apt install bash",
+        "win32": "wsl --install"
+      }
+    }
+  ],
+  "capitulos": [
+    {
+      "id": "c1",
+      "titulo": "1. SDL2: ventana, bucle de juego y choques",
+      "descripcion": "Abrir una ventana, dibujar rectángulos, leer eventos en el bucle de juego y detectar choques con SDL_HasIntersection.",
+      "archivo": "capitulos/01-sdl.md",
+      "tags": ["sdl2", "juegos", "eventos", "bucle de juego", "colisiones"],
+      "minutos": 25,
+      "aprobacion": 70,
+      "ejercicios": [
+        {
+          "id": "c1-e1",
+          "titulo": "Choque de rectangulos",
+          "enunciado": "ejercicios/choque-de-rectangulos-enunciado.md",
+          "solucion": "ejercicios/choque-de-rectangulos-solucion.md",
+          "pistas": [
+            "ejercicios/choque-de-rectangulos-pista-1.md",
+            "ejercicios/choque-de-rectangulos-pista-2.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/choque-de-rectangulos-plantilla.sh",
+          "pruebas": "ejercicios/choque-de-rectangulos-pruebas.json"
+        },
+        {
+          "id": "c1-e2",
+          "titulo": "Bucle de eventos",
+          "enunciado": "ejercicios/bucle-de-eventos-enunciado.md",
+          "solucion": "ejercicios/bucle-de-eventos-solucion.md",
+          "pistas": [
+            "ejercicios/bucle-de-eventos-pista-1.md",
+            "ejercicios/bucle-de-eventos-pista-2.md",
+            "ejercicios/bucle-de-eventos-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/bucle-de-eventos-plantilla.sh",
+          "pruebas": "ejercicios/bucle-de-eventos-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c1-q1",
+          "tipo": "unica",
+          "pregunta": "¿En qué orden se dibuja un fotograma con el renderer?",
+          "opciones": [
+            "SDL_RenderClear, SDL_RenderFillRect, SDL_RenderPresent",
+            "SDL_RenderPresent, SDL_RenderClear, SDL_RenderFillRect",
+            "SDL_RenderFillRect, SDL_RenderPresent, SDL_RenderClear",
+            "SDL_RenderFillRect, SDL_RenderClear, SDL_RenderPresent"
+          ],
+          "respuesta": 0,
+          "explicacion": "Primero se borra el fotograma anterior, después se dibuja lo nuevo y al final SDL_RenderPresent lo muestra en la ventana."
+        },
+        {
+          "id": "c1-q2",
+          "tipo": "vf",
+          "pregunta": "En SDL, y = 0 es el borde de arriba de la ventana y y crece hacia abajo.",
+          "respuesta": true,
+          "explicacion": "El píxel (0, 0) es la esquina de arriba a la izquierda. Para subir, se resta a y."
+        },
+        {
+          "id": "c1-q3",
+          "tipo": "unica",
+          "pregunta": "¿Qué rectángulo escribe SDL_IntersectRect para los rectángulos A y B de la imagen?",
+          "imagen": "img/colision-rects.svg",
+          "opciones": ["x=50 y=40 w=30 h=20", "x=20 y=20 w=90 h=60", "x=50 y=40 w=60 h=40", "x=40 y=50 w=20 h=30"],
+          "respuesta": 0,
+          "explicacion": "La zona común empieza donde empieza B (50, 40) y termina donde termina A (x=80, y=60). Su ancho es 80 − 50 = 30 y su alto 60 − 40 = 20."
+        },
+        {
+          "id": "c1-q4",
+          "tipo": "texto",
+          "pregunta": "¿Qué función saca el siguiente evento de la cola y devuelve 0 cuando está vacía? (solo el nombre)",
+          "aceptadas": ["SDL_PollEvent", "SDL_PollEvent()", "PollEvent"],
+          "explicacion": "SDL_PollEvent(&e) copia el siguiente evento en e. Se usa en un while para vaciar la cola en cada fotograma."
+        },
+        {
+          "id": "c1-q5",
+          "tipo": "unica",
+          "pregunta": "¿Qué imprime este código?",
+          "codigo": "SDL_Rect a = { 0, 0, 10, 10 };\nSDL_Rect b = { 10, 0, 10, 10 };\nprintf(\"%d\", SDL_HasIntersection(&a, &b));",
+          "opciones": ["0", "1", "10", "Error de compilación"],
+          "respuesta": 0,
+          "explicacion": "a ocupa las columnas 0 a 9 y b empieza en la 10. Solo se tocan por el borde: no comparten ningún píxel."
+        },
+        {
+          "id": "c1-q6",
+          "tipo": "arrastrar",
+          "pregunta": "Lleva cada línea a la fase del bucle de juego en la que va.",
+          "zonas": ["Leer eventos", "Actualizar", "Dibujar"],
+          "elementos": [
+            { "texto": "while (SDL_PollEvent(&e))", "zona": "Leer eventos" },
+            { "texto": "if (e.type == SDL_QUIT) corriendo = 0;", "zona": "Leer eventos" },
+            { "texto": "jugador.x += velocidad;", "zona": "Actualizar" },
+            { "texto": "if (SDL_HasIntersection(&jugador, &muro)) vidas--;", "zona": "Actualizar" },
+            { "texto": "SDL_RenderClear(pincel);", "zona": "Dibujar" },
+            { "texto": "SDL_RenderFillRect(pincel, &jugador);", "zona": "Dibujar" },
+            { "texto": "SDL_RenderPresent(pincel);", "zona": "Dibujar" }
+          ],
+          "explicacion": "Primero se vacía la cola de eventos, después se actualizan posiciones y choques, y al final se dibuja y se muestra el fotograma."
+        },
+        {
+          "id": "c1-q7",
+          "tipo": "multiple",
+          "pregunta": "¿Qué hace falta para compilar un programa con SDL2? (marca todos los correctos)",
+          "opciones": [
+            "Añadir $(sdl2-config --cflags --libs) a la línea de gcc",
+            "#include <SDL.h>",
+            "Declarar main como int main(int argc, char *argv[])",
+            "Añadir -lncurses a la línea de gcc"
+          ],
+          "respuestas": [0, 1, 2],
+          "explicacion": "sdl2-config da las rutas de las cabeceras y las bibliotecas. SDL puede sustituir a main, así que necesita la forma con argc y argv. ncurses es otra biblioteca."
+        }
+      ]
+    }
+  ]
+}

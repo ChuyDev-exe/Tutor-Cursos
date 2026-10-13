@@ -1,0 +1,1 @@
+Distingue primero el tipo con `e.type` (`SDL_QUIT` o `SDL_KEYDOWN`). Solo dentro de `SDL_KEYDOWN` tiene sentido mirar `e.key.keysym.sym`. Como `jugador` es un puntero, se escribe `jugador->x += PASO`.

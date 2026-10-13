@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="580" height="470" viewBox="0 0 580 470" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Rectángulos A y B que se solapan en coordenadas de SDL</title>
+  <rect width="580" height="470" rx="10" fill="#f8fafc"/>
+  <rect x="60" y="60" width="480" height="360" fill="#ffffff"/>
+  <g stroke="#e5e7eb" stroke-width="1">
+    <line x1="60" y1="60" x2="60" y2="420"/>
+    <line x1="100" y1="60" x2="100" y2="420"/>
+    <line x1="140" y1="60" x2="140" y2="420"/>
+    <line x1="180" y1="60" x2="180" y2="420"/>
+    <line x1="220" y1="60" x2="220" y2="420"/>
+    <line x1="260" y1="60" x2="260" y2="420"/>
+    <line x1="300" y1="60" x2="300" y2="420"/>
+    <line x1="340" y1="60" x2="340" y2="420"/>
+    <line x1="380" y1="60" x2="380" y2="420"/>
+    <line x1="420" y1="60" x2="420" y2="420"/>
+    <line x1="460" y1="60" x2="460" y2="420"/>
+    <line x1="500" y1="60" x2="500" y2="420"/>
+    <line x1="540" y1="60" x2="540" y2="420"/>
+    <line x1="60" y1="60" x2="540" y2="60"/>
+    <line x1="60" y1="100" x2="540" y2="100"/>
+    <line x1="60" y1="140" x2="540" y2="140"/>
+    <line x1="60" y1="180" x2="540" y2="180"/>
+    <line x1="60" y1="220" x2="540" y2="220"/>
+    <line x1="60" y1="260" x2="540" y2="260"/>
+    <line x1="60" y1="300" x2="540" y2="300"/>
+    <line x1="60" y1="340" x2="540" y2="340"/>
+    <line x1="60" y1="380" x2="540" y2="380"/>
+    <line x1="60" y1="420" x2="540" y2="420"/>
+  </g>
+  <rect x="60" y="60" width="480" height="360" fill="none" stroke="#9ca3af"/>
+  <g font-size="13" fill="#374151" font-family="Menlo, Consolas, monospace">
+    <text x="60" y="52" text-anchor="middle">0</text>
+    <text x="140" y="52" text-anchor="middle">20</text>
+    <text x="220" y="52" text-anchor="middle">40</text>
+    <text x="300" y="52" text-anchor="middle">60</text>
+    <text x="380" y="52" text-anchor="middle">80</text>
+    <text x="460" y="52" text-anchor="middle">100</text>
+    <text x="540" y="52" text-anchor="middle">120</text>
+    <text x="52" y="64" text-anchor="end">0</text>
+    <text x="52" y="144" text-anchor="end">20</text>
+    <text x="52" y="224" text-anchor="end">40</text>
+    <text x="52" y="304" text-anchor="end">60</text>
+    <text x="52" y="384" text-anchor="end">80</text>
+  </g>
+  <text x="60" y="24" font-size="13" fill="#374151">x →   (0, 0) es la esquina de arriba a la izquierda</text>
+  <text x="14" y="64" font-size="13" fill="#374151">y ↓</text>
+  <rect x="140" y="140" width="240" height="160" fill="#93c5fd" fill-opacity="0.55" stroke="#1d4ed8" stroke-width="2"/>
+  <rect x="260" y="220" width="240" height="160" fill="#fcd34d" fill-opacity="0.55" stroke="#b45309" stroke-width="2"/>
+  <defs><pattern id="r" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#7c3aed" stroke-width="3"/></pattern></defs>
+  <rect x="260" y="220" width="120" height="80" fill="url(#r)" stroke="#7c3aed" stroke-width="2"/>
+  <text x="148" y="162" font-size="15" font-weight="700" fill="#1e3a8a">A</text>
+  <text x="148" y="182" font-size="13" fill="#1e3a8a" font-family="Menlo, Consolas, monospace">x=20 y=20 w=60 h=40</text>
+  <text x="492" y="350" font-size="15" font-weight="700" fill="#78350f" text-anchor="end">B</text>
+  <text x="492" y="370" font-size="13" fill="#78350f" font-family="Menlo, Consolas, monospace" text-anchor="end">x=50 y=40 w=60 h=40</text>
+</svg>

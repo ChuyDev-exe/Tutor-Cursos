@@ -1,0 +1,6 @@
+[
+  { "nombre": "se solapan en una esquina", "entrada": "20 20 60 40\n50 40 60 40\n", "esperado": "choque\ninterseccion: 50 40 30 20" },
+  { "nombre": "solo se tocan por el borde", "entrada": "0 0 10 10\n10 0 10 10\n", "esperado": "libre" },
+  { "nombre": "uno dentro del otro", "entrada": "0 0 100 100\n10 20 5 5\n", "esperado": "choque\ninterseccion: 10 20 5 5" },
+  { "nombre": "lejos", "entrada": "0 0 10 10\n50 50 10 10\n", "esperado": "libre" }
+]
