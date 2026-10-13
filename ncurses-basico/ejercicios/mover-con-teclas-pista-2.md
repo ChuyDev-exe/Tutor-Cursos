@@ -1,0 +1,1 @@
+Para borrar, escribe un espacio en la posición actual: `mvaddch(*y, *x, ' ')`. Para moverte sin salir del área, comprueba el borde antes de cambiar el valor. Por ejemplo, `if (tecla == 'd' && *x < ANCHO - 1) (*x)++;`.

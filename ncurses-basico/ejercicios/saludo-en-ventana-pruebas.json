@@ -1,0 +1,5 @@
+[
+  { "nombre": "Ana", "entrada": "Ana\n", "esperado": "borde: si\ntexto: Hola, Ana" },
+  { "nombre": "nombre con espacio", "entrada": "Luis Miguel\n", "esperado": "borde: si\ntexto: Hola, Luis Miguel" },
+  { "nombre": "nombre de una letra", "entrada": "X\n", "esperado": "borde: si\ntexto: Hola, X" }
+]

@@ -1,0 +1,140 @@
+{
+  "$schema": "../vscode-tutor-ext/schemas/curso.schema.json",
+  "id": "ncurses-basico",
+  "titulo": "ncurses: interfaces de texto en C",
+  "descripcion": "Crea tu primera interfaz en la terminal con ncurses: coordenadas de fila y columna, ventanas con borde y lectura del teclado tecla a tecla. Para quien ya programa en C básico y quiere dibujar en la terminal.",
+  "nivel": "principiante",
+  "version": "1.0.0",
+  "manual": "MANUAL.md",
+  "setup": "setup.sh",
+  "requisitos": [
+    {
+      "comando": "gcc",
+      "nombre": "GCC / Clang (con ncurses)",
+      "versionMinima": "9.0",
+      "obligatorio": true,
+      "instalar": {
+        "darwin": "xcode-select --install",
+        "linux": "sudo apt install build-essential libncurses-dev",
+        "win32": "wsl --install"
+      }
+    },
+    {
+      "comando": "bash",
+      "nombre": "Bash",
+      "obligatorio": true,
+      "instalar": {
+        "darwin": "viene con macOS",
+        "linux": "sudo apt install bash",
+        "win32": "wsl --install"
+      }
+    }
+  ],
+  "capitulos": [
+    {
+      "id": "c1",
+      "titulo": "1. Tu primera interfaz de texto con ncurses",
+      "descripcion": "Abrir y cerrar la pantalla, escribir por fila y columna, crear ventanas con box y leer teclas con getch.",
+      "archivo": "capitulos/01-ncurses.md",
+      "tags": ["ncurses", "terminal", "ventanas", "getch", "coordenadas"],
+      "minutos": 25,
+      "aprobacion": 70,
+      "ejercicios": [
+        {
+          "id": "c1-e1",
+          "titulo": "Saludo en ventana",
+          "enunciado": "ejercicios/saludo-en-ventana-enunciado.md",
+          "solucion": "ejercicios/saludo-en-ventana-solucion.md",
+          "pistas": [
+            "ejercicios/saludo-en-ventana-pista-1.md",
+            "ejercicios/saludo-en-ventana-pista-2.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/saludo-en-ventana-plantilla.sh",
+          "pruebas": "ejercicios/saludo-en-ventana-pruebas.json"
+        },
+        {
+          "id": "c1-e2",
+          "titulo": "Mover con teclas",
+          "enunciado": "ejercicios/mover-con-teclas-enunciado.md",
+          "solucion": "ejercicios/mover-con-teclas-solucion.md",
+          "pistas": [
+            "ejercicios/mover-con-teclas-pista-1.md",
+            "ejercicios/mover-con-teclas-pista-2.md",
+            "ejercicios/mover-con-teclas-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/mover-con-teclas-plantilla.sh",
+          "pruebas": "ejercicios/mover-con-teclas-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c1-q1",
+          "tipo": "unica",
+          "pregunta": "¿Qué función hay que llamar antes de salir para devolver la terminal a su estado normal?",
+          "opciones": ["endwin()", "refresh()", "delwin(stdscr)", "exit(0)"],
+          "respuesta": 0,
+          "explicacion": "endwin() deshace los cambios que hizo initscr() en la terminal. Sin él, la terminal queda desconfigurada."
+        },
+        {
+          "id": "c1-q2",
+          "tipo": "vf",
+          "pregunta": "mvprintw(3, 10, \"Hola\") escribe en la columna 3 de la fila 10.",
+          "respuesta": false,
+          "explicacion": "En ncurses la fila va primero: escribe en la fila 3, columna 10."
+        },
+        {
+          "id": "c1-q3",
+          "tipo": "unica",
+          "pregunta": "¿Qué llamada dibuja la @ que ves en la imagen?",
+          "imagen": "img/pantalla-ncurses.svg",
+          "opciones": ["mvaddch(4, 12, '@')", "mvaddch(12, 4, '@')", "mvaddch(5, 13, '@')", "mvaddch(4, 11, '@')"],
+          "respuesta": 0,
+          "explicacion": "La @ está en la fila 4 y la columna 12, contando desde 0. La fila (y) va antes que la columna (x)."
+        },
+        {
+          "id": "c1-q4",
+          "tipo": "unica",
+          "pregunta": "Este código no muestra nada en pantalla. ¿Qué le falta?",
+          "codigo": "WINDOW *v = newwin(5, 20, 0, 0);\nbox(v, 0, 0);\nmvwprintw(v, 2, 2, \"Hola\");",
+          "opciones": ["wrefresh(v);", "endwin();", "keypad(v, TRUE);", "delwin(v);"],
+          "respuesta": 0,
+          "explicacion": "ncurses apunta los cambios en memoria. wrefresh(v) los pasa a la terminal."
+        },
+        {
+          "id": "c1-q5",
+          "tipo": "unica",
+          "pregunta": "¿Qué devuelve getch() cuando ya no hay más entrada?",
+          "opciones": ["ERR", "0", "'q'", "KEY_ENTER"],
+          "respuesta": 0,
+          "explicacion": "getch() devuelve ERR cuando no puede leer una tecla. Por eso el bucle típico comprueba tecla != ERR."
+        },
+        {
+          "id": "c1-q6",
+          "tipo": "arrastrar",
+          "pregunta": "Lleva cada función a lo que hace en un programa de ncurses.",
+          "zonas": ["Abrir o cerrar la pantalla", "Dibujar", "Mostrar los cambios", "Leer el teclado"],
+          "elementos": [
+            { "texto": "initscr()", "zona": "Abrir o cerrar la pantalla" },
+            { "texto": "endwin()", "zona": "Abrir o cerrar la pantalla" },
+            { "texto": "mvprintw(1, 2, \"Hola\")", "zona": "Dibujar" },
+            { "texto": "box(ventana, 0, 0)", "zona": "Dibujar" },
+            { "texto": "mvaddch(4, 12, '@')", "zona": "Dibujar" },
+            { "texto": "refresh()", "zona": "Mostrar los cambios" },
+            { "texto": "wrefresh(ventana)", "zona": "Mostrar los cambios" },
+            { "texto": "getch()", "zona": "Leer el teclado" }
+          ],
+          "explicacion": "initscr() y endwin() abren y cierran la pantalla. mvprintw, box y mvaddch dibujan en memoria. refresh y wrefresh muestran esos cambios. getch lee una tecla."
+        },
+        {
+          "id": "c1-q7",
+          "tipo": "texto",
+          "pregunta": "¿Qué función dibuja el borde de una ventana? (solo el nombre)",
+          "aceptadas": ["box", "box()"],
+          "explicacion": "box(ventana, 0, 0) dibuja el borde con los caracteres por defecto."
+        }
+      ]
+    }
+  ]
+}

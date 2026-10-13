@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="604" height="350" viewBox="0 0 604 350" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Pantalla de ncurses como rejilla de filas y columnas</title>
+  <rect width="604" height="350" rx="10" fill="#f8fafc"/>
+  <text x="70" y="26" font-size="13" fill="#374151">x (columna) →</text>
+  <text x="12" y="50" font-size="13" fill="#374151">y (fila) ↓</text>
+  <g font-size="13" fill="#374151" text-anchor="middle" font-family="Menlo, Consolas, monospace">
+    <text x="88" y="60">0</text>
+    <text x="124" y="60">1</text>
+    <text x="160" y="60">2</text>
+    <text x="196" y="60">3</text>
+    <text x="232" y="60">4</text>
+    <text x="268" y="60">5</text>
+    <text x="304" y="60">6</text>
+    <text x="340" y="60">7</text>
+    <text x="376" y="60">8</text>
+    <text x="412" y="60">9</text>
+    <text x="448" y="60">10</text>
+    <text x="484" y="60">11</text>
+    <text x="520" y="60">12</text>
+    <text x="556" y="60">13</text>
+    <text x="56" y="90">0</text>
+    <text x="56" y="120">1</text>
+    <text x="56" y="150">2</text>
+    <text x="56" y="180">3</text>
+    <text x="56" y="210">4</text>
+    <text x="56" y="240">5</text>
+    <text x="56" y="270">6</text>
+  </g>
+  <rect x="106" y="100" width="360" height="150" fill="#dbeafe"/>
+  <rect x="502" y="190" width="36" height="30" fill="#fef3c7"/>
+  <g stroke="#cbd5e1" stroke-width="1">
+    <line x1="70" y1="70" x2="70" y2="280"/>
+    <line x1="106" y1="70" x2="106" y2="280"/>
+    <line x1="142" y1="70" x2="142" y2="280"/>
+    <line x1="178" y1="70" x2="178" y2="280"/>
+    <line x1="214" y1="70" x2="214" y2="280"/>
+    <line x1="250" y1="70" x2="250" y2="280"/>
+    <line x1="286" y1="70" x2="286" y2="280"/>
+    <line x1="322" y1="70" x2="322" y2="280"/>
+    <line x1="358" y1="70" x2="358" y2="280"/>
+    <line x1="394" y1="70" x2="394" y2="280"/>
+    <line x1="430" y1="70" x2="430" y2="280"/>
+    <line x1="466" y1="70" x2="466" y2="280"/>
+    <line x1="502" y1="70" x2="502" y2="280"/>
+    <line x1="538" y1="70" x2="538" y2="280"/>
+    <line x1="574" y1="70" x2="574" y2="280"/>
+    <line x1="70" y1="70" x2="574" y2="70"/>
+    <line x1="70" y1="100" x2="574" y2="100"/>
+    <line x1="70" y1="130" x2="574" y2="130"/>
+    <line x1="70" y1="160" x2="574" y2="160"/>
+    <line x1="70" y1="190" x2="574" y2="190"/>
+    <line x1="70" y1="220" x2="574" y2="220"/>
+    <line x1="70" y1="250" x2="574" y2="250"/>
+    <line x1="70" y1="280" x2="574" y2="280"/>
+  </g>
+  <g font-size="17" text-anchor="middle" font-family="Menlo, Consolas, monospace">
+    <text x="124" y="121" fill="#1d4ed8">┌</text>
+    <text x="160" y="121" fill="#1d4ed8">─</text>
+    <text x="196" y="121" fill="#1d4ed8">─</text>
+    <text x="232" y="121" fill="#1d4ed8">─</text>
+    <text x="268" y="121" fill="#1d4ed8">─</text>
+    <text x="304" y="121" fill="#1d4ed8">─</text>
+    <text x="340" y="121" fill="#1d4ed8">─</text>
+    <text x="376" y="121" fill="#1d4ed8">─</text>
+    <text x="412" y="121" fill="#1d4ed8">─</text>
+    <text x="448" y="121" fill="#1d4ed8">┐</text>
+    <text x="124" y="151" fill="#1d4ed8">│</text>
+    <text x="448" y="151" fill="#1d4ed8">│</text>
+    <text x="124" y="181" fill="#1d4ed8">│</text>
+    <text x="196" y="181" fill="#1e3a8a" font-weight="700">H</text>
+    <text x="232" y="181" fill="#1e3a8a" font-weight="700">o</text>
+    <text x="268" y="181" fill="#1e3a8a" font-weight="700">l</text>
+    <text x="304" y="181" fill="#1e3a8a" font-weight="700">a</text>
+    <text x="448" y="181" fill="#1d4ed8">│</text>
+    <text x="124" y="211" fill="#1d4ed8">│</text>
+    <text x="448" y="211" fill="#1d4ed8">│</text>
+    <text x="520" y="211" fill="#92400e" font-weight="700">@</text>
+    <text x="124" y="241" fill="#1d4ed8">└</text>
+    <text x="160" y="241" fill="#1d4ed8">─</text>
+    <text x="196" y="241" fill="#1d4ed8">─</text>
+    <text x="232" y="241" fill="#1d4ed8">─</text>
+    <text x="268" y="241" fill="#1d4ed8">─</text>
+    <text x="304" y="241" fill="#1d4ed8">─</text>
+    <text x="340" y="241" fill="#1d4ed8">─</text>
+    <text x="376" y="241" fill="#1d4ed8">─</text>
+    <text x="412" y="241" fill="#1d4ed8">─</text>
+    <text x="448" y="241" fill="#1d4ed8">┘</text>
+  </g>
+  <text x="70" y="310" font-size="13" fill="#111827"><tspan font-family="Menlo, Consolas, monospace">newwin(5, 10, 1, 1)</tspan>: 5 filas y 10 columnas, con su esquina en y=1, x=1.</text>
+  <text x="70" y="332" font-size="13" fill="#111827">La celda (0, 0) es la esquina de arriba a la izquierda.</text>
+</svg>

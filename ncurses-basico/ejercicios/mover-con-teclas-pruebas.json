@@ -1,0 +1,7 @@
+[
+  { "nombre": "derecha, derecha, abajo", "entrada": "ddsq\n", "esperado": "y=1 x=2\ncelda=@\narrobas=1" },
+  { "nombre": "no sale por arriba ni por la izquierda", "entrada": "wwaaq\n", "esperado": "y=0 x=0\ncelda=@\narrobas=1" },
+  { "nombre": "se detiene en el borde de abajo", "entrada": "ssssssssssssq\n", "esperado": "y=9 x=0\ncelda=@\narrobas=1" },
+  { "nombre": "q termina aunque queden teclas", "entrada": "ddqdd\n", "esperado": "y=0 x=2\ncelda=@\narrobas=1" },
+  { "nombre": "sin q termina al acabar la entrada", "entrada": "dsdx\n", "esperado": "y=1 x=2\ncelda=@\narrobas=1" }
+]
