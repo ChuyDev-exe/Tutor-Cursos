@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="250" viewBox="0 0 600 250" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Dependencias de un Makefile con la hora de cada archivo</title>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0 0 10 5 0 10z" fill="#4b5563"/>
+    </marker>
+  </defs>
+  <rect width="600" height="250" rx="10" fill="#f8fafc"/>
+  <g font-size="13" fill="#374151" text-anchor="middle">
+    <text x="95" y="26">fuentes</text>
+    <text x="305" y="26">objetos</text>
+    <text x="510" y="26">ejecutable</text>
+  </g>
+
+  <rect x="20" y="40" width="150" height="58" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+  <text x="95" y="64" text-anchor="middle" font-size="15" font-weight="600" fill="#78350f" font-family="Menlo, Consolas, monospace">main.c</text>
+  <text x="95" y="86" text-anchor="middle" font-size="13" fill="#78350f">modificado 10:05</text>
+
+  <rect x="20" y="140" width="150" height="58" rx="8" fill="#dbeafe" stroke="#3b82f6"/>
+  <text x="95" y="164" text-anchor="middle" font-size="15" font-weight="600" fill="#1e3a8a" font-family="Menlo, Consolas, monospace">suma.s</text>
+  <text x="95" y="186" text-anchor="middle" font-size="13" fill="#1e3a8a">modificado 9:00</text>
+
+  <rect x="230" y="40" width="150" height="58" rx="8" fill="#dbeafe" stroke="#3b82f6"/>
+  <text x="305" y="64" text-anchor="middle" font-size="15" font-weight="600" fill="#1e3a8a" font-family="Menlo, Consolas, monospace">main.o</text>
+  <text x="305" y="86" text-anchor="middle" font-size="13" fill="#1e3a8a">creado 10:00</text>
+
+  <rect x="230" y="140" width="150" height="58" rx="8" fill="#dbeafe" stroke="#3b82f6"/>
+  <text x="305" y="164" text-anchor="middle" font-size="15" font-weight="600" fill="#1e3a8a" font-family="Menlo, Consolas, monospace">suma.o</text>
+  <text x="305" y="186" text-anchor="middle" font-size="13" fill="#1e3a8a">creado 9:30</text>
+
+  <rect x="440" y="90" width="140" height="58" rx="8" fill="#dcfce7" stroke="#22c55e"/>
+  <text x="510" y="114" text-anchor="middle" font-size="15" font-weight="600" fill="#14532d" font-family="Menlo, Consolas, monospace">prog</text>
+  <text x="510" y="136" text-anchor="middle" font-size="13" fill="#14532d">creado 10:01</text>
+
+  <g stroke="#4b5563" stroke-width="2" fill="none" marker-end="url(#a)">
+    <line x1="172" y1="69" x2="226" y2="69"/>
+    <line x1="172" y1="169" x2="226" y2="169"/>
+    <line x1="382" y1="69" x2="436" y2="108"/>
+    <line x1="382" y1="169" x2="436" y2="130"/>
+  </g>
+  <text x="20" y="232" font-size="13" fill="#111827">Cada flecha va de una dependencia al objetivo que se construye con ella.</text>
+</svg>

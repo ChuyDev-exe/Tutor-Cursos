@@ -2,9 +2,9 @@
   "$schema": "../vscode-tutor-ext/schemas/curso.schema.json",
   "id": "ensamblador-c",
   "titulo": "Ensamblador y C: de instrucciones a ejecutables",
-  "descripcion": "Aprende ensamblador desde cero: el pipeline de compilación, la arquitectura x86-64 de Linux y la ABI de ARM64 en macOS, cómo mezclar ensamblador con C, cómo trabaja el enlazador y cómo usar make. Con ejercicios ejecutables en macOS (as, clang, nm, ar, make) y teoría de comandos para GNU/Linux.",
+  "descripcion": "Aprende cómo unas instrucciones en ensamblador se convierten en un ejecutable: el pipeline de compilación, ARM64 en macOS y x86-64 en Linux, la mezcla con C, el enlazador y make. Para quien ya programa en C básico y usa la terminal; los ejercicios se ejecutan en un Mac con chip Apple (arm64).",
   "nivel": "intermedio",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "manual": "MANUAL.md",
   "setup": "setup.sh",
   "requisitos": [
@@ -29,13 +29,44 @@
         "linux": "sudo apt install make",
         "win32": "wsl --install"
       }
+    },
+    {
+      "comando": "clang",
+      "nombre": "Clang (enlaza los programas)",
+      "versionMinima": "12.0",
+      "obligatorio": true,
+      "instalar": {
+        "darwin": "xcode-select --install",
+        "linux": "sudo apt install clang",
+        "win32": "wsl --install"
+      }
+    },
+    {
+      "comando": "as",
+      "nombre": "as (ensamblador)",
+      "obligatorio": true,
+      "instalar": {
+        "darwin": "xcode-select --install",
+        "linux": "sudo apt install binutils",
+        "win32": "wsl --install"
+      }
+    },
+    {
+      "comando": "nm",
+      "nombre": "nm (tabla de símbolos)",
+      "obligatorio": true,
+      "instalar": {
+        "darwin": "xcode-select --install",
+        "linux": "sudo apt install binutils",
+        "win32": "wsl --install"
+      }
     }
   ],
   "capitulos": [
     {
       "id": "c1",
       "titulo": "1. Del código fuente al ejecutable",
-      "descripcion": "Qué hace cada paso del pipeline: as ensambla, nm inspecciona símbolos, clang enlaza y ejecuta. Secciones y símbolos de un archivo objeto.",
+      "descripcion": "Cómo as convierte un .s en un archivo objeto, cómo el enlazador produce el ejecutable y cómo leer secciones y símbolos con nm.",
       "archivo": "capitulos/01-pipeline.md",
       "tags": ["pipeline", "as", "nm", "secciones", "simbolos"],
       "minutos": 20,
@@ -152,13 +183,28 @@
           ],
           "respuesta": 0,
           "explicacion": "objdump -d hace el proceso inverso de as: recupera mnemónicos desde el código máquina. Es la herramienta clásica para inspeccionar qué contiene un binario."
+        },
+        {
+          "id": "c1-q9",
+          "tipo": "arrastrar",
+          "pregunta": "Lleva cada tarea a la herramienta que la hace.",
+          "zonas": ["as", "Enlazador (clang)", "nm", "objdump -d"],
+          "elementos": [
+            { "texto": "Traduce cada mnemónico a bytes", "zona": "as" },
+            { "texto": "Convierte un .s en un .o", "zona": "as" },
+            { "texto": "Resuelve los símbolos entre varios .o", "zona": "Enlazador (clang)" },
+            { "texto": "Escribe el ejecutable Mach-O o ELF", "zona": "Enlazador (clang)" },
+            { "texto": "Lista los símbolos con las letras T y U", "zona": "nm" },
+            { "texto": "Muestra el código máquina otra vez como instrucciones", "zona": "objdump -d" }
+          ],
+          "explicacion": "as solo traduce un archivo .s a un .o. El enlazador une los .o, resuelve los símbolos y escribe el ejecutable. nm lee la tabla de símbolos y objdump -d desensambla."
         }
       ]
     },
     {
       "id": "c2",
       "titulo": "2. x86-64 y la ABI de GNU/Linux",
-      "descripcion": "Registros, pila y convención de llamada System V de x86-64; sintaxis AT&T, formato ELF y los comandos de Linux (as, ld, gcc, readelf). Capítulo teórico: se estudia y se evalúa, sin ejercicios de escritura.",
+      "descripcion": "Capítulo teórico sobre x86-64 en GNU/Linux: registros, pila, convención System V, sintaxis AT&T, formato ELF y sus comandos.",
       "archivo": "capitulos/02-x86-linux.md",
       "tags": ["x86-64", "abi", "sysv", "elf", "att", "linux"],
       "minutos": 18,
@@ -243,13 +289,28 @@
           "opciones": ["12", "7", "5", "2"],
           "respuesta": 0,
           "explicacion": "add %rsi, %rdi suma 7 en rdi (rdi=12). Luego mov %rdi, %rax copia 12 a rax, el registro de retorno."
+        },
+        {
+          "id": "c2-q9",
+          "tipo": "arrastrar",
+          "pregunta": "En x86-64 con la ABI System V, lleva cada registro a su función principal.",
+          "zonas": ["Argumento entero", "Valor de retorno", "Pila"],
+          "elementos": [
+            { "texto": "rdi", "zona": "Argumento entero" },
+            { "texto": "rsi", "zona": "Argumento entero" },
+            { "texto": "rdx", "zona": "Argumento entero" },
+            { "texto": "rax", "zona": "Valor de retorno" },
+            { "texto": "rsp", "zona": "Pila" },
+            { "texto": "rbp", "zona": "Pila" }
+          ],
+          "explicacion": "Los argumentos enteros van en rdi, rsi, rdx, rcx, r8 y r9, en ese orden. El resultado vuelve en rax. rsp apunta a la cima de la pila y rbp a la base del marco."
         }
       ]
     },
     {
       "id": "c3",
       "titulo": "3. Tu primer programa en ARM64",
-      "descripcion": "Registros de AArch64, prólogo y epílogo con x29/x30, etiquetas, adr/adrp y llamadas a printf y scanf con la convención de argumentos de macOS.",
+      "descripcion": "Tu primer programa AArch64 en macOS: registros, prólogo y epílogo con x29 y x30, adrp y add, y llamadas a printf y scanf.",
       "archivo": "capitulos/03-arm64-macos.md",
       "tags": ["arm64", "aarch64", "prologo", "printf", "scanf", "abi"],
       "minutos": 25,
@@ -369,13 +430,28 @@
           ],
           "respuesta": 0,
           "explicacion": "w y x nombran las dos vistas del mismo registro: w son los 32 bits bajos. Escribir en w1 pone a cero la parte alta de x1."
+        },
+        {
+          "id": "c3-q9",
+          "tipo": "arrastrar",
+          "pregunta": "En AArch64, lleva cada registro a su grupo según lo que pasa después de una llamada con bl.",
+          "zonas": ["Volátil", "Callee-saved"],
+          "elementos": [
+            { "texto": "x0", "zona": "Volátil" },
+            { "texto": "x8", "zona": "Volátil" },
+            { "texto": "x18", "zona": "Volátil" },
+            { "texto": "x19", "zona": "Callee-saved" },
+            { "texto": "x28", "zona": "Callee-saved" },
+            { "texto": "x30", "zona": "Callee-saved" }
+          ],
+          "explicacion": "x0 a x18 son volátiles: la función llamada puede cambiarlos. x19 a x28, x29 y x30 son callee-saved: si una función los usa, debe guardarlos y restaurarlos. Por eso el prólogo guarda x29 y x30."
         }
       ]
     },
     {
       "id": "c4",
       "titulo": "4. Agregar ensamblador a C",
-      "descripcion": "Dos direcciones de mezcla: C llama a funciones escritas en ensamblador y el ensamblador llama a funciones de C. Ensamblador en línea con __asm__, y archivos .s aparte compilados con gcc -c.",
+      "descripcion": "Mezclar C y ensamblador en las dos direcciones, con __asm__ en línea y con archivos .s compilados aparte con gcc -c.",
       "archivo": "capitulos/04-asm-y-c.md",
       "tags": ["c", "asm", "inline", "extern", "simbolos", "gcc -c"],
       "minutos": 25,
@@ -489,13 +565,28 @@
           "opciones": ["5", "2", "3", "Error de compilación"],
           "respuesta": 0,
           "explicacion": "x0=2 (primer argumento), x1=3; add deja 5 en x0, que es el registro de retorno. printf recibe 5."
+        },
+        {
+          "id": "c4-q9",
+          "tipo": "arrastrar",
+          "pregunta": "Con la regla de este curso (C lee la entrada y el ensamblador solo calcula), lleva cada línea al archivo donde va.",
+          "zonas": ["main.c", "suma.s"],
+          "elementos": [
+            { "texto": "int suma(int, int);", "zona": "main.c" },
+            { "texto": "scanf(\"%d %d\", &a, &b);", "zona": "main.c" },
+            { "texto": "printf(\"%d\\n\", suma(a, b));", "zona": "main.c" },
+            { "texto": ".globl _suma", "zona": "suma.s" },
+            { "texto": "add x0, x0, x1", "zona": "suma.s" },
+            { "texto": "ret", "zona": "suma.s" }
+          ],
+          "explicacion": "C declara el prototipo, lee con scanf e imprime con printf. El archivo .s hace visible _suma con .globl, suma los argumentos que llegan en x0 y x1 y vuelve con ret."
         }
       ]
     },
     {
       "id": "c5",
       "titulo": "5. El enlazador y las bibliotecas",
-      "descripcion": "Qué resuelve ld: símbolos definidos y externos, errores típicos (undefined y duplicate symbol), bibliotecas estáticas con ar y opciones -L y -l.",
+      "descripcion": "Qué resuelve el enlazador, cómo leer los errores Undefined symbols y duplicate symbol, y cómo crear y usar bibliotecas estáticas con ar, -L y -l.",
       "archivo": "capitulos/05-linker.md",
       "tags": ["ld", "enlazador", "ar", "bibliotecas", "undefined", "duplicate"],
       "minutos": 20,
@@ -620,13 +711,29 @@
           "pregunta": "El enlazador produce el archivo final (executable o biblioteca) a partir de uno o más archivos objeto y bibliotecas.",
           "respuesta": true,
           "explicacion": "Ese es su trabajo: transformar .o independientes en un programa completo con todas las referencias resueltas."
+        },
+        {
+          "id": "c5-q9",
+          "tipo": "arrastrar",
+          "pregunta": "Lleva cada situación al resultado que da el enlazador.",
+          "imagen": "img/enlazador.svg",
+          "zonas": ["Undefined symbols", "duplicate symbol", "Enlaza bien"],
+          "elementos": [
+            { "texto": "clang main.o -o prog, y _suma solo está en suma.o", "zona": "Undefined symbols" },
+            { "texto": "clang main.o -lsuma -o prog, sin -L.", "zona": "Undefined symbols" },
+            { "texto": "a.o y b.o definen los dos _dup", "zona": "duplicate symbol" },
+            { "texto": "Enlazas dos .o que definen _suma", "zona": "duplicate symbol" },
+            { "texto": "clang main.o suma.o -o prog", "zona": "Enlaza bien" },
+            { "texto": "clang main.o -L. -lsuma -o prog, con libsuma.a en la carpeta", "zona": "Enlaza bien" }
+          ],
+          "explicacion": "Undefined symbols aparece cuando un U no encuentra su T: falta el .o o falta -L. para encontrar la biblioteca. duplicate symbol aparece cuando dos archivos definen el mismo símbolo."
         }
       ]
     },
     {
       "id": "c6",
       "titulo": "6. make y portabilidad",
-      "descripcion": "Makefiles con reglas y dependencias, el requisito de las tabulaciones, objetivos personalizados, y las diferencias entre ELF de Linux y Mach-O de macOS, con una tabla de comandos para ambos sistemas.",
+      "descripcion": "Makefiles con reglas, dependencias y tabuladores, y las diferencias entre ELF y Mach-O y entre x86-64 y arm64.",
       "archivo": "capitulos/06-make-portabilidad.md",
       "tags": ["make", "makefile", "elf", "mach-o", "portabilidad", "comandos"],
       "minutos": 20,
@@ -681,8 +788,9 @@
           "id": "c6-q2",
           "tipo": "vf",
           "pregunta": "Si solo cambias main.c y vuelves a ejecutar make, make recompila main.o y reenlaza, pero no recompila suma.o.",
+          "imagen": "img/make-dependencias.svg",
           "respuesta": true,
-          "explicacion": "make compara fechas: suma.o es más reciente que suma.c, así que no hace nada con él. Esa es su utilidad: reconstruir solo lo que cambió."
+          "explicacion": "make compara fechas: suma.o es más reciente que su fuente, suma.s, así que no hace nada con él. Esa es su utilidad: reconstruir solo lo que cambió."
         },
         {
           "id": "c6-q3",
@@ -745,6 +853,21 @@
           ],
           "respuesta": 0,
           "explicacion": "Los objetivos no tienen por qué ser archivos: simbolos puede ejecutar nm y otras utilidades como inspección rápida."
+        },
+        {
+          "id": "c6-q9",
+          "tipo": "arrastrar",
+          "pregunta": "Según la tabla del capítulo, lleva cada detalle al sistema al que corresponde.",
+          "zonas": ["macOS", "GNU/Linux"],
+          "elementos": [
+            { "texto": "Formato Mach-O", "zona": "macOS" },
+            { "texto": "Formato ELF", "zona": "GNU/Linux" },
+            { "texto": "La función suma aparece como _suma", "zona": "macOS" },
+            { "texto": "La función suma aparece como suma", "zona": "GNU/Linux" },
+            { "texto": "La biblioteca matemática ya está enlazada", "zona": "macOS" },
+            { "texto": "Hay que añadir -lm al final para la biblioteca matemática", "zona": "GNU/Linux" }
+          ],
+          "explicacion": "macOS usa Mach-O y pone un guion bajo delante de los símbolos de C. GNU/Linux usa ELF, sin guion bajo, y necesita -lm para las funciones matemáticas."
         }
       ]
     }

@@ -38,6 +38,10 @@ En macOS los nombres C llevan un guion bajo. La función `suma` aparece como `_s
 
 Si en tu `.o` aparece `U _printf`, tu código llama a `printf` y otra pieza tendrá que definirla al enlazar.
 
+![El enlazador une cada símbolo U de main.o con su definición T: _suma en suma.o y _printf en la biblioteca del sistema](../img/enlazador.svg)
+
+Cada `U` de `main.o` tiene que encontrar una `T` en otra pieza. Si alguna no la encuentra, aparece el error de la sección siguiente.
+
 ## El error Undefined symbols
 
 Cuando el enlazador termina y queda alguna referencia sin resolver, el mensaje es este:

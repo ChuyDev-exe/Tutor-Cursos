@@ -15,6 +15,10 @@ as f.s -o f.o && clang f.o -o f && ./f
 
 El primer comando crea `f.o`. El segundo crea `f`, el programa ejecutable. El tercero lo ejecuta.
 
+![Pipeline: hola.s pasa por as a hola.o; el enlazador (clang) lo une con las bibliotecas del sistema y escribe el ejecutable](../img/pipeline.svg)
+
+En la imagen, `nm` y `objdump -d` no cambian nada: solo leen el `.o` para inspeccionarlo.
+
 ## Qué hace `as`
 
 `as` es el ensamblador. Recibe un archivo `.s` y escribe un archivo `.o` con las instrucciones ya convertidas a bytes. Esa traducción es literal: cada mnemónico se convierte en sus bytes. `as` no busca bibliotecas ni llama a C. Solo traduce un archivo. El `.o` tiene código máquina, pero todavía no es un programa: falta el segundo paso.

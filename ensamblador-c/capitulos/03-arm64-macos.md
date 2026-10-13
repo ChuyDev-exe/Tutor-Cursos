@@ -41,6 +41,10 @@ _main:
 
 `stp` guarda dos registros de una vez y `ldp` los restaura. `add x29, sp, #32` deja `x29` apuntando a los dos valores guardados. `mov w0, #0` devuelve el código de salida 0 al sistema.
 
+![Marco de pila de _main tras el prólogo: x30 en sp+40, x29 en sp+32, la variable n en x29−4 y los argumentos variádicos en sp+0 y sp+8](../img/marco-arm64.svg)
+
+La imagen muestra los 48 bytes que reserva el prólogo del programa de la sección siguiente. Las direcciones altas están arriba. `sp` apunta a la parte baja del marco y `x29`, a los dos registros guardados.
+
 ## Etiquetas
 
 Una etiqueta es un nombre que marca una posición, como `fin:`. Se usa para saltar con `b` o con `b.ne`, que salta si las dos últimas comparadas con `cmp` no son iguales. Los dos puntos van solo al definir la etiqueta; al saltar a ella no se escriben.

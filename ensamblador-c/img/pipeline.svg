@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="300" viewBox="0 0 680 300" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Pipeline: hola.s pasa por as a hola.o y el enlazador produce el ejecutable</title>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0 0 10 5 0 10z" fill="#4b5563"/>
+    </marker>
+  </defs>
+  <rect width="680" height="300" rx="10" fill="#f8fafc"/>
+  <g text-anchor="middle" font-size="13">
+    <rect x="20" y="40" width="150" height="104" rx="8" fill="#dbeafe" stroke="#3b82f6"/>
+    <text x="95" y="72" fill="#1e3a8a" font-size="15" font-weight="600">hola.s</text>
+    <text x="95" y="96" fill="#1e3a8a">texto en</text>
+    <text x="95" y="114" fill="#1e3a8a">ensamblador</text>
+
+    <rect x="260" y="40" width="170" height="104" rx="8" fill="#fef3c7" stroke="#f59e0b"/>
+    <text x="345" y="66" fill="#78350f" font-size="15" font-weight="600">hola.o</text>
+    <text x="345" y="88" fill="#78350f">archivo objeto:</text>
+    <text x="345" y="106" fill="#78350f">código máquina</text>
+    <text x="345" y="124" fill="#78350f">+ secciones y símbolos</text>
+
+    <rect x="520" y="40" width="140" height="104" rx="8" fill="#dcfce7" stroke="#22c55e"/>
+    <text x="590" y="72" fill="#14532d" font-size="15" font-weight="600">hola</text>
+    <text x="590" y="96" fill="#14532d">ejecutable</text>
+    <text x="590" y="114" fill="#14532d">Mach-O (macOS)</text>
+    <text x="590" y="132" fill="#14532d">ELF (Linux)</text>
+
+    <text x="214" y="60" fill="#111827" font-weight="600" font-family="Menlo, Consolas, monospace">as</text>
+    <text x="214" y="78" fill="#374151">ensambla</text>
+    <text x="474" y="60" fill="#111827" font-weight="600" font-family="Menlo, Consolas, monospace">clang</text>
+    <text x="474" y="78" fill="#374151">enlaza</text>
+
+    <rect x="390" y="200" width="170" height="60" rx="8" fill="#e5e7eb" stroke="#6b7280"/>
+    <text x="475" y="224" fill="#1f2937">bibliotecas</text>
+    <text x="475" y="244" fill="#1f2937">del sistema: _printf</text>
+  </g>
+  <g stroke="#4b5563" stroke-width="2" fill="none" marker-end="url(#a)">
+    <line x1="172" y1="92" x2="256" y2="92"/>
+    <line x1="432" y1="92" x2="516" y2="92"/>
+    <line x1="475" y1="198" x2="475" y2="100"/>
+  </g>
+  <path d="M185 198 L330 148" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="5 4" fill="none"/>
+  <rect x="20" y="200" width="330" height="82" rx="8" fill="#ede9fe" stroke="#7c3aed"/>
+  <g font-size="13" fill="#3b0764">
+    <text x="34" y="222" font-weight="600">Inspeccionar el .o</text>
+    <text x="34" y="244"><tspan font-family="Menlo, Consolas, monospace">nm hola.o</tspan>: lista los símbolos (T, U)</text>
+    <text x="34" y="266"><tspan font-family="Menlo, Consolas, monospace">objdump -d hola.o</tspan>: vuelve a instrucciones</text>
+  </g>
+</svg>

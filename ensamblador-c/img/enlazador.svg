@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="320" viewBox="0 0 680 320" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>El enlazador une cada símbolo U con su definición T</title>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0 0 10 5 0 10z" fill="#4b5563"/>
+    </marker>
+    <marker id="v" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0 0 10 5 0 10z" fill="#15803d"/>
+    </marker>
+  </defs>
+  <rect width="680" height="320" rx="10" fill="#f8fafc"/>
+
+  <rect x="20" y="40" width="190" height="120" rx="8" fill="#fef3c7" stroke="#f59e0b"/>
+  <text x="115" y="64" text-anchor="middle" font-size="15" font-weight="600" fill="#78350f">main.o</text>
+  <g font-size="14" font-family="Menlo, Consolas, monospace" fill="#78350f">
+    <text x="40" y="90">T _main</text>
+    <text x="40" y="114">U _suma</text>
+    <text x="40" y="138">U _printf</text>
+  </g>
+
+  <rect x="290" y="40" width="190" height="64" rx="8" fill="#dbeafe" stroke="#3b82f6"/>
+  <text x="385" y="64" text-anchor="middle" font-size="15" font-weight="600" fill="#1e3a8a">suma.o</text>
+  <text x="310" y="90" font-size="14" font-family="Menlo, Consolas, monospace" fill="#1e3a8a">T _suma</text>
+
+  <rect x="290" y="124" width="190" height="64" rx="8" fill="#e5e7eb" stroke="#6b7280"/>
+  <text x="385" y="148" text-anchor="middle" font-size="14" font-weight="600" fill="#1f2937">biblioteca del sistema</text>
+  <text x="310" y="174" font-size="14" font-family="Menlo, Consolas, monospace" fill="#1f2937">T _printf</text>
+
+  <g stroke="#15803d" stroke-width="2" stroke-dasharray="6 4" fill="none" marker-end="url(#v)">
+    <path d="M150 110 C230 110 230 86 300 86"/>
+    <path d="M168 134 C240 134 240 170 300 170"/>
+  </g>
+
+  <rect x="500" y="40" width="165" height="148" rx="8" fill="#ffffff" stroke="#9ca3af"/>
+  <g font-size="13" fill="#111827">
+    <text x="512" y="64"><tspan font-weight="700" font-family="Menlo, Consolas, monospace">T</tspan>  definido en</text>
+    <text x="512" y="82">    este archivo</text>
+    <text x="512" y="108"><tspan font-weight="700" font-family="Menlo, Consolas, monospace">U</tspan>  se usa aquí,</text>
+    <text x="512" y="126">    lo define otro</text>
+    <text x="512" y="152" fill="#b91c1c">U sin definición:</text>
+    <text x="512" y="170" fill="#b91c1c">Undefined symbols</text>
+  </g>
+
+  <g stroke="#4b5563" stroke-width="2" fill="none" marker-end="url(#a)">
+    <line x1="115" y1="162" x2="200" y2="226"/>
+    <line x1="385" y1="190" x2="300" y2="226"/>
+    <line x1="382" y1="258" x2="466" y2="258"/>
+  </g>
+
+  <rect x="120" y="230" width="260" height="58" rx="8" fill="#ede9fe" stroke="#7c3aed"/>
+  <text x="250" y="254" text-anchor="middle" font-size="15" font-weight="600" fill="#3b0764">Enlazador (clang)</text>
+  <text x="250" y="276" text-anchor="middle" font-size="13" fill="#3b0764">une los .o y resuelve cada U</text>
+
+  <rect x="470" y="230" width="190" height="58" rx="8" fill="#dcfce7" stroke="#22c55e"/>
+  <text x="565" y="254" text-anchor="middle" font-size="15" font-weight="600" fill="#14532d">prog</text>
+  <text x="565" y="276" text-anchor="middle" font-size="13" fill="#14532d">ejecutable sin huecos</text>
+</svg>
