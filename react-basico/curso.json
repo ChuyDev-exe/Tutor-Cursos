@@ -2,9 +2,9 @@
   "$schema": "../vscode-tutor-ext/schemas/curso.schema.json",
   "id": "react-basico",
   "titulo": "React desde cero",
-  "descripcion": "Aprende React de lo básico a lo avanzado: elementos, componentes, props, estado, listas, hooks, contexto, formularios, rendimiento y conciliación, con ejercicios y evaluaciones en JavaScript puro, sin instalar paquetes.",
+  "descripcion": "Aprende cómo funciona React por dentro: elementos, componentes, estado, hooks, contexto, formularios y conciliación, con un mini React en JavaScript puro y sin instalar paquetes. Para quien ya sabe JavaScript básico (funciones, arrays y objetos) y empieza con React.",
   "nivel": "principiante",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "manual": "MANUAL.md",
   "setup": "setup.sh",
   "requisitos": [
@@ -159,13 +159,47 @@
             1
           ],
           "explicacion": "El tipo es la etiqueta (cadena) o el componente (función). Un número o una lista no dicen qué elemento crear."
+        },
+        {
+          "id": "c1-q9",
+          "tipo": "arrastrar",
+          "pregunta": "En esta llamada a h(), lleva cada parte al lugar que ocupa en el elemento.",
+          "codigo": "h(Saludo, { nombre: \"Ana\", className: \"grande\" }, \"¡Hola!\", h(\"b\", {}, \"hoy\"))",
+          "zonas": [
+            "type",
+            "props",
+            "children"
+          ],
+          "elementos": [
+            {
+              "texto": "Saludo",
+              "zona": "type"
+            },
+            {
+              "texto": "nombre: \"Ana\"",
+              "zona": "props"
+            },
+            {
+              "texto": "className: \"grande\"",
+              "zona": "props"
+            },
+            {
+              "texto": "\"¡Hola!\"",
+              "zona": "children"
+            },
+            {
+              "texto": "h(\"b\", {}, \"hoy\")",
+              "zona": "children"
+            }
+          ],
+          "explicacion": "El primer argumento de h() es el type, el segundo es el objeto props y todo lo que sigue son los children."
         }
       ]
     },
     {
       "id": "c2",
       "titulo": "2. Componentes, props y composición",
-      "descripcion": "Un componente es una función que recibe props y devuelve elementos. Se componen entre sí.",
+      "descripcion": "Un componente es una función que recibe props y devuelve elementos, y los componentes se combinan entre sí.",
       "archivo": "capitulos/02-componentes-props.md",
       "tags": [
         "componentes",
@@ -307,13 +341,50 @@
             "la prop children"
           ],
           "explicacion": "children reúne lo que el componente envuelve; suele llegar como array."
+        },
+        {
+          "id": "c2-q9",
+          "tipo": "arrastrar",
+          "pregunta": "En este árbol, lleva cada type a lo que es.",
+          "codigo": "h(App, {},\n  h(Tarjeta, { titulo: \"Hola\" },\n    h(\"div\", { className: \"tarjeta\" },\n      h(\"h2\", {}, \"Hola\"),\n      h(Cuerpo, {}, h(\"p\", {}, \"Bienvenida\")))))",
+          "zonas": [
+            "Componente (función)",
+            "Etiqueta HTML (texto)"
+          ],
+          "elementos": [
+            {
+              "texto": "App",
+              "zona": "Componente (función)"
+            },
+            {
+              "texto": "Tarjeta",
+              "zona": "Componente (función)"
+            },
+            {
+              "texto": "Cuerpo",
+              "zona": "Componente (función)"
+            },
+            {
+              "texto": "\"div\"",
+              "zona": "Etiqueta HTML (texto)"
+            },
+            {
+              "texto": "\"h2\"",
+              "zona": "Etiqueta HTML (texto)"
+            },
+            {
+              "texto": "\"p\"",
+              "zona": "Etiqueta HTML (texto)"
+            }
+          ],
+          "explicacion": "Si el type es una función, es un componente: renderToString la llama con sus props. Si es un texto, es una etiqueta HTML."
         }
       ]
     },
     {
       "id": "c3",
       "titulo": "3. Estado: useState y useReducer",
-      "descripcion": "El estado cambia con el tiempo. Reglas: nunca mutarlo; un reducer recibe estado y acción y devuelve el nuevo estado.",
+      "descripcion": "Qué es el estado, por qué nunca se modifica directamente y cómo un reducer calcula el siguiente valor a partir de una acción.",
       "archivo": "capitulos/03-estado.md",
       "tags": [
         "estado",
@@ -446,6 +517,42 @@
           "pregunta": "Un reducer es una función pura: con las mismas acciones, en el mismo orden, produce siempre el mismo estado final.",
           "respuesta": true,
           "explicacion": "Por eso un reducer no lee el reloj, no hace peticiones y no modifica lo que recibe: solo calcula el siguiente estado."
+        },
+        {
+          "id": "c3-q9",
+          "tipo": "arrastrar",
+          "pregunta": "Lleva cada línea según cómo trata al estado.",
+          "zonas": [
+            "Muta el estado",
+            "Crea un valor nuevo"
+          ],
+          "elementos": [
+            {
+              "texto": "estado.contador = estado.contador + 1",
+              "zona": "Muta el estado"
+            },
+            {
+              "texto": "estado.contador++",
+              "zona": "Muta el estado"
+            },
+            {
+              "texto": "estado.visible = !estado.visible",
+              "zona": "Muta el estado"
+            },
+            {
+              "texto": "{ ...estado, contador: estado.contador + 1 }",
+              "zona": "Crea un valor nuevo"
+            },
+            {
+              "texto": "{ ...estado, visible: !estado.visible }",
+              "zona": "Crea un valor nuevo"
+            },
+            {
+              "texto": "return estado + 1; (en un reducer de números)",
+              "zona": "Crea un valor nuevo"
+            }
+          ],
+          "explicacion": "Asignar a una propiedad modifica el mismo objeto y React no ve el cambio. El spread { ...estado } y las operaciones que devuelven un valor crean uno nuevo."
         }
       ]
     },
@@ -592,6 +699,42 @@
             "map()"
           ],
           "explicacion": "map recorre el array original y devuelve otro con los resultados, sin tocar el primero."
+        },
+        {
+          "id": "c4-q9",
+          "tipo": "arrastrar",
+          "pregunta": "Lleva cada key según si identifica bien a cada elemento de la lista.",
+          "zonas": [
+            "Key estable",
+            "Key problemática"
+          ],
+          "elementos": [
+            {
+              "texto": "key: tarea.id",
+              "zona": "Key estable"
+            },
+            {
+              "texto": "key: usuario.correo (único por usuario)",
+              "zona": "Key estable"
+            },
+            {
+              "texto": "key: texto, en una lista sin textos repetidos",
+              "zona": "Key estable"
+            },
+            {
+              "texto": "key: \"fila\" en todos los elementos",
+              "zona": "Key problemática"
+            },
+            {
+              "texto": "key: Math.random()",
+              "zona": "Key problemática"
+            },
+            {
+              "texto": "key: texto, en una lista con textos repetidos",
+              "zona": "Key problemática"
+            }
+          ],
+          "explicacion": "Una buena key sale del propio dato, es única en la lista y no cambia entre renders. Una key repetida o que cambia en cada render impide a React saber quién es quién."
         }
       ]
     },
@@ -751,6 +894,42 @@
             2
           ],
           "explicacion": "ejecutar imprime el HTML de cada render, empezando por el inicial y siguiendo tras cada evento. Convertir las líneas es tarea de parsearEventos."
+        },
+        {
+          "id": "c5-q9",
+          "tipo": "arrastrar",
+          "pregunta": "Lleva cada fragmento según si cumple las reglas de los hooks.",
+          "zonas": [
+            "Cumple las reglas",
+            "Rompe las reglas"
+          ],
+          "elementos": [
+            {
+              "texto": "const [n, setN] = useState(0); al principio del componente",
+              "zona": "Cumple las reglas"
+            },
+            {
+              "texto": "Dos useState seguidos, siempre en el mismo orden",
+              "zona": "Cumple las reglas"
+            },
+            {
+              "texto": "onClick: () => setN((x) => x + 1)",
+              "zona": "Cumple las reglas"
+            },
+            {
+              "texto": "if (visible) { const [x, setX] = useState(0); }",
+              "zona": "Rompe las reglas"
+            },
+            {
+              "texto": "for (const t of tareas) { useState(t); }",
+              "zona": "Rompe las reglas"
+            },
+            {
+              "texto": "onClick: () => { const [a] = useState(1); }",
+              "zona": "Rompe las reglas"
+            }
+          ],
+          "explicacion": "Los hooks se llaman siempre en el mismo orden, al principio del componente; nunca dentro de un if, un bucle ni una función anidada. Llamar a setN dentro de un manejador sí está permitido: setN no es un hook."
         }
       ]
     },
@@ -911,6 +1090,43 @@
             2
           ],
           "explicacion": "Esas son las tres formas. Una lista de dependencias es un array: un número no sirve como lista."
+        },
+        {
+          "id": "c6-q9",
+          "tipo": "arrastrar",
+          "pregunta": "Lleva cada caso a la lista de dependencias que le corresponde.",
+          "zonas": [
+            "Lista vacía: []",
+            "Con dependencia: [n]",
+            "Sin lista"
+          ],
+          "elementos": [
+            {
+              "texto": "Corre solo al montar, la primera vez",
+              "zona": "Lista vacía: []"
+            },
+            {
+              "texto": "Imprimir «montado» una sola vez",
+              "zona": "Lista vacía: []"
+            },
+            {
+              "texto": "Corre al montar y cada vez que n cambia",
+              "zona": "Con dependencia: [n]"
+            },
+            {
+              "texto": "Imprimir «valor: n» cuando el contador cambia",
+              "zona": "Con dependencia: [n]"
+            },
+            {
+              "texto": "Corre después de cada render",
+              "zona": "Sin lista"
+            },
+            {
+              "texto": "Registrar en la consola todos los renders",
+              "zona": "Sin lista"
+            }
+          ],
+          "explicacion": "[] ejecuta el efecto solo al montar. [n] lo ejecuta al montar y cuando n cambia (comparado con Object.is). Sin lista, corre tras cada render."
         }
       ]
     },
@@ -1065,6 +1281,40 @@
           ],
           "respuesta": 0,
           "explicacion": "Sin Provider arriba, useContext devuelve el valor por defecto del contexto."
+        },
+        {
+          "id": "c7-q9",
+          "tipo": "arrastrar",
+          "pregunta": "Lleva cada consumidor al valor que lee con useContext(Tema).",
+          "codigo": "const Tema = createContext(\"claro\");\n\nh(\"main\", {},\n  h(ConsumidorA, {}),\n  h(Tema.Provider, { value: \"oscuro\" },\n    h(ConsumidorB, {}),\n    h(Tema.Provider, { value: \"verde\" },\n      h(ConsumidorC, {}),\n      h(\"div\", {}, h(ConsumidorD, {}))),\n    h(ConsumidorE, {})))",
+          "zonas": [
+            "claro",
+            "oscuro",
+            "verde"
+          ],
+          "elementos": [
+            {
+              "texto": "ConsumidorA",
+              "zona": "claro"
+            },
+            {
+              "texto": "ConsumidorB",
+              "zona": "oscuro"
+            },
+            {
+              "texto": "ConsumidorC",
+              "zona": "verde"
+            },
+            {
+              "texto": "ConsumidorD",
+              "zona": "verde"
+            },
+            {
+              "texto": "ConsumidorE",
+              "zona": "oscuro"
+            }
+          ],
+          "explicacion": "Cada consumidor lee el Provider más cercano por encima. A no tiene ninguno y lee el valor por defecto, \"claro\". D está dentro de un div, pero su Provider más cercano sigue siendo el de \"verde\"."
         }
       ]
     },
@@ -1223,6 +1473,43 @@
             2
           ],
           "explicacion": "Memorizar cuesta comparaciones: se hace cuando hay un problema medible. Un literal fijo no se recalcula y no necesita memo."
+        },
+        {
+          "id": "c8-q9",
+          "tipo": "arrastrar",
+          "pregunta": "Lleva cada necesidad al hook que la resuelve.",
+          "zonas": [
+            "useMemo",
+            "useCallback",
+            "useRef"
+          ],
+          "elementos": [
+            {
+              "texto": "Guardar el resultado de un cálculo caro",
+              "zona": "useMemo"
+            },
+            {
+              "texto": "Filtrar una lista larga solo cuando cambia el texto",
+              "zona": "useMemo"
+            },
+            {
+              "texto": "Mantener la misma función entre renders",
+              "zona": "useCallback"
+            },
+            {
+              "texto": "Un manejador que se pasa a un hijo con React.memo",
+              "zona": "useCallback"
+            },
+            {
+              "texto": "Guardar el valor anterior sin provocar un render",
+              "zona": "useRef"
+            },
+            {
+              "texto": "Un objeto { current } que persiste entre renders",
+              "zona": "useRef"
+            }
+          ],
+          "explicacion": "useMemo guarda un valor calculado, useCallback guarda una función y useRef guarda un objeto mutable que no provoca renders al cambiar."
         }
       ]
     },
@@ -1381,6 +1668,42 @@
             3
           ],
           "explicacion": "La reutilización y la separación son el objetivo. Dentro del hook siguen prohibidas las llamadas condicionales."
+        },
+        {
+          "id": "c9-q9",
+          "tipo": "arrastrar",
+          "pregunta": "Lleva cada característica a lo que describe: un hook personalizado o un componente.",
+          "zonas": [
+            "Hook personalizado",
+            "Componente"
+          ],
+          "elementos": [
+            {
+              "texto": "Su nombre empieza por use",
+              "zona": "Hook personalizado"
+            },
+            {
+              "texto": "Devuelve { n, sumar, restar }",
+              "zona": "Hook personalizado"
+            },
+            {
+              "texto": "Reúne estado y manejadores para reutilizarlos",
+              "zona": "Hook personalizado"
+            },
+            {
+              "texto": "Devuelve elementos creados con h(...)",
+              "zona": "Componente"
+            },
+            {
+              "texto": "Decide cómo se ve algo en pantalla",
+              "zona": "Componente"
+            },
+            {
+              "texto": "Se pasa como type a h()",
+              "zona": "Componente"
+            }
+          ],
+          "explicacion": "Un hook personalizado devuelve datos y funciones, y su nombre empieza por use. Un componente devuelve elementos y se usa como type de h()."
         }
       ]
     },
@@ -1695,6 +2018,42 @@
           ],
           "respuesta": 0,
           "explicacion": "El límite de errores solo captura errores de render. Los errores de eventos, callbacks y promesas hay que capturarlos a mano con try/catch en ese mismo código."
+        },
+        {
+          "id": "c11-q9",
+          "tipo": "arrastrar",
+          "pregunta": "Entre un render y el siguiente, ¿qué hace React con el nodo del DOM en cada caso?",
+          "zonas": [
+            "Conserva el nodo",
+            "Elimina y crea uno nuevo"
+          ],
+          "elementos": [
+            {
+              "texto": "h(\"div\", {}, \"uno\") → h(\"div\", {}, \"dos\")",
+              "zona": "Conserva el nodo"
+            },
+            {
+              "texto": "h(\"p\", { className: \"a\" }) → h(\"p\", { className: \"b\" })",
+              "zona": "Conserva el nodo"
+            },
+            {
+              "texto": "li con key \"a\" que cambia de posición en la lista",
+              "zona": "Conserva el nodo"
+            },
+            {
+              "texto": "h(\"div\") → h(\"section\")",
+              "zona": "Elimina y crea uno nuevo"
+            },
+            {
+              "texto": "h(Fila) → h(Tarjeta)",
+              "zona": "Elimina y crea uno nuevo"
+            },
+            {
+              "texto": "li con key \"a\" que pasa a tener key \"b\"",
+              "zona": "Elimina y crea uno nuevo"
+            }
+          ],
+          "explicacion": "Con el mismo type, React conserva el nodo y solo actualiza las props. Si el type cambia, lo reemplaza. La key identifica al hijo: si se mantiene, React lo mueve; si cambia, lo trata como un elemento distinto."
         }
       ]
     }

@@ -60,7 +60,7 @@ const Fila = React.memo(function Fila({ nombre }) {
 
 La comparación superficial mira cada prop con `Object.is`. No entra dentro de los objetos ni de los arrays.
 
-Convienne cuando el componente es caro o se repite con las mismas props. No conviene cuando las props cambian siempre: un objeto o función creado en cada render falla la comparación siempre. Tampoco conviene en componentes pequeños, porque la comparación cuesta tanto como el render.
+Conviene cuando el componente es caro o se repite con las mismas props. No conviene cuando las props cambian siempre: un objeto o función creado en cada render falla la comparación siempre. Tampoco conviene en componentes pequeños, porque la comparación cuesta tanto como el render.
 
 `PureComponent` es la misma idea en componentes de clase: compara props y estado antes de pintar.
 
@@ -119,7 +119,7 @@ h(Suspense, { fallback: h("p", {}, "Cargando...") }, h(Pesado));
 
 Mientras carga, se muestra el `fallback`.
 
-## Cuándo preocarte por el rendimiento
+## Cuándo preocuparte por el rendimiento
 
 | Situación | ¿Preocuparte? |
 | --- | --- |
