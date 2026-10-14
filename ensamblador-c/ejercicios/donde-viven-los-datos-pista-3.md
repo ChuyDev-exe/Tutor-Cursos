@@ -1,0 +1,1 @@
+Las constantes (`const char[]`) caen en `__TEXT,__const`, que es un segmento de solo lectura. Las inicializadas van a `__DATA,__data` y las declaradas sin valor a `__DATA,__common`, la `.bss` de Mach-O.

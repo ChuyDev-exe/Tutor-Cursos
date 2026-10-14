@@ -1,0 +1,5 @@
+[
+  { "nombre": "solo llama a _usada", "entrada": "usada\n", "esperado": "sin descarte: _hueca _usada\ncon descarte: _usada" },
+  { "nombre": "solo llama a _hueca", "entrada": "hueca\n", "esperado": "sin descarte: _hueca _usada\ncon descarte: _hueca" },
+  { "nombre": "llama a las dos", "entrada": "ambas\n", "esperado": "sin descarte: _hueca _usada\ncon descarte: _hueca _usada" }
+]

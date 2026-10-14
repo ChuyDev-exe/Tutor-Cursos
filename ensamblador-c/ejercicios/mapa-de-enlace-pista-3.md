@@ -1,0 +1,1 @@
+El mapa se pide al enlazador con `-Wl,-map,archivo` (la parte de después de la coma es el nombre del mapa). En el bloque `# Sections` cada línea tiene dirección, tamaño, segmento y sección: con `awk '$4=="__text"{print $3" "$4}'` te quedas con segmento y sección.

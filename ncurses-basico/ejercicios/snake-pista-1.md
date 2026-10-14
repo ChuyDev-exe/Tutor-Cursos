@@ -1,0 +1,1 @@
+El estado es el array `segmentos`: `segmentos[0]` es la cabeza. Mover sin comer es desplazar desde el final hacia atrás (`segmentos[s + 1] = segmentos[s]` desde `*largo - 1`) y luego poner la cabeza nueva en `segmentos[0]`; la cola se pierde sola porque `*largo` no cambia. Si comió, suma 1 a `*largo` después del desplazamiento: así la cola se conserva y el animal crece.

@@ -1,0 +1,1 @@
+El error de duplicado sale por stderr y termina el proceso: redirígela con `2>&1`, añade `|| true` para que `set -e` no mate el script y filtra con `grep -o "duplicate symbol" | head -1`, igual que en el ejercicio de errores de enlace.

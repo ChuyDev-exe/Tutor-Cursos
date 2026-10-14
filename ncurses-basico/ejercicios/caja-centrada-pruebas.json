@@ -1,0 +1,22 @@
+[
+  {
+    "nombre": "dialogo 10x30 con titulo Hola y mensaje Adios",
+    "entrada": "10 30 Hola Adios\n",
+    "esperado": "\n\n         +-Hola----+\n         |         |\n         | Adios   |\n         |         |\n         +---------+"
+  },
+  {
+    "nombre": "dialogo 12x40 con titulo Fin y mensaje Go",
+    "entrada": "12 40 Fin Go\n",
+    "esperado": "\n\n\n               +-Fin----+\n               |        |\n               | Go     |\n               |        |\n               +--------+"
+  },
+  {
+    "nombre": "mensaje mas largo que el titulo",
+    "entrada": "9 20 Confirmar Ok\n",
+    "esperado": "\n\n  +-Confirmar---+\n  |             |\n  | Ok          |\n  |             |\n  +-------------+"
+  },
+  {
+    "nombre": "titulo mas largo que el mensaje",
+    "entrada": "8 36 Aceptar Salir\n",
+    "esperado": "\n           +-Aceptar---+\n           |           |\n           | Salir     |\n           |           |\n           +-----------+"
+  }
+]

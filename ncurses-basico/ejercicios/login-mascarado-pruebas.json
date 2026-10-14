@@ -1,0 +1,6 @@
+[
+  { "nombre": "credenciales correctas", "entrada": "admin\ns3cret\n", "esperado": "usuario=admin clave=*** acceso=concedido" },
+  { "nombre": "clave incorrecta", "entrada": "admin\nmala\n", "esperado": "usuario=admin clave=*** acceso=denegado" },
+  { "nombre": "usuario incorrecto", "entrada": "root\ns3cret\n", "esperado": "usuario=root clave=*** acceso=denegado" },
+  { "nombre": "ninguno coincide", "entrada": "juan\n12345\n", "esperado": "usuario=juan clave=*** acceso=denegado" }
+]

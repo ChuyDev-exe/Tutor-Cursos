@@ -1,0 +1,8 @@
+[
+  { "nombre": "sin teclas: orden original del fichero", "entrada": "", "esperado": "fila=manzana|12|3\nfila=platano|7|2\nfila=uvas|20|8\nfila=pera|5|6\nfila=kiwi|30|4\nfila=melon|2|9\nfila=naranja|15|1\nfila=fresa|9|5" },
+  { "nombre": "orden por nombre", "entrada": "n", "esperado": "fila=fresa|9|5\nfila=kiwi|30|4\nfila=manzana|12|3\nfila=melon|2|9\nfila=naranja|15|1\nfila=pera|5|6\nfila=platano|7|2\nfila=uvas|20|8" },
+  { "nombre": "orden por cantidad ascendente", "entrada": "c", "esperado": "fila=melon|2|9\nfila=pera|5|6\nfila=platano|7|2\nfila=fresa|9|5\nfila=manzana|12|3\nfila=naranja|15|1\nfila=uvas|20|8\nfila=kiwi|30|4" },
+  { "nombre": "orden por precio ascendente", "entrada": "p", "esperado": "fila=naranja|15|1\nfila=platano|7|2\nfila=manzana|12|3\nfila=kiwi|30|4\nfila=fresa|9|5\nfila=pera|5|6\nfila=uvas|20|8\nfila=melon|2|9" },
+  { "nombre": "nombre y despues cantidad: gana la ultima", "entrada": "nc", "esperado": "fila=melon|2|9\nfila=pera|5|6\nfila=platano|7|2\nfila=fresa|9|5\nfila=manzana|12|3\nfila=naranja|15|1\nfila=uvas|20|8\nfila=kiwi|30|4" },
+  { "nombre": "cantidad y despues precio: gana la ultima", "entrada": "cp", "esperado": "fila=naranja|15|1\nfila=platano|7|2\nfila=manzana|12|3\nfila=kiwi|30|4\nfila=fresa|9|5\nfila=pera|5|6\nfila=uvas|20|8\nfila=melon|2|9" }
+]

@@ -1,0 +1,6 @@
+[
+  { "nombre": "datos inicializados", "entrada": "data\n", "esperado": "inicializado: __DATA,__data" },
+  { "nombre": "constante", "entrada": "const\n", "esperado": "constante: __TEXT,__const" },
+  { "nombre": "sin inicializar", "entrada": "bss\n", "esperado": "sin inicializar: __DATA,__common\nbss: __common BSS" },
+  { "nombre": "todo", "entrada": "todo\n", "esperado": "inicializado: __DATA,__data\nconstante: __TEXT,__const\nsin inicializar: __DATA,__common\nbss: __common BSS" }
+]

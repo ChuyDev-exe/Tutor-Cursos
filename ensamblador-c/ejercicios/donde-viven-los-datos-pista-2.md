@@ -1,0 +1,1 @@
+En `objdump -h` las columnas son índice, nombre, tamaño, dirección y tipo. La sección sin inicializar se llama `__common` y su tipo es `BSS`; el `awk` debe quedarse con el nombre (`$2`) y el tipo (`$5`).

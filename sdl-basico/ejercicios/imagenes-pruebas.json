@@ -1,0 +1,5 @@
+[
+  { "nombre": "imagen_carga_y_muestra", "entrada": "", "esperado": "OK" },
+  { "nombre": "imagen_centrada_en_ventana", "entrada": "", "esperado": "OK" },
+  { "nombre": "programa_termina_después_3_segundos", "entrada": "", "esperado": "OK" }
+]

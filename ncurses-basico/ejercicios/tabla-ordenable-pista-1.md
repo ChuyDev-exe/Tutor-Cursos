@@ -1,0 +1,1 @@
+`qsort(p, n, sizeof(Producto), comparar)` ordena el array en el sitio. Tu comparador recibe dos `void *`: conviértelos a `const Producto *` y devuelve `<0`, `0` o `>0`. `strcmp` ya hace ese trabajo con los nombres; para los enteros, resta o usa `(a > b) - (a < b)`.

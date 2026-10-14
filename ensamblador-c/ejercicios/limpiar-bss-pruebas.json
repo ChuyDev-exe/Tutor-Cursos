@@ -1,0 +1,5 @@
+[
+  { "nombre": "8 bytes", "entrada": "8\n", "esperado": "no cero antes: 8\nno cero despues: 0" },
+  { "nombre": "un byte", "entrada": "1\n", "esperado": "no cero antes: 1\nno cero despues: 0" },
+  { "nombre": "se recorta a 64", "entrada": "100\n", "esperado": "no cero antes: 64\nno cero despues: 0" }
+]

@@ -1,0 +1,5 @@
+[
+  { "nombre": "4 dobla a 8", "entrada": "4\n", "esperado": "preproceso: ok\nensamblador: _doble:\nobjeto: T _doble\nejecutable: 8" },
+  { "nombre": "cero", "entrada": "0\n", "esperado": "preproceso: ok\nensamblador: _doble:\nobjeto: T _doble\nejecutable: 0" },
+  { "nombre": "negativo", "entrada": "-3\n", "esperado": "preproceso: ok\nensamblador: _doble:\nobjeto: T _doble\nejecutable: -6" }
+]

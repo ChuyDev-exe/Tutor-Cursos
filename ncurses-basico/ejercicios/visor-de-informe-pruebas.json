@@ -1,0 +1,7 @@
+[
+  { "nombre": "sin teclas: se queda arriba del todo", "entrada": "", "esperado": "top=0\nv1=linea 01\nv5=linea 05" },
+  { "nombre": "tres lineas hacia abajo", "entrada": "jjj\n", "esperado": "top=3\nv1=linea 04\nv5=linea 08" },
+  { "nombre": "clamp: no pasa de la linea 30", "entrada": "jjjjjjjjjjjjjjjjjjjjjjjjjjjjj\n", "esperado": "top=25\nv1=linea 26\nv5=linea 30" },
+  { "nombre": "k en el tope no baja de 0 y luego j", "entrada": "kj\n", "esperado": "top=1\nv1=linea 02\nv5=linea 06" },
+  { "nombre": "q termina enseguida", "entrada": "q\n", "esperado": "top=0\nv1=linea 01\nv5=linea 05" }
+]

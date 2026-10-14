@@ -1,0 +1,5 @@
+[
+  { "nombre": "3 y 4", "entrada": "3 4\n", "esperado": "preproceso: add x0, x0, x1\nobjeto: T _suma\nejecutable: 7" },
+  { "nombre": "10 y -2", "entrada": "10 -2\n", "esperado": "preproceso: add x0, x0, x1\nobjeto: T _suma\nejecutable: 8" },
+  { "nombre": "ceros", "entrada": "0 0\n", "esperado": "preproceso: add x0, x0, x1\nobjeto: T _suma\nejecutable: 0" }
+]

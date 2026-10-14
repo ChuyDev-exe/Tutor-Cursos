@@ -1,0 +1,1 @@
+La ventana vive en la variable global `vista`: créala con `newwin(6, 35, 0, 0)` y dibuja con funciones con `w` y coordenadas relativas a la ventana (`mvwprintw(vista, 1, 1, …)` es la fila 1 de la ventana, no de la pantalla).

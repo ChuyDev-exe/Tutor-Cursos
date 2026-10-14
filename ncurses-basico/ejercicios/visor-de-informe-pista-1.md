@@ -1,0 +1,1 @@
+`prefresh` es como `wrefresh` pero para pads: `prefresh(pad, pminrow, pmincol, sminrow, smincol, smaxrow, smaxcol)`. Los dos primeros números dicen **qué parte del pad** se muestra; los cuatro últimos, **dónde cae en pantalla**.

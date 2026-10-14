@@ -1,0 +1,6 @@
+[
+  { "nombre": "jugador se mueve con flechas", "entrada": "flechas", "esperado": "cuadrado blanco se mueve" },
+  { "nombre": "cuadrado rojo se mueve solo", "entrada": "tiempo", "esperado": "cambia de posición" },
+  { "nombre": "colisión suma puntos", "entrada": "choque", "esperado": "puntuación aumenta en 10" },
+  { "nombre": "tiempo termina en 30s", "entrada": "30 segundos", "esperado": "muestra juego terminado"}
+]

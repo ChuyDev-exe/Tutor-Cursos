@@ -1,0 +1,1 @@
+Capturar el error es lo mismo que en el ejercicio de errores de enlace: `2>&1` para unir stderr, `|| true` para que `set -e` no mate el script, `grep -o "duplicate symbol" | head -1` para la frase y un `sed` para el prefijo `enlace: `.

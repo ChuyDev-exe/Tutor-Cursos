@@ -1,0 +1,1 @@
+En el `.o` hay dos líneas: `T _saluda` (global) y `t _interna` (local). Con `awk '$2=="T"||$2=="t"{print $2" "$3}'` se quedan las dos; con `grep -E '_(saluda|interna)'` se evitan las líneas de más que `nm` añade.

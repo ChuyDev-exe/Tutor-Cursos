@@ -1,0 +1,1 @@
+En macOS, C llama a `_suma` y no a `suma`: el guion bajo forma parte del nombre. Si el `.s` define `suma` a secas, el enlazador no encuentra `_suma` y el mensaje empieza con `Undefined`, con mayúscula.

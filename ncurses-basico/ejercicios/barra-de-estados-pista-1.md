@@ -1,0 +1,1 @@
+Cada servicio ocupa su propia fila: la fila es `1 + i` y las columnas no cambian (nombre en 2, bloque en 20). El andamiaje ya creó las parejas 1, 2 y 3; tú solo tienes que usarlas con `COLOR_PAIR(estados[i])`.

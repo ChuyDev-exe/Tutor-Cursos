@@ -1,0 +1,1 @@
+Comprueba el límite **antes** de moverte: `if (col < COLS_GRID - 1) col++;` y `if (fila > 0) fila--;`. Después recalcular `sel = fila * COLS_GRID + col` y, si el índice llega a `n`, vuelve a la última app válida.

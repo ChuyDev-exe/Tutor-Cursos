@@ -1,0 +1,1 @@
+Las 8 vecinas salen de dos bucles anidados: `df` de -1 a 1 y `dc` de -1 a 1, con `vf = f + df` y `vc = c + dc`. Salta la celda central (`df == 0 && dc == 0`) y descarta las que caen fuera: `if (vf < 0 || vf >= filas || vc < 0 || vc >= columnas) continue;` — los bordes cuentan como muertos.

@@ -1,0 +1,1 @@
+Dentro de cada panel todo es igual que en `stdscr`, pero con `w`: `box(panel, 0, 0)`, `mvwprintw(panel, 0, 2, "INFO")`, `mvwprintw(panel, 1 + j, 1, "%s", info[j])` y `wrefresh(panel)`. El título va en la fila 0 porque ahí está el borde de arriba.

@@ -1,0 +1,5 @@
+[
+  { "nombre": "sonido_carga_y_reproduce", "entrada": "espacio", "esperado": "OK" },
+  { "nombre": "sonido_reproduce_al_pulsar_espacio", "entrada": "espacio", "esperado": "OK" },
+  { "nombre": "programa_termina_después_3s", "entrada": "3_segundos", "esperado": "OK" }
+]

@@ -1,0 +1,5 @@
+[
+  { "nombre": "triangulo se proyecta y dibuja", "entrada": "", "esperado": "OK" },
+  { "nombre": "triangulo gira con el tiempo", "entrada": "", "esperado": "OK" },
+  { "nombre": "aristas blancas visibles", "entrada": "", "esperado": "OK" }
+]

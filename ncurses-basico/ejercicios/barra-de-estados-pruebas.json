@@ -1,0 +1,7 @@
+[
+  { "nombre": "mezcla de estados", "entrada": "OK OK WARN CRIT OK\n", "esperado": "cpu=1\nram=1\ndisco=2\nred=3\nbackup=1" },
+  { "nombre": "todo critico", "entrada": "CRIT CRIT CRIT CRIT CRIT\n", "esperado": "cpu=3\nram=3\ndisco=3\nred=3\nbackup=3" },
+  { "nombre": "un warn y un crit", "entrada": "WARN OK OK OK CRIT\n", "esperado": "cpu=2\nram=1\ndisco=1\nred=1\nbackup=3" },
+  { "nombre": "todo ok", "entrada": "OK OK OK OK OK\n", "esperado": "cpu=1\nram=1\ndisco=1\nred=1\nbackup=1" },
+  { "nombre": "alternando", "entrada": "CRIT WARN OK WARN CRIT\n", "esperado": "cpu=3\nram=2\ndisco=1\nred=2\nbackup=3" }
+]

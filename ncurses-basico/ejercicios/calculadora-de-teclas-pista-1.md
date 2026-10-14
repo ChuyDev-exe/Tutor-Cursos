@@ -1,0 +1,1 @@
+Guarda el estado en cuatro variables al principio de `calcular`: `long izq = 0, der = 0; char op = 0; int fase = 0;`. Recorre la cadena con `for (int i = 0; teclas[i] != '\0'; i++)` y trabaja con `char c = teclas[i];`.

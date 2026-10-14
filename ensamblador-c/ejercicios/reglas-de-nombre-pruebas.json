@@ -1,0 +1,5 @@
+[
+  { "nombre": "dos globales iguales", "entrada": "global\n", "esperado": "enlace: duplicate symbol" },
+  { "nombre": "dos locales iguales", "entrada": "static\n", "esperado": "enlace: ok" },
+  { "nombre": "falta el guion bajo", "entrada": "guion\n", "esperado": "enlace: Undefined symbols" }
+]

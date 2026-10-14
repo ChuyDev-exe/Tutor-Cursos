@@ -1,0 +1,1 @@
+Sigue siempre el mismo orden en cada paso: pared (`ny < 0 || ny >= ALTO || nx < 0 || nx >= ANCHO` → `*vivo = 0` y la cabeza se queda en la posición del choque, sin clamplear) → auto-choque (bucle sobre `segmentos[1]` a `segmentos[*largo - 1]`) → comida → desplazar y cabeza al frente.

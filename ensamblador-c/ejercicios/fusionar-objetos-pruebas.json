@@ -1,0 +1,5 @@
+[
+  { "nombre": "fusion", "entrada": "fusion\n", "esperado": "secciones antes: 2\nsecciones despues: 1\nsimbolos: _fa _fb" },
+  { "nombre": "duplicado", "entrada": "dup\n", "esperado": "fusion: duplicate symbol" },
+  { "nombre": "fusion con texto de mas", "entrada": "fusion otra vez\n", "esperado": "secciones antes: 2\nsecciones despues: 1\nsimbolos: _fa _fb" }
+]

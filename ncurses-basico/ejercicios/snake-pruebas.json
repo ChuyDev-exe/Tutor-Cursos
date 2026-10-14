@@ -1,0 +1,8 @@
+[
+  { "nombre": "sin teclas: no hay pasos", "entrada": "", "esperado": "score=0 largo=3 estado=vivo cabeza=5,5" },
+  { "nombre": "tres a la derecha: come la primera comida", "entrada": "ddd", "esperado": "score=1 largo=4 estado=vivo cabeza=5,8" },
+  { "nombre": "gira a la derecha despues de bajar", "entrada": "sdd", "esperado": "score=0 largo=3 estado=vivo cabeza=6,7" },
+  { "nombre": "seis abajo: muere contra la pared de abajo", "entrada": "ssssss", "esperado": "score=0 largo=3 estado=muerto cabeza=10,5" },
+  { "nombre": "seis arriba: muere contra la pared de arriba", "entrada": "wwwwww", "esperado": "score=0 largo=3 estado=muerto cabeza=-1,5" },
+  { "nombre": "primera tecla a la izquierda: se muerde el cuerpo", "entrada": "a", "esperado": "score=0 largo=3 estado=muerto cabeza=5,4" }
+]

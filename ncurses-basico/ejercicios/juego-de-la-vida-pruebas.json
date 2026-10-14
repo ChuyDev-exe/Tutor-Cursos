@@ -1,0 +1,7 @@
+[
+  { "nombre": "sin teclas: se queda en el estado inicial", "entrada": "", "esperado": "generaciones=0\nfila=............\nfila=....O.......\nfila=...OOO......\nfila=............\nfila=....O.O.....\nfila=............" },
+  { "nombre": "una generacion", "entrada": "n", "esperado": "generaciones=1\nfila=............\nfila=...OOO......\nfila=...OOO......\nfila=...O........\nfila=............\nfila=............" },
+  { "nombre": "q termina enseguida", "entrada": "nq", "esperado": "generaciones=1\nfila=............\nfila=...OOO......\nfila=...OOO......\nfila=...O........\nfila=............\nfila=............" },
+  { "nombre": "teclas raras se ignoran", "entrada": "nzn", "esperado": "generaciones=2\nfila=....O.......\nfila=...O.O......\nfila=..O..O......\nfila=...O........\nfila=............\nfila=............" },
+  { "nombre": "tres generaciones", "entrada": "nnn", "esperado": "generaciones=3\nfila=....O.......\nfila=...O.O......\nfila=..OO........\nfila=............\nfila=............\nfila=............" }
+]

@@ -1,0 +1,1 @@
+El scroll es un índice `top`: en la fila 1 de la ventana va `lineas[top]`, en la 2 `lineas[top+1]`… `j` suma 1 a `top` con máximo `n - 4`, `k` resta 1 con mínimo 0. Ese máximo es el **clamp**: sin él dibujas memoria que no es tuya.

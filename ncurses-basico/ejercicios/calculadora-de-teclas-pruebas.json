@@ -1,0 +1,8 @@
+[
+  { "nombre": "suma con igual", "entrada": "12+3=\n", "esperado": "pantalla=15\nresultado=15" },
+  { "nombre": "producto con igual", "entrada": "8*7=\n", "esperado": "pantalla=56\nresultado=56" },
+  { "nombre": "c reinicia antes de operar", "entrada": "9c5-2=\n", "esperado": "pantalla=3\nresultado=3" },
+  { "nombre": "operaciones encadenadas", "entrada": "2+3=*10=\n", "esperado": "pantalla=50\nresultado=50" },
+  { "nombre": "sin igual se queda en la fase 2", "entrada": "7/\n", "esperado": "pantalla=7 / 0\nresultado=7" },
+  { "nombre": "entrada vacia", "entrada": "", "esperado": "pantalla=0\nresultado=0" }
+]

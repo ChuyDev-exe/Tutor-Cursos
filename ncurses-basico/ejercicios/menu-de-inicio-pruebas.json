@@ -1,0 +1,8 @@
+[
+  { "nombre": "solo EOF: se queda en la primera", "entrada": "", "esperado": "seleccion=0\ntitulo=Procesos" },
+  { "nombre": "baja dos y sube una", "entrada": "jjk\n", "esperado": "seleccion=1\ntitulo=Discos" },
+  { "nombre": "no pasa de la ultima opcion", "entrada": "jjjjjj\n", "esperado": "seleccion=3\ntitulo=Salir" },
+  { "nombre": "no sube de la primera", "entrada": "k\n", "esperado": "seleccion=0\ntitulo=Procesos" },
+  { "nombre": "enter acepta la opcion actual", "entrada": "j\n", "esperado": "seleccion=1\ntitulo=Discos" },
+  { "nombre": "q termina y las letras raras se ignoran", "entrada": "zqx", "esperado": "seleccion=0\ntitulo=Procesos" }
+]

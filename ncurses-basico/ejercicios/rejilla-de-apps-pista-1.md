@@ -1,0 +1,1 @@
+Cada índice es una posición: `fila = i / COLS_GRID` y `columna = i % COLS_GRID`. Al revés, la selección es `sel = fila * COLS_GRID + col`. Con `sel = 0` al principio, `l` sube el índice de 1 en 1 y `j` salta a la fila de abajo.

@@ -2,9 +2,9 @@
   "$schema": "../vscode-tutor-ext/schemas/curso.schema.json",
   "id": "ensamblador-c",
   "titulo": "Ensamblador y C: de instrucciones a ejecutables",
-  "descripcion": "Aprende cómo unas instrucciones en ensamblador se convierten en un ejecutable: el pipeline de compilación, ARM64 en macOS y x86-64 en Linux, la mezcla con C, el enlazador y make. Para quien ya programa en C básico y usa la terminal; los ejercicios se ejecutan en un Mac con chip Apple (arm64).",
+  "descripcion": "Aprende cómo unas instrucciones en ensamblador se convierten en un ejecutable: el pipeline de compilación, ARM64 en macOS y x86-64 en Linux, la mezcla con C, el enlazador por dentro (secciones, símbolos, descarte de código, linker scripts, .rodata/.data/.bss y VMA/LMA) y make. Para quien ya programa en C básico y usa la terminal; los ejercicios se ejecutan en un Mac con chip Apple (arm64).",
   "nivel": "intermedio",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "manual": "MANUAL.md",
   "setup": "setup.sh",
   "requisitos": [
@@ -868,6 +868,857 @@
             { "texto": "Hay que añadir -lm al final para la biblioteca matemática", "zona": "GNU/Linux" }
           ],
           "explicacion": "macOS usa Mach-O y pone un guion bajo delante de los símbolos de C. GNU/Linux usa ELF, sin guion bajo, y necesita -lm para las funciones matemáticas."
+        }
+      ]
+    },
+    {
+      "id": "c7",
+      "titulo": "7. El proceso de compilación por dentro",
+      "descripcion": "Los cuatro pasos de la compilación: preprocesado, compilación a ensamblador, ensamblado y enlace, con gcc -E, -S y -c, y macros en archivos .S.",
+      "archivo": "capitulos/07-compilacion.md",
+      "tags": ["preproceso", "gcc -E", "gcc -S", "objeto", "macros"],
+      "minutos": 18,
+      "aprobacion": 70,
+      "evaluacionRequerida": true,
+      "ejercicios": [
+        {
+          "id": "c7-e1",
+          "titulo": "Pasos de compilacion",
+          "enunciado": "ejercicios/pasos-de-compilacion-enunciado.md",
+          "solucion": "ejercicios/pasos-de-compilacion-solucion.md",
+          "pistas": [
+            "ejercicios/pasos-de-compilacion-pista-1.md",
+            "ejercicios/pasos-de-compilacion-pista-2.md",
+            "ejercicios/pasos-de-compilacion-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/pasos-de-compilacion-plantilla.sh",
+          "pruebas": "ejercicios/pasos-de-compilacion-pruebas.json"
+        },
+        {
+          "id": "c7-e2",
+          "titulo": "Macro de ensamblador",
+          "enunciado": "ejercicios/macro-de-ensamblador-enunciado.md",
+          "solucion": "ejercicios/macro-de-ensamblador-solucion.md",
+          "pistas": [
+            "ejercicios/macro-de-ensamblador-pista-1.md",
+            "ejercicios/macro-de-ensamblador-pista-2.md",
+            "ejercicios/macro-de-ensamblador-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/macro-de-ensamblador-plantilla.sh",
+          "pruebas": "ejercicios/macro-de-ensamblador-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c7-q1",
+          "tipo": "unica",
+          "pregunta": "¿En qué orden convierte la toolchain un archivo .c en un programa ejecutable?",
+          "opciones": [
+            "preprocesa, compila a ensamblador, ensambla a .o, enlaza",
+            "ensambla, enlaza, preprocesa, compila a ensamblador",
+            "compila a ensamblador, preprocesa, ensambla, enlaza",
+            "enlaza, ensambla, preprocesa, compila a ensamblador"
+          ],
+          "respuesta": 0,
+          "explicacion": "Cuatro pasos y en ese orden: cpp escribe el .i, el compilador escribe el .s, as escribe el .o y el enlazador escribe el programa. Cada paso solo lee el archivo del anterior."
+        },
+        {
+          "id": "c7-q2",
+          "tipo": "vf",
+          "pregunta": "`gcc -E archivo.c -o archivo.i` produce el C con los #include y los #define ya resueltos, sin compilar nada.",
+          "respuesta": true,
+          "explicacion": "El preprocesador es texto a texto: copia los cabeceros, sustituye las macros y borra los comentarios. No valida la sintaxis de C."
+        },
+        {
+          "id": "c7-q3",
+          "tipo": "unica",
+          "codigo": "$ gcc -S doble.c -o doble.s\n$ grep -n doble doble.s\n5:_doble:                                 ; @doble",
+          "pregunta": "¿Qué paso generó ese archivo y qué contiene?",
+          "opciones": [
+            "El paso de compilación: ensamblador legible con la etiqueta de la función",
+            "El preprocesado: C sin #include ni comentarios",
+            "El paso de enlace: código máquina con direcciones finales",
+            "El paso de ensamblado: bytes en un archivo objeto"
+          ],
+          "respuesta": 0,
+          "explicacion": "-S detiene el proceso después de generar el ensamblador. Ahí aparecen la etiqueta _doble: y mnemónicos como add o str, listos para que as los traduzca a bytes."
+        },
+        {
+          "id": "c7-q4",
+          "tipo": "multiple",
+          "pregunta": "¿Cuáles de estos comandos producen un archivo objeto .o? (marca todos los correctos)",
+          "opciones": ["gcc -c archivo.c", "gcc -S archivo.c", "as archivo.s -o archivo.o", "gcc -E archivo.c"],
+          "respuestas": [0, 2],
+          "explicacion": "-c detiene el proceso después de ensamblar y -S se para antes. -E solo preprocesa y as es el ensamblador que sí escribe el .o."
+        },
+        {
+          "id": "c7-q5",
+          "tipo": "texto",
+          "pregunta": "¿Qué palabra de C pones delante de una función para que no sea visible fuera de su fichero? (una palabra)",
+          "aceptadas": ["static", "static()"],
+          "explicacion": "static convierte el símbolo en local: cada fichero puede tener su propia versión y el enlazador nunca las mezcla."
+        },
+        {
+          "id": "c7-q6",
+          "tipo": "unica",
+          "codigo": "gcc -c suma.S -o suma.o",
+          "pregunta": "El archivo se llama `.S` con mayúscula. ¿Qué hace eso en este comando?",
+          "opciones": [
+            "Pasa el archivo por el preprocesador antes de ensamblarlo",
+            "Enlaza en vez de ensamblar",
+            "Genera un .o sin secciones",
+            "Borra los comentarios del ensamblador"
+          ],
+          "respuesta": 0,
+          "explicacion": "La mayúscula activa el preprocesador: los #define y los #include se resuelven y luego as ensambla. Con .s en minúscula, as lee el texto tal cual y no entiende las macros."
+        },
+        {
+          "id": "c7-q7",
+          "tipo": "vf",
+          "pregunta": "Un archivo .o ya contiene código máquina y tabla de símbolos, pero sus direcciones siguen siendo provisionales y empiezan en cero.",
+          "respuesta": true,
+          "explicacion": "Las direcciones del .o son relativas al principio de cada sección. Las finales las pone el enlazador en el capítulo 8."
+        },
+        {
+          "id": "c7-q8",
+          "tipo": "unica",
+          "codigo": "macro.s:5:5: error: unrecognized instruction mnemonic",
+          "pregunta": "¿En qué paso se produjo ese mensaje?",
+          "opciones": [
+            "Al ensamblar con as",
+            "Al preprocesar los #include",
+            "Al enlazar los archivos objeto",
+            "Al ejecutar make"
+          ],
+          "respuesta": 0,
+          "explicacion": "Habla de un mnemónico desconocido: es el ensamblador el que no reconoce la instrucción. Los errores de C aparecen antes, en el paso de compilación."
+        },
+        {
+          "id": "c7-q9",
+          "tipo": "arrastrar",
+          "pregunta": "Lleva cada detalle al paso de la compilación en el que aparece.",
+          "zonas": ["Preprocesado", "Compilación", "Ensamblado", "Enlace"],
+          "elementos": [
+            { "texto": "archivo.i", "zona": "Preprocesado" },
+            { "texto": "#define sustituido por su valor", "zona": "Preprocesado" },
+            { "texto": "archivo.s con mnemónicos", "zona": "Compilación" },
+            { "texto": "la etiqueta _doble: en el ensamblador", "zona": "Compilación" },
+            { "texto": "archivo.o con T _doble a dirección cero", "zona": "Ensamblado" },
+            { "texto": "se resuelve la U de main.o y sale el programa", "zona": "Enlace" }
+          ],
+          "explicacion": "El preprocesador escribe el .i, el compilador escribe el .s con las etiquetas, as escribe el .o con la tabla de símbolos y el enlazador resuelve lo que falta y escribe el ejecutable."
+        }
+      ]
+    },
+    {
+      "id": "c8",
+      "titulo": "8. El enlazador por dentro: secciones y direcciones",
+      "descripcion": "Cómo fusiona el enlazador las secciones de varios .o, cómo pasa de direcciones provisionales a direcciones reales y cómo leer el mapa de enlace con nm y objdump -h.",
+      "archivo": "capitulos/08-enlazador-por-dentro.md",
+      "tags": ["ld -r", "secciones", "direcciones", "mapa de enlace", "segmentos"],
+      "minutos": 20,
+      "aprobacion": 70,
+      "evaluacionRequerida": true,
+      "ejercicios": [
+        {
+          "id": "c8-e1",
+          "titulo": "Fusionar objetos",
+          "enunciado": "ejercicios/fusionar-objetos-enunciado.md",
+          "solucion": "ejercicios/fusionar-objetos-solucion.md",
+          "pistas": [
+            "ejercicios/fusionar-objetos-pista-1.md",
+            "ejercicios/fusionar-objetos-pista-2.md",
+            "ejercicios/fusionar-objetos-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/fusionar-objetos-plantilla.sh",
+          "pruebas": "ejercicios/fusionar-objetos-pruebas.json"
+        },
+        {
+          "id": "c8-e2",
+          "titulo": "Mapa de enlace",
+          "enunciado": "ejercicios/mapa-de-enlace-enunciado.md",
+          "solucion": "ejercicios/mapa-de-enlace-solucion.md",
+          "pistas": [
+            "ejercicios/mapa-de-enlace-pista-1.md",
+            "ejercicios/mapa-de-enlace-pista-2.md",
+            "ejercicios/mapa-de-enlace-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/mapa-de-enlace-plantilla.sh",
+          "pruebas": "ejercicios/mapa-de-enlace-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c8-q1",
+          "tipo": "unica",
+          "codigo": "ld -r fa.o fb.o -o todo.o",
+          "pregunta": "¿Qué produce esta orden?",
+          "opciones": [
+            "Un solo archivo objeto con las secciones de los dos ya fusionadas",
+            "Un ejecutable que se puede lanzar",
+            "Una biblioteca estática",
+            "El mapa de enlace de los dos objetos"
+          ],
+          "respuesta": 0,
+          "explicacion": "-r significa relocatable: une los objetos en uno nuevo sin buscar bibliotecas ni dar direcciones finales. Es la forma de mirar la fusión antes del enlace completo."
+        },
+        {
+          "id": "c8-q2",
+          "tipo": "vf",
+          "pregunta": "Las secciones __text de todos los .o acaban fusionadas en un único __text del ejecutable.",
+          "respuesta": true,
+          "explicacion": "El enlazador agrupa por nombre: todo el código en __text, todo lo inicializado en __data y así con el resto. Por eso la sección final pesa la suma de las de cada objeto."
+        },
+        {
+          "id": "c8-q3",
+          "tipo": "unica",
+          "codigo": "$ nm main.o | grep doble\n                 U _doble\n$ nm prog | grep doble\n00000001000004a0 T _doble",
+          "pregunta": "¿Qué ha hecho el enlazador entre las dos salidas?",
+          "opciones": [
+            "Sustituir la referencia sin resolver por la dirección real de la función",
+            "Borrar la función y volver a compilarla",
+            "Renombrar _doble por _doble2",
+            "Convertir la función en una macro"
+          ],
+          "respuesta": 0,
+          "explicacion": "U en el .o significa «lo uso y falta definirlo». Después de enlazar, T con dirección real significa «está aquí, en esta posición». Ese es el trabajo central del enlazador."
+        },
+        {
+          "id": "c8-q4",
+          "tipo": "multiple",
+          "pregunta": "¿Cuáles de estas cosas hace el enlazador? (marca todos los correctos)",
+          "opciones": [
+            "Fusionar las secciones de todos los .o por nombre",
+            "Asignar la dirección final de cada sección",
+            "Sustituir cada U por la dirección de su símbolo",
+            "Sustituir los #include por su contenido"
+          ],
+          "respuestas": [0, 1, 2],
+          "explicacion": "Los #include los sustituye el preprocesador, en el primer paso. El enlazador trabaja ya con archivos objeto: fusiona, coloca y resuelve."
+        },
+        {
+          "id": "c8-q5",
+          "tipo": "texto",
+          "pregunta": "En el mapa de enlace, ¿qué dos nombres lleva la línea del código: segmento y sección? (escríbelos separados por un espacio, en orden)",
+          "aceptadas": ["__text __text", "__text __text "],
+          "explicacion": "La línea del mapa es dirección, tamaño, segmento y sección: el código está en el segmento __TEXT y la sección __text. Con awk '$4==\"__text\"{print $3\" \"$4}' se imprime __TEXT __text."
+        },
+        {
+          "id": "c8-q6",
+          "tipo": "unica",
+          "pregunta": "¿Qué segmento guarda el código y las constantes de solo lectura?",
+          "opciones": ["__TEXT", "__DATA", "__common", "__bss"],
+          "respuesta": 0,
+          "explicacion": "__TEXT lleva el código y las constantes; __DATA lleva las variables que el programa puede escribir. Por eso objdump -h marca __text como tipo TEXT."
+        },
+        {
+          "id": "c8-q7",
+          "tipo": "vf",
+          "pregunta": "Las direcciones que enseña nm son las del archivo; al cargarlo en ejecución, macOS las desplaza entero (ASLR), así que cambian de una ejecución a otra.",
+          "respuesta": true,
+          "explicacion": "Por eso no se comparan direcciones de ejecución con las del nm. Lo que se conserva es la distancia entre símbolos: si uno está 16 bytes por delante del otro, sigue estándolo."
+        },
+        {
+          "id": "c8-q8",
+          "tipo": "unica",
+          "codigo": "nm fa.o  ->  0000000000000000 T _fa\nnm prog  ->  00000001000002d8 T _fa",
+          "pregunta": "¿Qué pasó para que la dirección dejara de ser cero?",
+          "opciones": [
+            "El enlazador colocó la sección en una dirección y sumó el desplazamiento de la función dentro de ella",
+            "El ensamblador recompiló el archivo con optimizaciones",
+            "El sistema operativo compiló de nuevo el programa",
+            "nm escribe siempre direcciones distintas"
+          ],
+          "respuesta": 0,
+          "explicacion": "Dentro del .o la función estaba al principio de su sección. Al enlazar, esa sección se coloca en el ejecutable y la etiqueta hereda esa dirección más su posición."
+        },
+        {
+          "id": "c8-q9",
+          "tipo": "arrastrar",
+          "pregunta": "Lleva cada situación al momento en el que se ve.",
+          "zonas": ["Antes de enlazar", "Después de enlazar", "Nunca"],
+          "elementos": [
+            { "texto": "U _doble en main.o", "zona": "Antes de enlazar" },
+            { "texto": "dirección 0000000000000000 en el .o", "zona": "Antes de enlazar" },
+            { "texto": "T _doble con dirección de 16 cifras", "zona": "Después de enlazar" },
+            { "texto": "un único __text con el código de todos los .o", "zona": "Después de enlazar" },
+            { "texto": "el mapa con direcciones, segmentos y secciones", "zona": "Después de enlazar" },
+            { "texto": "archivo.i con los #include ya copiados", "zona": "Nunca" }
+          ],
+          "explicacion": "Antes del enlace los .o tienen referencias U y direcciones provisionales. Después, todo está fusionado, con direcciones reales y con un mapa que lo documenta. El preprocesado no tiene nada que ver con el enlazador."
+        }
+      ]
+    },
+    {
+      "id": "c9",
+      "titulo": "9. Varios objetos y el enlazador travieso",
+      "descripcion": "Qué decide el enlazador con varios objetos, cómo arrastra piezas sin avisar con -t y -u, y cómo descartar código muerto con -dead_strip y .subsections_via_symbols.",
+      "archivo": "capitulos/09-objetos-y-descarte.md",
+      "tags": ["dead_strip", "bibliotecas", "arrastre", "descarte", "objetos"],
+      "minutos": 20,
+      "aprobacion": 70,
+      "evaluacionRequerida": true,
+      "ejercicios": [
+        {
+          "id": "c9-e1",
+          "titulo": "Descarte en el mismo archivo",
+          "enunciado": "ejercicios/descarte-en-archivo-enunciado.md",
+          "solucion": "ejercicios/descarte-en-archivo-solucion.md",
+          "pistas": [
+            "ejercicios/descarte-en-archivo-pista-1.md",
+            "ejercicios/descarte-en-archivo-pista-2.md",
+            "ejercicios/descarte-en-archivo-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/descarte-en-archivo-plantilla.sh",
+          "pruebas": "ejercicios/descarte-en-archivo-pruebas.json"
+        },
+        {
+          "id": "c9-e2",
+          "titulo": "El enlazador travieso",
+          "enunciado": "ejercicios/enlazador-travieso-enunciado.md",
+          "solucion": "ejercicios/enlazador-travieso-solucion.md",
+          "pistas": [
+            "ejercicios/enlazador-travieso-pista-1.md",
+            "ejercicios/enlazador-travieso-pista-2.md",
+            "ejercicios/enlazador-travieso-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/enlazador-travieso-plantilla.sh",
+          "pruebas": "ejercicios/enlazador-travieso-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c9-q1",
+          "tipo": "unica",
+          "pregunta": "¿Qué hace la opción -dead_strip al enlazar?",
+          "opciones": [
+            "Elimina el código que nadie referencia",
+            "Une todos los .o en uno solo",
+            "Escribe el mapa de enlace",
+            "Pone a cero la sección .bss"
+          ],
+          "respuesta": 0,
+          "explicacion": "Recorre el grafo de referencias desde los puntos de entrada y tira todo lo que no se alcanza. Un símbolo sin ninguna llamada desaparece del ejecutable."
+        },
+        {
+          "id": "c9-q2",
+          "tipo": "vf",
+          "pregunta": "Se puede descartar una función aunque esté en el mismo archivo que otra que sí se usa, siempre que el .s abra con .subsections_via_symbols.",
+          "respuesta": true,
+          "explicacion": "Sin esa línea, todo el __text del archivo es un bloque indivisible y si una parte se usa se queda entero. Con ella, cada función es una subsección descartable por separado."
+        },
+        {
+          "id": "c9-q3",
+          "tipo": "unica",
+          "codigo": "$ clang main.o -L. -layuda -o prog -Wl,-t\n...libayuda.a(ayuda.o)",
+          "pregunta": "¿Qué te está enseñando esa salida?",
+          "opciones": [
+            "Cada archivo que el enlazador ha cargado durante el proceso",
+            "Cada línea del código fuente compilada",
+            "Los errores que ha encontrado el ensamblador",
+            "Las dependencias de make"
+          ],
+          "respuesta": 0,
+          "explicacion": "-t registra cada objeto, biblioteca y pieza del sistema que entra en el enlace. Es la forma de ver lo que el enlazador hace sin avisar."
+        },
+        {
+          "id": "c9-q4",
+          "tipo": "multiple",
+          "pregunta": "¿Cuáles de estas cosas hace el enlazador sin que se lo pidas expresamente? (marca todos los correctos)",
+          "opciones": [
+            "Meter el miembro de una biblioteca que alguien referencia",
+            "Añadir el arranque del sistema y las piezas de printf",
+            "Tirar el código que nadie usa con -dead_strip",
+            "Sustituir los #define por su valor"
+          ],
+          "respuestas": [0, 1, 2],
+          "explicacion": "El enlazador arrastra miembros, añade las piezas del runtime y, si se le pide, descarta lo muerto. Los #define son cosa del preprocesador, del primer paso."
+        },
+        {
+          "id": "c9-q5",
+          "tipo": "texto",
+          "pregunta": "En un linker script, ¿cómo se llama la sección de destino que tira lo que recibe y no lo escribe en el resultado? (tal como aparece, con barras)",
+          "aceptadas": ["/discard/", "/DISCARD/", "/discard/", "discard"],
+          "explicacion": "/DISCARD/ es una sección de salida especial: lo que entre en ella no se escribe en el ejecutable. Es la forma de tirar .comment o las secciones de depuración."
+        },
+        {
+          "id": "c9-q6",
+          "tipo": "unica",
+          "codigo": "clang sin.o -L. -layuda -o prog\n$ nm prog | grep helper",
+          "pregunta": "El main de sin.o no llama a helper. ¿Qué muestra nm?",
+          "opciones": [
+            "Nada: el miembro de la biblioteca no se ha arrastrado",
+            "T _helper, porque las bibliotecas se meten enteras",
+            "U _helper, porque falta la definición",
+            "Un error de enlace"
+          ],
+          "respuesta": 0,
+          "explicacion": "Una biblioteca estática solo aporta los miembros que resuelven una referencia pendiente. Si no hay ninguna, no entra ni una instrucción."
+        },
+        {
+          "id": "c9-q7",
+          "tipo": "vf",
+          "pregunta": "Si quito .subsections_via_symbols de piezas.s y enlazo con -dead_strip, _hueca puede quedarse dentro del ejecutable aunque nadie la llame.",
+          "respuesta": true,
+          "explicacion": "El __text del archivo pasa a ser un único bloque: como _usada se usa, todo el bloque se conserva. La directiva es la que permite separar."
+        },
+        {
+          "id": "c9-q8",
+          "tipo": "unica",
+          "codigo": "clang ... -Wl,-dead_strip -Wl,-why_live,_hueca",
+          "pregunta": "¿Para qué sirve -why_live?",
+          "opciones": [
+            "Para que el enlazador explique por qué una pieza se ha quedado viva",
+            "Para forzar la carga de esa pieza",
+            "Para renombrar el símbolo",
+            "Para imprimir el mapa de enlace"
+          ],
+          "respuesta": 0,
+          "explicacion": "Si imprime algo como dont-dead-strip, la pieza se ha quedado y ahí está el motivo. Si no imprime nada, estaba muerta y el descarte la ha eliminado."
+        },
+        {
+          "id": "c9-q9",
+          "tipo": "arrastrar",
+          "pregunta": "Según lo visto, lleva cada caso a si el contenido entra en el ejecutable o no.",
+          "zonas": ["Entra en el ejecutable", "No entra"],
+          "elementos": [
+            { "texto": "main llama a helper y se enlaza con -L. -layuda", "zona": "Entra en el ejecutable" },
+            { "texto": "helper con -Wl,-u,_helper sin ninguna llamada", "zona": "Entra en el ejecutable" },
+            { "texto": "ayuda.o pasado a pelo en la línea de enlace", "zona": "Entra en el ejecutable" },
+            { "texto": "libayuda.a sin ninguna referencia a helper", "zona": "No entra" },
+            { "texto": "_hueca con -dead_strip y nadie que la llame", "zona": "No entra" },
+            { "texto": "una función sin .globl en un .o, al mirar nm prog", "zona": "No entra" }
+          ],
+          "explicacion": "Todo lo que se referencia o se fuerza con -u entra; una biblioteca sin referencias no aporta nada, el código muerto se descarta y los símbolos locales no salen de su archivo."
+        }
+      ]
+    },
+    {
+      "id": "c10",
+      "titulo": "10. Linker scripts: mandar en la memoria",
+      "descripcion": "Anatomía de un linker script: SECTIONS, contador de ubicación, comodines, /DISCARD/ y el mapa MEMORY con ORIGIN y LENGTH.",
+      "archivo": "capitulos/10-linker-scripts.md",
+      "tags": ["linker script", "sections", "memory", "discard", "comodines"],
+      "minutos": 22,
+      "aprobacion": 70,
+      "evaluacionRequerida": true,
+      "ejercicios": [
+        {
+          "id": "c10-e1",
+          "titulo": "Script de secciones",
+          "enunciado": "ejercicios/script-de-secciones-enunciado.md",
+          "solucion": "ejercicios/script-de-secciones-solucion.md",
+          "pistas": [
+            "ejercicios/script-de-secciones-pista-1.md",
+            "ejercicios/script-de-secciones-pista-2.md",
+            "ejercicios/script-de-secciones-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/script-de-secciones-plantilla.sh",
+          "pruebas": "ejercicios/script-de-secciones-pruebas.json"
+        },
+        {
+          "id": "c10-e2",
+          "titulo": "Script de memoria",
+          "enunciado": "ejercicios/script-de-memoria-enunciado.md",
+          "solucion": "ejercicios/script-de-memoria-solucion.md",
+          "pistas": [
+            "ejercicios/script-de-memoria-pista-1.md",
+            "ejercicios/script-de-memoria-pista-2.md",
+            "ejercicios/script-de-memoria-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/script-de-memoria-plantilla.sh",
+          "pruebas": "ejercicios/script-de-memoria-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c10-q1",
+          "tipo": "unica",
+          "codigo": "SECTIONS\n{\n  . = 0x08000000;\n  .text : { *(.text) }\n}",
+          "pregunta": "¿Qué hace la línea `. = 0x08000000;`?",
+          "opciones": [
+            "Mueve el contador de ubicación: lo que venga después empieza en esa dirección",
+            "Declara una sección llamada igual",
+            "Borra la memoria de esa dirección",
+            "Cambia el nombre de la sección .text"
+          ],
+          "respuesta": 0,
+          "explicacion": "El punto es el contador de ubicación del script. Asignarle un valor sitúa el punto de partida de la siguiente sección."
+        },
+        {
+          "id": "c10-q2",
+          "tipo": "vf",
+          "pregunta": "El comodín `*(.text)` recoge la sección .text de todos los objetos de entrada, y `*(.rodata*)` además las variantes que empiezan por ese nombre.",
+          "respuesta": true,
+          "explicacion": "Un solo asterisco significa «todos los archivos». El guion final en .rodata* cubre variantes como .rodata.str1.1 que genera el compilador."
+        },
+        {
+          "id": "c10-q3",
+          "tipo": "unica",
+          "codigo": "/DISCARD/ : { *(.comment) }",
+          "pregunta": "¿Qué se lleva esta línea?",
+          "opciones": [
+            "Las .comment de todos los objetos, que no se escriben en el resultado",
+            "Solo la .comment del primer objeto",
+            "Las .text de todos los objetos",
+            "El archivo entero si tiene comentarios"
+          ],
+          "respuesta": 0,
+          "explicacion": "/DISCARD/ es una sección de destino que no se emite. El asterisco la aplica a todos los objetos de entrada."
+        },
+        {
+          "id": "c10-q4",
+          "tipo": "multiple",
+          "pregunta": "¿Cuáles de estos elementos aparecen en un linker script? (marca todos los correctos)",
+          "opciones": ["MEMORY", "*(.rodata*)", "/DISCARD/", "#include <stdio.h>"],
+          "respuestas": [0, 1, 2],
+          "explicacion": "El script declara bloques de memoria, secciones con comodines y descartes. Los #include no: ese archivo lo lee el preprocesador, no el enlazador."
+        },
+        {
+          "id": "c10-q5",
+          "tipo": "texto",
+          "pregunta": "En el bloque MEMORY, ¿qué palabra fija la dirección de arranque de un bloque? (tal como aparece, en mayúsculas)",
+          "aceptadas": ["origin", "ORIGIN"],
+          "explicacion": "ORIGIN es la primera dirección del bloque; LENGTH, su tamaño. Ambas van juntas en la declaración de cada bloque."
+        },
+        {
+          "id": "c10-q6",
+          "tipo": "unica",
+          "codigo": "ld -T memoria.ld a.o b.o -o prog",
+          "pregunta": "¿Qué hace la opción -T en GNU ld?",
+          "opciones": [
+            "Indica el archivo del linker script que debe usar",
+            "Fusiona los objetos sin enlazar",
+            "Escribe el mapa de enlace",
+            "Descarta las secciones de depuración"
+          ],
+          "respuesta": 0,
+          "explicacion": "-T sustituye el guion interno del enlazador por el que le indiques. Sin él, el enlazador usa su script por defecto."
+        },
+        {
+          "id": "c10-q7",
+          "tipo": "vf",
+          "pregunta": "El ld de macOS (ld64) no entiende esta sintaxis de linker script, así que los ejercicios comprueban el script en lugar de usarlo para enlazar.",
+          "respuesta": true,
+          "explicacion": "ld64 usa opciones como -segaddr, -dead_strip y -map, y reparte la memoria por su cuenta. La sintaxis con SECTIONS es la de GNU ld, la que usarás en embebidos y en GNU/Linux."
+        },
+        {
+          "id": "c10-q8",
+          "tipo": "unica",
+          "codigo": ".text : { *(.text) } > FLASH",
+          "pregunta": "¿Qué significa `> FLASH`?",
+          "opciones": [
+            "Coloca la sección en el bloque FLASH declarado en MEMORY",
+            "Copia la sección a la dirección FLASH",
+            "Borra la sección si FLASH no existe",
+            "Cambia el nombre de la sección a FLASH"
+          ],
+          "respuesta": 0,
+          "explicacion": "Tras la llave de la sección, el operador de mayúscula indica en qué bloque de MEMORY se aloja. Si no cabe, el enlazador se niega a continuar."
+        },
+        {
+          "id": "c10-q9",
+          "tipo": "arrastrar",
+          "pregunta": "Lleva cada línea al bloque donde debería estar en un linker script.",
+          "zonas": ["Bloque SECTIONS", "Bloque MEMORY", "No va en el script"],
+          "elementos": [
+            { "texto": ".text : { *(.text) }", "zona": "Bloque SECTIONS" },
+            { "texto": "/DISCARD/ : { *(.comment) }", "zona": "Bloque SECTIONS" },
+            { "texto": ". = 0x08000000;", "zona": "Bloque SECTIONS" },
+            { "texto": "ORIGIN = 0x20000000", "zona": "Bloque MEMORY" },
+            { "texto": "LENGTH = 16K", "zona": "Bloque MEMORY" },
+            { "texto": "#define FLASH 65536", "zona": "No va en el script" }
+          ],
+          "explicacion": "MEMORY declara los bloques con su origen y su tamaño; SECTIONS reparte el programa entre ellos y sitúa el contador de ubicación. Las macros del preprocesador no existen aquí."
+        }
+      ]
+    },
+    {
+      "id": "c11",
+      "titulo": "11. .rodata, .data y .bss: VMA, LMA y un solo banco",
+      "descripcion": "Qué viven en .rodata, .data y .bss, quién pone a cero la .bss al arrancar y la diferencia entre VMA y LMA en un sistema con un solo banco de memoria.",
+      "archivo": "capitulos/11-secciones-datos.md",
+      "tags": ["rodata", "data", "bss", "vma", "lma"],
+      "minutos": 22,
+      "aprobacion": 70,
+      "evaluacionRequerida": true,
+      "ejercicios": [
+        {
+          "id": "c11-e1",
+          "titulo": "Donde viven los datos",
+          "enunciado": "ejercicios/donde-viven-los-datos-enunciado.md",
+          "solucion": "ejercicios/donde-viven-los-datos-solucion.md",
+          "pistas": [
+            "ejercicios/donde-viven-los-datos-pista-1.md",
+            "ejercicios/donde-viven-los-datos-pista-2.md",
+            "ejercicios/donde-viven-los-datos-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/donde-viven-los-datos-plantilla.sh",
+          "pruebas": "ejercicios/donde-viven-los-datos-pruebas.json"
+        },
+        {
+          "id": "c11-e2",
+          "titulo": "Limpiar la bss",
+          "enunciado": "ejercicios/limpiar-bss-enunciado.md",
+          "solucion": "ejercicios/limpiar-bss-solucion.md",
+          "pistas": [
+            "ejercicios/limpiar-bss-pista-1.md",
+            "ejercicios/limpiar-bss-pista-2.md",
+            "ejercicios/limpiar-bss-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/limpiar-bss-plantilla.sh",
+          "pruebas": "ejercicios/limpiar-bss-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c11-q1",
+          "tipo": "unica",
+          "codigo": "const char mensaje[] = \"hola\";\nint contador = 42;\nint sin_inicializar;",
+          "pregunta": "¿En qué sección va cada una?",
+          "opciones": [
+            "mensaje en .rodata, contador en .data y sin_inicializar en .bss",
+            "las tres en .data",
+            "mensaje en .bss, contador en .rodata y sin_inicializar en .data",
+            "las tres en .rodata"
+          ],
+          "respuesta": 0,
+          "explicacion": "Lo constante va a .rodata, lo inicializado a .data (porque su valor hay que escribirlo) y lo declarado sin valor a .bss, que solo ocupa sitio en memoria."
+        },
+        {
+          "id": "c11-q2",
+          "tipo": "vf",
+          "pregunta": "Una variable sin inicializar ocupa en el archivo el mismo sitio que una inicializada con el mismo tipo.",
+          "respuesta": false,
+          "explicacion": "La .bss no escribe bytes en el archivo: solo deja el hueco reservado. Por eso un buffer de un megabyte sin inicializar no engorda el ejecutable."
+        },
+        {
+          "id": "c11-q3",
+          "tipo": "unica",
+          "codigo": ".data : { *(.data) } > RAM AT > FLASH",
+          "pregunta": "¿Qué significa `AT > FLASH`?",
+          "opciones": [
+            "La sección se ejecuta en RAM pero se carga desde la flash",
+            "La sección se copia dos veces",
+            "La sección se borra de la flash",
+            "La sección se ejecuta en la flash y se lee en RAM"
+          ],
+          "respuesta": 0,
+          "explicacion": "Es la diferencia entre VMA y LMA: se ejecuta en su dirección de memoria (RAM) pero se carga desde otra (flash). Al arrancar hay que copiarla."
+        },
+        {
+          "id": "c11-q4",
+          "tipo": "multiple",
+          "pregunta": "En un sistema con un solo banco de memoria, ¿qué trabajos hace la rutina de arranque antes de llamar a main? (marca todos los correctos)",
+          "opciones": [
+            "Copiar .data desde la flash hasta la RAM",
+            "Poner a cero el hueco de .bss",
+            "Sustituir los #include por su contenido",
+            "Declarar los bloques con MEMORY"
+          ],
+          "respuestas": [0, 1],
+          "explicacion": "Los dos primeros son los suyos: copiar los datos inicializados y limpiar los no inicializados. Los #include los resuelve el preprocesador y los bloques MEMORY los declara el linker script."
+        },
+        {
+          "id": "c11-q5",
+          "tipo": "texto",
+          "pregunta": "¿Qué dos símbolos marcan el principio y el final de la .bss en un linker script? (escríbelos separados por un espacio, en orden)",
+          "aceptadas": ["_sbss _ebss", "sbss ebss", "_sbss _ebss "],
+          "explicacion": "El script asigna _sbss = .; antes de la sección y _ebss = .; después. La rutina de arranque recorre ese rango poniendo bytes a cero."
+        },
+        {
+          "id": "c11-q6",
+          "tipo": "unica",
+          "codigo": "  7 __common      00000004 0000000100008004 BSS",
+          "pregunta": "¿Qué sección es esa en un ejecutable de macOS?",
+          "opciones": ["__common", "__text", "__const", "__stubs"],
+          "respuesta": 0,
+          "explicacion": "En Mach-O las variables sin inicializar acaban en __DATA,__common, que objdump -h marca como tipo BSS. Es la misma idea que la .bss de ELF, con otro nombre."
+        },
+        {
+          "id": "c11-q7",
+          "tipo": "vf",
+          "pregunta": "La VMA y la LMA coinciden en .text y .bss, pero en .data suelen ser distintas en un sistema embebido con un solo banco.",
+          "respuesta": true,
+          "explicacion": ".text y .bss se usan donde están, pero .data se usa en RAM y se carga desde la flash, así que necesita las dos direcciones."
+        },
+        {
+          "id": "c11-q8",
+          "tipo": "unica",
+          "pregunta": "Si olvidas poner a cero la .bss en la rutina de arranque, ¿qué ocurre?",
+          "opciones": [
+            "Las variables globales sin inicializar arrancan con la basura que había en la RAM",
+            "El programa no compila",
+            "Las constantes se pierden",
+            "La .bss desaparece del mapa de memoria"
+          ],
+          "respuesta": 0,
+          "explicacion": "La memoria RAM arranca con cualquier contenido. Si nadie limpia el hueco, tus globales toman valores aleatorios: un fallo que solo aparece en el hardware."
+        },
+        {
+          "id": "c11-q9",
+          "tipo": "arrastrar",
+          "pregunta": "Lleva cada dato a la sección en la que acaba.",
+          "zonas": [".rodata", ".data", ".bss"],
+          "elementos": [
+            { "texto": "const char mensaje[] = \"hola\";", "zona": ".rodata" },
+            { "texto": "const int tabla[3] = {1, 2, 3};", "zona": ".rodata" },
+            { "texto": "int contador = 42;", "zona": ".data" },
+            { "texto": "los valores que hay que copiar de flash a RAM al arrancar", "zona": ".data" },
+            { "texto": "int sin_inicializar;", "zona": ".bss" },
+            { "texto": "unsigned char buffer[1024];", "zona": ".bss" }
+          ],
+          "explicacion": "Lo constante va a .rodata (solo lectura), lo inicializado a .data (su valor está escrito en el archivo y hay que copiarlo) y lo demás a .bss, que solo ocupa memoria."
+        }
+      ]
+    },
+    {
+      "id": "c12",
+      "titulo": "12. Nombres de símbolos y reglas de nombrado",
+      "descripcion": "El guion bajo de Mach-O, símbolos globales y locales, static, las reglas de nombrado y las letras de nm.",
+      "archivo": "capitulos/12-nombres-simbolos.md",
+      "tags": ["simbolos", "nm", "static", "nombres", "mangling"],
+      "minutos": 18,
+      "aprobacion": 70,
+      "evaluacionRequerida": true,
+      "ejercicios": [
+        {
+          "id": "c12-e1",
+          "titulo": "Global y local",
+          "enunciado": "ejercicios/global-y-local-enunciado.md",
+          "solucion": "ejercicios/global-y-local-solucion.md",
+          "pistas": [
+            "ejercicios/global-y-local-pista-1.md",
+            "ejercicios/global-y-local-pista-2.md",
+            "ejercicios/global-y-local-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/global-y-local-plantilla.sh",
+          "pruebas": "ejercicios/global-y-local-pruebas.json"
+        },
+        {
+          "id": "c12-e2",
+          "titulo": "Reglas de nombre",
+          "enunciado": "ejercicios/reglas-de-nombre-enunciado.md",
+          "solucion": "ejercicios/reglas-de-nombre-solucion.md",
+          "pistas": [
+            "ejercicios/reglas-de-nombre-pista-1.md",
+            "ejercicios/reglas-de-nombre-pista-2.md",
+            "ejercicios/reglas-de-nombre-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/reglas-de-nombre-plantilla.sh",
+          "pruebas": "ejercicios/reglas-de-nombre-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c12-q1",
+          "tipo": "unica",
+          "pregunta": "En macOS, ¿cómo se guarda el símbolo de la función C `suma`?",
+          "opciones": ["_suma", "suma", "SUMA", "C_suma"],
+          "respuesta": 0,
+          "explicacion": "Mach-O antepone un guion bajo a los símbolos de C. En Linux (ELF) el mismo símbolo aparece como suma, sin guion."
+        },
+        {
+          "id": "c12-q2",
+          "tipo": "vf",
+          "pregunta": "Dos funciones `static` con el mismo nombre en dos ficheros distintos pueden enlazarse juntas sin que aparezca duplicate symbol.",
+          "respuesta": true,
+          "explicacion": "static hace que cada versión sea local a su fichero: el enlazador nunca las mezcla. Solo chocan las globales."
+        },
+        {
+          "id": "c12-q3",
+          "tipo": "unica",
+          "codigo": "$ nm pieza.o\n0000000000000000 T _saluda\n0000000000000008 t _interna",
+          "pregunta": "¿Qué ves en la segunda línea?",
+          "opciones": [
+            "Una función local: existe solo en ese archivo",
+            "Una función que falta definir en otro sitio",
+            "Una función de la biblioteca del sistema",
+            "Un error del ensamblador"
+          ],
+          "respuesta": 0,
+          "explicacion": "La letra minúscula t dice que el símbolo es local. Se compila igual que _saluda, pero no sale del archivo: al enlazar desaparece de la tabla del ejecutable."
+        },
+        {
+          "id": "c12-q4",
+          "tipo": "multiple",
+          "pregunta": "¿Cuáles de estas situaciones producen el error duplicate symbol? (marca todos los correctos)",
+          "opciones": [
+            "Dos .o que definen la misma función global",
+            "Una función sin static definida igual en dos .c",
+            "Dos funciones static con el mismo nombre en ficheros distintos",
+            "Llamar a printf desde dos archivos distintos"
+          ],
+          "respuestas": [0, 1],
+          "explicacion": "Duplicate symbol aparece cuando dos definiciones globales del mismo nombre se cruzan en el enlace. static evita el choque y usar printf no define nada."
+        },
+        {
+          "id": "c12-q5",
+          "tipo": "texto",
+          "pregunta": "¿Qué palabra de C pones delante de una función para que su nombre no se vea fuera del fichero? (una palabra)",
+          "aceptadas": ["static", "static()"],
+          "explicacion": "static convierte la función en local: nm la enseña con letra minúscula en el .o y no aparece en el ejecutable."
+        },
+        {
+          "id": "c12-q6",
+          "tipo": "unica",
+          "pregunta": "En C++, ¿por qué hay que declarar `extern \"C\"` una función escrita en C o en ensamblador?",
+          "opciones": [
+            "Porque C++ altera los nombres para codificar los tipos y C busca el nombre sin alterar",
+            "Porque C++ no puede llamar a funciones de ningún tipo",
+            "Porque extern desactiva el preprocesador",
+            "Porque el guion bajo solo existe en C"
+          ],
+          "respuesta": 0,
+          "explicacion": "Ese cambio de nombre se llama name mangling. extern \"C\" obliga a usar el nombre tal cual lo espera C, que en macOS es _nombre."
+        },
+        {
+          "id": "c12-q7",
+          "tipo": "vf",
+          "pregunta": "En C, los identificadores que empiezan por guion bajo seguido de una mayúscula están reservados por la norma para el sistema.",
+          "respuesta": true,
+          "explicacion": "Por eso el sistema reserva nombres como _Printf. La regla general es que los que empiezan por guion bajo son internos."
+        },
+        {
+          "id": "c12-q8",
+          "tipo": "unica",
+          "codigo": "$ nm pieza.o | grep _interna\n0000000000000008 t _interna\n$ nm prog | grep _interna\n(no sale)",
+          "pregunta": "¿Por qué desaparece en el ejecutable?",
+          "opciones": [
+            "Los símbolos locales se resuelven dentro de su archivo y el enlazador no los escribe en el resultado",
+            "El enlazador la convierte en global",
+            "El compilador la borró antes de ensamblar",
+            "El ejecutable no guarda tabla de símbolos"
+          ],
+          "respuesta": 0,
+          "explicacion": "Lo local no necesita salir: nadie de fuera puede referirse a ello. El enlazador lo usa en su sitio y no lo vuelca al ejecutable."
+        },
+        {
+          "id": "c12-q9",
+          "tipo": "arrastrar",
+          "pregunta": "Lleva cada entrada a su categoría según la tabla de símbolos.",
+          "zonas": ["Global (mayúscula)", "Local (minúscula)", "No es un símbolo"],
+          "elementos": [
+            { "texto": "T _saluda", "zona": "Global (mayúscula)" },
+            { "texto": "D _contador", "zona": "Global (mayúscula)" },
+            { "texto": "t _interna", "zona": "Local (minúscula)" },
+            { "texto": "d _privado (static en C)", "zona": "Local (minúscula)" },
+            { "texto": "#define N 10", "zona": "No es un símbolo" },
+            { "texto": "un comentario del archivo .s", "zona": "No es un símbolo" }
+          ],
+          "explicacion": "Las mayúsculas (T, D, C) marcan símbolos globales y las minúsculas (t, d, b) locales. Las macros y los comentarios desaparecen antes de ensamblar, así que no existen en la tabla de símbolos."
         }
       ]
     }

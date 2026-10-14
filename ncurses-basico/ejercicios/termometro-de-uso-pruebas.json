@@ -1,0 +1,8 @@
+[
+  { "nombre": "40 por ciento verde", "entrada": "40\n", "esperado": "relleno=8\ncolor=verde\nbarra=########------------" },
+  { "nombre": "60 por ciento amarillo", "entrada": "60\n", "esperado": "relleno=12\ncolor=amarillo\nbarra=############--------" },
+  { "nombre": "90 por ciento rojo", "entrada": "90\n", "esperado": "relleno=18\ncolor=rojo\nbarra=##################--" },
+  { "nombre": "100 por ciento lleno", "entrada": "100\n", "esperado": "relleno=20\ncolor=rojo\nbarra=####################" },
+  { "nombre": "0 por ciento vacio", "entrada": "0\n", "esperado": "relleno=0\ncolor=ninguno\nbarra=--------------------" },
+  { "nombre": "85 por ciento corta rojo", "entrada": "85\n", "esperado": "relleno=17\ncolor=rojo\nbarra=#################---" }
+]

@@ -1,0 +1,1 @@
+Un operador en fase 0 es fácil: `op = c; der = 0; fase = 2;`. En fase 2 hay que aplicar antes la operación pendiente (`izq += der`, `izq -= der`, `izq *= der` o `izq = (der == 0) ? 0 : izq / der;`) y luego guardar el nuevo operador. Recuerda: la división es entera y entre 0 el resultado es 0.

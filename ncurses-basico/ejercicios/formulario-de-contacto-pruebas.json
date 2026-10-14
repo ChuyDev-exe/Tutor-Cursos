@@ -1,0 +1,7 @@
+[
+  { "nombre": "datos correctos", "entrada": "Ana\nana@mail.com\n30\n", "esperado": "nombre=Ana correo=ana@mail.com edad=30 valido=si" },
+  { "nombre": "correo sin arroba", "entrada": "Bo\nbobmail.com\n25\n", "esperado": "nombre=Bo correo=bobmail.com edad=25 valido=no" },
+  { "nombre": "edad sin digitos", "entrada": "Cy\nc@mail\nx\n", "esperado": "nombre=Cy correo=c@mail edad=0 valido=no" },
+  { "nombre": "nombre largo cortado a 10 caracteres", "entrada": "Diego Fernando\nd@e.f\n40\n", "esperado": "nombre=Diego Fern correo=d@e.f edad=40 valido=si" },
+  { "nombre": "edad fuera de rango", "entrada": "Eve\neve@x.com\n200\n", "esperado": "nombre=Eve correo=eve@x.com edad=200 valido=no" }
+]

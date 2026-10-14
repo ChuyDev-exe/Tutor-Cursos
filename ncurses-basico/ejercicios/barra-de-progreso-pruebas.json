@@ -1,0 +1,6 @@
+[
+  { "nombre": "sin teclas: solo ticks por EOF", "entrada": "", "esperado": "barra=####################\npaso_final=20" },
+  { "nombre": "20 teclas basura tambien avanzan", "entrada": "xxxxxxxxxxxxxxxxxxxx", "esperado": "barra=####################\npaso_final=20" },
+  { "nombre": "una tecla y luego EOF", "entrada": "x\n", "esperado": "barra=####################\npaso_final=20" },
+  { "nombre": "sobran teclas: el bucle es de 20 pasos", "entrada": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "esperado": "barra=####################\npaso_final=20" }
+]

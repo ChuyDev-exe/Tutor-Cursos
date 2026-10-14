@@ -1,0 +1,5 @@
+[
+  { "nombre": "script completo", "entrada": "", "esperado": "memoria: ok\norigen: ok\nlongitud: ok\ntext: ok\ndata: ok\nbss: ok\nflash: ok\nram: ok\nllaves: ok\nscript: valido" },
+  { "nombre": "ignora stdin", "entrada": "x\n", "esperado": "memoria: ok\norigen: ok\nlongitud: ok\ntext: ok\ndata: ok\nbss: ok\nflash: ok\nram: ok\nllaves: ok\nscript: valido" },
+  { "nombre": "ignora llaves sueltas", "entrada": "{ }\n", "esperado": "memoria: ok\norigen: ok\nlongitud: ok\ntext: ok\ndata: ok\nbss: ok\nflash: ok\nram: ok\nllaves: ok\nscript: valido" }
+]

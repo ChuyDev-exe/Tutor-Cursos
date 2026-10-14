@@ -2,9 +2,9 @@
   "$schema": "../vscode-tutor-ext/schemas/curso.schema.json",
   "id": "ncurses-basico",
   "titulo": "ncurses: interfaces de texto en C",
-  "descripcion": "Crea tu primera interfaz en la terminal con ncurses: coordenadas de fila y columna, ventanas con borde y lectura del teclado tecla a tecla. Para quien ya programa en C básico y quiere dibujar en la terminal.",
+  "descripcion": "De cero a interfaces completas en la terminal con ncurses en C: coordenadas y ventanas, teclado y flechas, colores, subventanas, pads, formularios, animación con timeout, layouts responsivos, y dos proyectos reales (visor de logs e inventario ordenable) más snake y el Juego de la Vida. Para quien ya programa en C básico y quiere dibujar en la terminal.",
   "nivel": "principiante",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "manual": "MANUAL.md",
   "setup": "setup.sh",
   "requisitos": [
@@ -36,7 +36,13 @@
       "titulo": "1. Tu primera interfaz de texto con ncurses",
       "descripcion": "Abrir y cerrar la pantalla, escribir por fila y columna, crear ventanas con box y leer teclas con getch.",
       "archivo": "capitulos/01-ncurses.md",
-      "tags": ["ncurses", "terminal", "ventanas", "getch", "coordenadas"],
+      "tags": [
+        "ncurses",
+        "terminal",
+        "ventanas",
+        "getch",
+        "coordenadas"
+      ],
       "minutos": 25,
       "aprobacion": 70,
       "ejercicios": [
@@ -73,7 +79,12 @@
           "id": "c1-q1",
           "tipo": "unica",
           "pregunta": "¿Qué función hay que llamar antes de salir para devolver la terminal a su estado normal?",
-          "opciones": ["endwin()", "refresh()", "delwin(stdscr)", "exit(0)"],
+          "opciones": [
+            "endwin()",
+            "refresh()",
+            "delwin(stdscr)",
+            "exit(0)"
+          ],
           "respuesta": 0,
           "explicacion": "endwin() deshace los cambios que hizo initscr() en la terminal. Sin él, la terminal queda desconfigurada."
         },
@@ -89,7 +100,12 @@
           "tipo": "unica",
           "pregunta": "¿Qué llamada dibuja la @ que ves en la imagen?",
           "imagen": "img/pantalla-ncurses.svg",
-          "opciones": ["mvaddch(4, 12, '@')", "mvaddch(12, 4, '@')", "mvaddch(5, 13, '@')", "mvaddch(4, 11, '@')"],
+          "opciones": [
+            "mvaddch(4, 12, '@')",
+            "mvaddch(12, 4, '@')",
+            "mvaddch(5, 13, '@')",
+            "mvaddch(4, 11, '@')"
+          ],
           "respuesta": 0,
           "explicacion": "La @ está en la fila 4 y la columna 12, contando desde 0. La fila (y) va antes que la columna (x)."
         },
@@ -98,7 +114,12 @@
           "tipo": "unica",
           "pregunta": "Este código no muestra nada en pantalla. ¿Qué le falta?",
           "codigo": "WINDOW *v = newwin(5, 20, 0, 0);\nbox(v, 0, 0);\nmvwprintw(v, 2, 2, \"Hola\");",
-          "opciones": ["wrefresh(v);", "endwin();", "keypad(v, TRUE);", "delwin(v);"],
+          "opciones": [
+            "wrefresh(v);",
+            "endwin();",
+            "keypad(v, TRUE);",
+            "delwin(v);"
+          ],
           "respuesta": 0,
           "explicacion": "ncurses apunta los cambios en memoria. wrefresh(v) los pasa a la terminal."
         },
@@ -106,7 +127,12 @@
           "id": "c1-q5",
           "tipo": "unica",
           "pregunta": "¿Qué devuelve getch() cuando ya no hay más entrada?",
-          "opciones": ["ERR", "0", "'q'", "KEY_ENTER"],
+          "opciones": [
+            "ERR",
+            "0",
+            "'q'",
+            "KEY_ENTER"
+          ],
           "respuesta": 0,
           "explicacion": "getch() devuelve ERR cuando no puede leer una tecla. Por eso el bucle típico comprueba tecla != ERR."
         },
@@ -114,16 +140,45 @@
           "id": "c1-q6",
           "tipo": "arrastrar",
           "pregunta": "Lleva cada función a lo que hace en un programa de ncurses.",
-          "zonas": ["Abrir o cerrar la pantalla", "Dibujar", "Mostrar los cambios", "Leer el teclado"],
+          "zonas": [
+            "Abrir o cerrar la pantalla",
+            "Dibujar",
+            "Mostrar los cambios",
+            "Leer el teclado"
+          ],
           "elementos": [
-            { "texto": "initscr()", "zona": "Abrir o cerrar la pantalla" },
-            { "texto": "endwin()", "zona": "Abrir o cerrar la pantalla" },
-            { "texto": "mvprintw(1, 2, \"Hola\")", "zona": "Dibujar" },
-            { "texto": "box(ventana, 0, 0)", "zona": "Dibujar" },
-            { "texto": "mvaddch(4, 12, '@')", "zona": "Dibujar" },
-            { "texto": "refresh()", "zona": "Mostrar los cambios" },
-            { "texto": "wrefresh(ventana)", "zona": "Mostrar los cambios" },
-            { "texto": "getch()", "zona": "Leer el teclado" }
+            {
+              "texto": "initscr()",
+              "zona": "Abrir o cerrar la pantalla"
+            },
+            {
+              "texto": "endwin()",
+              "zona": "Abrir o cerrar la pantalla"
+            },
+            {
+              "texto": "mvprintw(1, 2, \"Hola\")",
+              "zona": "Dibujar"
+            },
+            {
+              "texto": "box(ventana, 0, 0)",
+              "zona": "Dibujar"
+            },
+            {
+              "texto": "mvaddch(4, 12, '@')",
+              "zona": "Dibujar"
+            },
+            {
+              "texto": "refresh()",
+              "zona": "Mostrar los cambios"
+            },
+            {
+              "texto": "wrefresh(ventana)",
+              "zona": "Mostrar los cambios"
+            },
+            {
+              "texto": "getch()",
+              "zona": "Leer el teclado"
+            }
           ],
           "explicacion": "initscr() y endwin() abren y cierran la pantalla. mvprintw, box y mvaddch dibujan en memoria. refresh y wrefresh muestran esos cambios. getch lee una tecla."
         },
@@ -131,8 +186,1339 @@
           "id": "c1-q7",
           "tipo": "texto",
           "pregunta": "¿Qué función dibuja el borde de una ventana? (solo el nombre)",
-          "aceptadas": ["box", "box()"],
+          "aceptadas": [
+            "box",
+            "box()"
+          ],
           "explicacion": "box(ventana, 0, 0) dibuja el borde con los caracteres por defecto."
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "titulo": "2. El teclado: de una tecla a las flechas",
+      "descripcion": "Modos de línea con cbreak y noecho, teclas especiales con keypad (KEY_UP…), getch como int y un menú navegable que no se sale de los límites.",
+      "archivo": "capitulos/02-teclado.md",
+      "tags": [
+        "teclado",
+        "getch",
+        "keypad",
+        "KEY_UP",
+        "menu"
+      ],
+      "minutos": 25,
+      "aprobacion": 70,
+      "ejercicios": [
+        {
+          "id": "c2-e1",
+          "titulo": "Menú de inicio",
+          "enunciado": "ejercicios/menu-de-inicio-enunciado.md",
+          "solucion": "ejercicios/menu-de-inicio-solucion.md",
+          "pistas": [
+            "ejercicios/menu-de-inicio-pista-1.md",
+            "ejercicios/menu-de-inicio-pista-2.md",
+            "ejercicios/menu-de-inicio-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/menu-de-inicio-plantilla.sh",
+          "pruebas": "ejercicios/menu-de-inicio-pruebas.json"
+        },
+        {
+          "id": "c2-e2",
+          "titulo": "Calculadora de teclas",
+          "enunciado": "ejercicios/calculadora-de-teclas-enunciado.md",
+          "solucion": "ejercicios/calculadora-de-teclas-solucion.md",
+          "pistas": [
+            "ejercicios/calculadora-de-teclas-pista-1.md",
+            "ejercicios/calculadora-de-teclas-pista-2.md",
+            "ejercicios/calculadora-de-teclas-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/calculadora-de-teclas-plantilla.sh",
+          "pruebas": "ejercicios/calculadora-de-teclas-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c2-q1",
+          "tipo": "unica",
+          "pregunta": "¿Qué pasa si olvidas llamar a noecho()?",
+          "opciones": [
+            "Las teclas pulsadas se escriben solas en la terminal (eco)",
+            "getch() espera a que pulses Enter",
+            "Las flechas llegan como ESC en lugar de KEY_UP",
+            "El programa no puede llamar a endwin()"
+          ],
+          "respuesta": 0,
+          "explicacion": "noecho() desactiva el eco automático. Sin cbreak() getch() esperaría a Enter y sin keypad() las flechas llegarían como secuencias ESC."
+        },
+        {
+          "id": "c2-q2",
+          "tipo": "vf",
+          "pregunta": "getch() devuelve un int: por eso se compara con enteros como 'q' (113), KEY_UP (259) o ERR.",
+          "respuesta": true,
+          "explicacion": "Las teclas especiales ocupan números por encima de 255 y ERR vale -1. Si guardases el resultado en un char se perderían los bits altos: siempre se guarda en un int."
+        },
+        {
+          "id": "c2-q3",
+          "tipo": "multiple",
+          "pregunta": "Un menú acepta estas teclas para terminar. ¿Cuáles son correctas?",
+          "opciones": [
+            "'\\n' (Enter)",
+            "KEY_ENTER",
+            "'q'",
+            "KEY_DOWN"
+          ],
+          "respuestas": [
+            0,
+            1,
+            2
+          ],
+          "explicacion": "Enter llega como '\\n' (o '\\r') por pipe y como KEY_ENTER en el teclado numérico; 'q' también termina. KEY_DOWN solo mueve la selección."
+        },
+        {
+          "id": "c2-q4",
+          "tipo": "arrastrar",
+          "pregunta": "Relaciona cada llamada con lo que hace en un programa con varias ventanas.",
+          "zonas": [
+            "Lee una tecla de stdscr",
+            "Lee una tecla de una ventana concreta",
+            "Activa las flechas como KEY_* en una ventana",
+            "Devuelve una tecla al buffer para releerla"
+          ],
+          "elementos": [
+            {
+              "texto": "getch()",
+              "zona": "Lee una tecla de stdscr"
+            },
+            {
+              "texto": "wgetch(ventana)",
+              "zona": "Lee una tecla de una ventana concreta"
+            },
+            {
+              "texto": "keypad(ventana, TRUE)",
+              "zona": "Activa las flechas como KEY_* en una ventana"
+            },
+            {
+              "texto": "ungetch(tecla)",
+              "zona": "Devuelve una tecla al buffer para releerla"
+            }
+          ],
+          "explicacion": "getch() es wgetch(stdscr). keypad se activa por ventana, y ungetch devuelve una tecla al buffer para que la vuelvas a leer."
+        },
+        {
+          "id": "c2-q5",
+          "tipo": "texto",
+          "pregunta": "¿Cómo se llama la constante que representa la flecha izquierda? (solo el nombre)",
+          "aceptadas": [
+            "KEY_LEFT",
+            "key_left"
+          ],
+          "explicacion": "KEY_LEFT vale 260 y, con keypad activado, getch() la devuelve cuando pulsas la flecha izquierda."
+        },
+        {
+          "id": "c2-q6",
+          "tipo": "unica",
+          "pregunta": "El usuario pulsa la flecha arriba y el if no se cumple. ¿Por qué?",
+          "codigo": "int t = getch();\nchar c = (char)t;\nif (c == KEY_UP) mover();",
+          "opciones": [
+            "KEY_UP vale 259 y el cast a char pierde los bits altos",
+            "Falta un refresh() antes de leer",
+            "La flecha arriba produce el carácter 'w'",
+            "mover() debe devolver int, no void"
+          ],
+          "respuesta": 0,
+          "explicacion": "getch() devuelve 259 (KEY_UP) como int; al pasarlo a char solo quedan 8 bits (quedaría 3) y la comparación con 259 falla. Nunca hagas cast a char."
+        },
+        {
+          "id": "c2-q7",
+          "tipo": "unica",
+          "pregunta": "Sin keypad(stdscr, TRUE), ¿qué devuelve getch() cuando pulsas la flecha arriba en la terminal?",
+          "opciones": [
+            "La secuencia ESC, '[' y 'A' en tres getch() distintos",
+            "KEY_UP igual que con keypad activado",
+            "ERR",
+            "Un solo getch() con el valor 10"
+          ],
+          "respuesta": 0,
+          "explicacion": "Sin keypad, ncurses no interpreta la secuencia de escape y devuelve sus bytes por separado: 27, '[' y 'A'. Por eso un menú sin keypad ignora las flechas."
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "titulo": "3. Colores y atributos",
+      "descripcion": "Paletas con start_color e init_pair, el patrón attron/attroff, atributos como A_BOLD y lectura del color de una celda; panel de estados y termómetro con semáforo.",
+      "archivo": "capitulos/03-colores.md",
+      "tags": [
+        "colores",
+        "init_pair",
+        "COLOR_PAIR",
+        "A_BOLD",
+        "atributos"
+      ],
+      "minutos": 25,
+      "aprobacion": 70,
+      "ejercicios": [
+        {
+          "id": "c3-e1",
+          "titulo": "Panel de estados de servicios",
+          "enunciado": "ejercicios/barra-de-estados-enunciado.md",
+          "solucion": "ejercicios/barra-de-estados-solucion.md",
+          "pistas": [
+            "ejercicios/barra-de-estados-pista-1.md",
+            "ejercicios/barra-de-estados-pista-2.md",
+            "ejercicios/barra-de-estados-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/barra-de-estados-plantilla.sh",
+          "pruebas": "ejercicios/barra-de-estados-pruebas.json"
+        },
+        {
+          "id": "c3-e2",
+          "titulo": "Termómetro de uso",
+          "enunciado": "ejercicios/termometro-de-uso-enunciado.md",
+          "solucion": "ejercicios/termometro-de-uso-solucion.md",
+          "pistas": [
+            "ejercicios/termometro-de-uso-pista-1.md",
+            "ejercicios/termometro-de-uso-pista-2.md",
+            "ejercicios/termometro-de-uso-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/termometro-de-uso-plantilla.sh",
+          "pruebas": "ejercicios/termometro-de-uso-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c3-q1",
+          "tipo": "unica",
+          "pregunta": "¿Qué hay que llamar antes de usar init_pair?",
+          "opciones": [
+            "initscr()",
+            "start_color()",
+            "refresh()",
+            "keypad()"
+          ],
+          "respuesta": 1,
+          "explicacion": "start_color() activa el sistema de color. Se llama una sola vez, al arrancar, después de abrir la pantalla."
+        },
+        {
+          "id": "c3-q2",
+          "tipo": "vf",
+          "pregunta": "La pareja de color 0 está reservada para el texto normal, por eso init_pair empieza en la 1.",
+          "respuesta": true,
+          "explicacion": "Los números válidos van de 1 a COLOR_PAIRS-1; la pareja 0 la usa el texto normal sin color."
+        },
+        {
+          "id": "c3-q3",
+          "tipo": "multiple",
+          "pregunta": "Para escribir «[]» con la pareja 3 (roja) y volver después al texto normal, ¿qué pasos son correctos?",
+          "opciones": [
+            "attron(COLOR_PAIR(3)) antes de escribir",
+            "attroff(COLOR_PAIR(3)) después de escribir",
+            "Volver a llamar a init_pair(3,…) por cada celda escrita",
+            "Llamar a start_color() después de cada mvprintw"
+          ],
+          "respuestas": [
+            0,
+            1
+          ],
+          "explicacion": "El patrón es attron antes de escribir y attroff después. Si olvidas el attroff, el color se cuela en el resto de la pantalla."
+        },
+        {
+          "id": "c3-q4",
+          "tipo": "arrastrar",
+          "pregunta": "Coloca cada llamada en el momento en que se hace.",
+          "zonas": [
+            "Se hace una sola vez al arrancar",
+            "Se hace alrededor de cada celda que pintas"
+          ],
+          "elementos": [
+            {
+              "texto": "start_color()",
+              "zona": "Se hace una sola vez al arrancar"
+            },
+            {
+              "texto": "init_pair(1, COLOR_GREEN, COLOR_BLACK)",
+              "zona": "Se hace una sola vez al arrancar"
+            },
+            {
+              "texto": "attron(COLOR_PAIR(1))",
+              "zona": "Se hace alrededor de cada celda que pintas"
+            },
+            {
+              "texto": "attroff(COLOR_PAIR(1))",
+              "zona": "Se hace alrededor de cada celda que pintas"
+            }
+          ],
+          "explicacion": "La paleta (start_color + init_pair) se prepara una vez al inicio; attron/attroff se abren y cierran en cada escritura con color."
+        },
+        {
+          "id": "c3-q5",
+          "tipo": "texto",
+          "pregunta": "¿Qué macro devuelve el número de pareja de una celda leída con mvinch? (solo el nombre)",
+          "aceptadas": [
+            "PAIR_NUMBER",
+            "PAIR_NUMBER()"
+          ],
+          "explicacion": "Se usa como PAIR_NUMBER(celda & A_COLOR). A_COLOR es la máscara que aísla los bits de color de la celda."
+        },
+        {
+          "id": "c3-q6",
+          "tipo": "unica",
+          "codigo": "init_pair(1, COLOR_GREEN, COLOR_BLACK);\nmvprintw(0, 0, \"A\");\ninit_pair(1, COLOR_RED, COLOR_BLACK);\nmvprintw(0, 2, \"B\");\nrefresh();",
+          "pregunta": "¿De qué color se ve la A tras ejecutar este código?",
+          "opciones": [
+            "verde",
+            "rojo",
+            "sin color",
+            "amarillo"
+          ],
+          "respuesta": 1,
+          "explicacion": "Las celdas guardan el número de pareja, no el color. Cambiar init_pair(1,…) en caliente cambia todas las celdas que usaban esa pareja, así que la A se ve roja."
+        },
+        {
+          "id": "c3-q7",
+          "tipo": "vf",
+          "pregunta": "Si has_colors() devuelve false, no debes llamar a init_pair y puedes apoyarte en atributos como A_BOLD.",
+          "respuesta": true,
+          "explicacion": "En una terminal monocromo no hay parejas que crear; atributos como A_BOLD, A_REVERSE o A_UNDERLINE siguen funcionando para dar énfasis."
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "titulo": "4. Ventanas, subventanas y marcos",
+      "descripcion": "derwin frente a subwin, bordes con box, wborder y caracteres ACS, limpieza con werase, solapamiento con touchwin; panel dividido estilo tmux y tabla de inventario.",
+      "archivo": "capitulos/04-ventanas.md",
+      "tags": [
+        "ventanas",
+        "derwin",
+        "subwin",
+        "ACS",
+        "bordes"
+      ],
+      "minutos": 30,
+      "aprobacion": 70,
+      "ejercicios": [
+        {
+          "id": "c4-e1",
+          "titulo": "Panel de logs (vista dividida)",
+          "enunciado": "ejercicios/panel-de-logs-enunciado.md",
+          "solucion": "ejercicios/panel-de-logs-solucion.md",
+          "pistas": [
+            "ejercicios/panel-de-logs-pista-1.md",
+            "ejercicios/panel-de-logs-pista-2.md",
+            "ejercicios/panel-de-logs-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/panel-de-logs-plantilla.sh",
+          "pruebas": "ejercicios/panel-de-logs-pruebas.json"
+        },
+        {
+          "id": "c4-e2",
+          "titulo": "Tabla de inventario con bordes",
+          "enunciado": "ejercicios/tabla-con-bordes-enunciado.md",
+          "solucion": "ejercicios/tabla-con-bordes-solucion.md",
+          "pistas": [
+            "ejercicios/tabla-con-bordes-pista-1.md",
+            "ejercicios/tabla-con-bordes-pista-2.md",
+            "ejercicios/tabla-con-bordes-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/tabla-con-bordes-plantilla.sh",
+          "pruebas": "ejercicios/tabla-con-bordes-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c4-q1",
+          "tipo": "unica",
+          "pregunta": "¿En qué orden hay que liberar las ventanas creadas con derwin sobre stdscr?",
+          "opciones": [
+            "Primero stdscr y después las hijas",
+            "Primero las hijas y después la madre (o endwin/delscreen)",
+            "Solo hace falta endwin",
+            "Primero la ventana más grande, da igual el orden"
+          ],
+          "respuesta": 1,
+          "explicacion": "delwin de las hijas ANTES que la madre. Si borras la madre primero, las hijas quedan apuntando a memoria ya liberada."
+        },
+        {
+          "id": "c4-q2",
+          "tipo": "vf",
+          "pregunta": "derwin crea una ventana con contenido propio, mientras que subwin comparte el contenido con la ventana madre.",
+          "respuesta": true,
+          "explicacion": "Por eso se usa derwin para paneles independientes tipo tmux; subwin solo si quieres ver lo mismo desde dos sitios."
+        },
+        {
+          "id": "c4-q3",
+          "tipo": "multiple",
+          "pregunta": "¿Qué funciones borran el contenido de una ventana (no la liberan)?",
+          "opciones": [
+            "werase",
+            "wclear",
+            "wclrtoeol",
+            "delwin"
+          ],
+          "respuestas": [
+            0,
+            1,
+            2
+          ],
+          "explicacion": "werase y wclear limpian la ventana entera; wclrtoeol borra desde el cursor hasta el final de la fila. delwin libera la ventana, no la limpia."
+        },
+        {
+          "id": "c4-q4",
+          "tipo": "arrastrar",
+          "pregunta": "Coloca cada función según lo que hace.",
+          "zonas": [
+            "Crea una ventana",
+            "Dibuja líneas de borde"
+          ],
+          "elementos": [
+            {
+              "texto": "newwin",
+              "zona": "Crea una ventana"
+            },
+            {
+              "texto": "derwin",
+              "zona": "Crea una ventana"
+            },
+            {
+              "texto": "mvhline",
+              "zona": "Dibuja líneas de borde"
+            },
+            {
+              "texto": "wborder",
+              "zona": "Dibuja líneas de borde"
+            }
+          ],
+          "explicacion": "newwin y derwin crean ventanas (la segunda, una subventana con contenido propio); mvhline dibuja una línea horizontal de n celdas y wborder dibuja los cuatro bordes."
+        },
+        {
+          "id": "c4-q5",
+          "tipo": "texto",
+          "pregunta": "¿Qué función dibuja una línea horizontal de n celdas a partir de la fila y y la columna x? (solo el nombre)",
+          "aceptadas": [
+            "mvhline",
+            "mvhline()"
+          ],
+          "explicacion": "mvhline(y, x, ACS_HLINE, n). La versión sin posición es hline(y, x, n) y la de ventana es mvwhline."
+        },
+        {
+          "id": "c4-q6",
+          "tipo": "unica",
+          "codigo": "WINDOW *a = derwin(stdscr, 8, 38, 0, 40);\nmvwprintw(a, 1, 1, \"hola\");",
+          "pregunta": "En una pantalla de 80 columnas, ¿en qué celda de stdscr queda «hola»?",
+          "opciones": [
+            "fila 1, columna 41",
+            "fila 1, columna 1",
+            "fila 0, columna 40",
+            "no se ve en stdscr"
+          ],
+          "respuesta": 0,
+          "explicacion": "derwin usa coordenadas relativas a la madre: el panel empieza en la columna 40, así que (1, 1) del panel es (1, 41) de stdscr. Recuerda que la fila va siempre antes que la columna."
+        },
+        {
+          "id": "c4-q7",
+          "tipo": "vf",
+          "pregunta": "Si dos ventanas se solapan y la ventana de abajo cambia, touchwin(win) + wrefresh(win) fuerza el repintado de esa zona.",
+          "respuesta": true,
+          "explicacion": "ncurses no detecta siempre los cambios de la ventana que queda debajo; touchwin la marca entera como sucia y wrefresh la vuelve a enviar."
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "titulo": "5. Pads: contenido más grande que la pantalla",
+      "descripcion": "newpad y prefresh para ver 30 líneas en 5 filas, scroll vertical y horizontal con clamp; visor de informe y tabla ancha como less.",
+      "archivo": "capitulos/05-pads.md",
+      "tags": [
+        "pads",
+        "newpad",
+        "prefresh",
+        "scroll"
+      ],
+      "minutos": 25,
+      "aprobacion": 70,
+      "ejercicios": [
+        {
+          "id": "c5-e1",
+          "titulo": "Visor de informe",
+          "enunciado": "ejercicios/visor-de-informe-enunciado.md",
+          "solucion": "ejercicios/visor-de-informe-solucion.md",
+          "pistas": [
+            "ejercicios/visor-de-informe-pista-1.md",
+            "ejercicios/visor-de-informe-pista-2.md",
+            "ejercicios/visor-de-informe-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/visor-de-informe-plantilla.sh",
+          "pruebas": "ejercicios/visor-de-informe-pruebas.json"
+        },
+        {
+          "id": "c5-e2",
+          "titulo": "Tabla ancha",
+          "enunciado": "ejercicios/tabla-ancha-enunciado.md",
+          "solucion": "ejercicios/tabla-ancha-solucion.md",
+          "pistas": [
+            "ejercicios/tabla-ancha-pista-1.md",
+            "ejercicios/tabla-ancha-pista-2.md",
+            "ejercicios/tabla-ancha-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/tabla-ancha-plantilla.sh",
+          "pruebas": "ejercicios/tabla-ancha-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c5-q1",
+          "tipo": "unica",
+          "pregunta": "¿Qué función crea un pad?",
+          "opciones": [
+            "newpad(filas, columnas)",
+            "newwin(filas, columnas, 0, 0)",
+            "subwin(pad, 5, 10, 0, 0)",
+            "box(pad, 0, 0)"
+          ],
+          "respuesta": 0,
+          "explicacion": "newpad crea un pad de filas × columnas sin posición en pantalla. newwin crea una ventana colocada en un punto concreto."
+        },
+        {
+          "id": "c5-q2",
+          "tipo": "vf",
+          "pregunta": "prefresh(pad, 2, 0, 0, 0, 4, 14) muestra el pad desde su fila 2 en las filas 0 a 4 de la pantalla.",
+          "respuesta": true,
+          "explicacion": "pminrow = 2 dice desde qué fila del pad; el rectángulo (0,0)-(4,14) dice dónde cae ese recorte en pantalla."
+        },
+        {
+          "id": "c5-q3",
+          "tipo": "unica",
+          "codigo": "prefresh(pad, top, 0, 0, 0, 4, 14);\n// pad de 30 filas; el viewport ocupa 5 filas",
+          "pregunta": "¿Cuál es el máximo valor de top para que el recorte quepa entero en el pad?",
+          "opciones": [
+            "25",
+            "29",
+            "30",
+            "5"
+          ],
+          "respuesta": 0,
+          "explicacion": "30 − 5 = 25. Con top = 26 el viewport miraría la fila 30, que no existe en el pad."
+        },
+        {
+          "id": "c5-q4",
+          "tipo": "multiple",
+          "pregunta": "Marca los errores típicos al trabajar con pads.",
+          "opciones": [
+            "Llamar a wrefresh(pad) en lugar de prefresh",
+            "Dejar que pminrow sea negativo",
+            "Hacer el viewport más grande que el pad",
+            "Usar mvwprintw para dibujar dentro del pad"
+          ],
+          "respuestas": [
+            0,
+            1,
+            2
+          ],
+          "explicacion": "wrefresh no sirve para pads; pminrow negativo y viewport mayor que el pad rompen el recorte. mvwprintw en un pad es correcto: se dibuja igual que en una ventana."
+        },
+        {
+          "id": "c5-q5",
+          "tipo": "texto",
+          "pregunta": "¿Qué función muestra una región del pad en pantalla? (solo el nombre)",
+          "aceptadas": [
+            "prefresh",
+            "prefresh()"
+          ],
+          "explicacion": "prefresh(pad, pminrow, pmincol, sminrow, smincol, smaxrow, smaxcol) es la versión del refresh para pads."
+        },
+        {
+          "id": "c5-q6",
+          "tipo": "arrastrar",
+          "pregunta": "Lleva cada argumento a lo que dice en prefresh.",
+          "zonas": [
+            "Dice qué parte del pad se ve",
+            "Dónde cae ese recorte en la pantalla"
+          ],
+          "elementos": [
+            {
+              "texto": "pminrow",
+              "zona": "Dice qué parte del pad se ve"
+            },
+            {
+              "texto": "pmincol",
+              "zona": "Dice qué parte del pad se ve"
+            },
+            {
+              "texto": "sminrow",
+              "zona": "Dónde cae ese recorte en la pantalla"
+            },
+            {
+              "texto": "smincol",
+              "zona": "Dónde cae ese recorte en la pantalla"
+            },
+            {
+              "texto": "smaxrow",
+              "zona": "Dónde cae ese recorte en la pantalla"
+            },
+            {
+              "texto": "smaxcol",
+              "zona": "Dónde cae ese recorte en la pantalla"
+            }
+          ],
+          "explicacion": "Los dos primeros son del pad (pmin*); los cuatro últimos forman el rectángulo de la pantalla (smin/smax)."
+        },
+        {
+          "id": "c5-q7",
+          "tipo": "unica",
+          "pregunta": "En un visor tipo less hecho con un pad, ¿qué guarda cada cosa?",
+          "opciones": [
+            "El pad guarda el contenido entero y en pantalla se ve solo un recorte",
+            "El pad guarda solo lo visible y el contenido entero va en stdscr",
+            "El pad y stdscr guardan exactamente lo mismo",
+            "El pad sustituye a la terminal y no hace falta refresh"
+          ],
+          "respuesta": 0,
+          "explicacion": "El pad es el contenido completo en memoria; prefresh lleva a la pantalla solo el rectángulo que toca. Por eso desplazar es mover pminrow/pmincol."
+        }
+      ]
+    },
+    {
+      "id": "c6",
+      "titulo": "6. Escribir texto: campos y formularios",
+      "descripcion": "wgetnstr para leer líneas, eco y noecho, validar antes de usar lo que escribe el usuario y un login con contraseña enmascarada.",
+      "archivo": "capitulos/06-formularios.md",
+      "tags": [
+        "wgetnstr",
+        "echo",
+        "noecho",
+        "formularios",
+        "validacion"
+      ],
+      "minutos": 25,
+      "aprobacion": 70,
+      "ejercicios": [
+        {
+          "id": "c6-e1",
+          "titulo": "Formulario de contacto",
+          "enunciado": "ejercicios/formulario-de-contacto-enunciado.md",
+          "solucion": "ejercicios/formulario-de-contacto-solucion.md",
+          "pistas": [
+            "ejercicios/formulario-de-contacto-pista-1.md",
+            "ejercicios/formulario-de-contacto-pista-2.md",
+            "ejercicios/formulario-de-contacto-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/formulario-de-contacto-plantilla.sh",
+          "pruebas": "ejercicios/formulario-de-contacto-pruebas.json"
+        },
+        {
+          "id": "c6-e2",
+          "titulo": "Login mascarado",
+          "enunciado": "ejercicios/login-mascarado-enunciado.md",
+          "solucion": "ejercicios/login-mascarado-solucion.md",
+          "pistas": [
+            "ejercicios/login-mascarado-pista-1.md",
+            "ejercicios/login-mascarado-pista-2.md",
+            "ejercicios/login-mascarado-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/login-mascarado-plantilla.sh",
+          "pruebas": "ejercicios/login-mascarado-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c6-q1",
+          "tipo": "unica",
+          "pregunta": "¿Qué hace echo()?",
+          "opciones": [
+            "Hace que lo que lees con wgetnstr aparezca en pantalla",
+            "Lee el teclado carácter a carácter sin esperar a Enter",
+            "Abre la pantalla de ncurses",
+            "Dibuja el cursor en la posición actual"
+          ],
+          "respuesta": 0,
+          "explicacion": "echo() activa el modo de eco: lo que entra por wgetnstr se escribe en pantalla. noecho() lo apaga. getnstr/wgetnstr nunca imprimen por sí solos."
+        },
+        {
+          "id": "c6-q2",
+          "tipo": "vf",
+          "pregunta": "wgetnstr(stdscr, buf, 10) añade un '\\0' al final de lo leído.",
+          "respuesta": true,
+          "explicacion": "wgetnstr siempre termina la cadena con '\\0', por eso el buffer debe tener sitio para max caracteres + 1."
+        },
+        {
+          "id": "c6-q3",
+          "tipo": "multiple",
+          "pregunta": "¿Qué comprobaciones son validaciones razonables en un formulario de contacto?",
+          "opciones": [
+            "strchr(correo, '@') para el correo",
+            "Un bucle con isdigit sobre la edad escrita",
+            "strtol para convertir la edad a número y comprobar el rango",
+            "Confiar en que el usuario escribió bien los datos"
+          ],
+          "respuestas": [
+            0,
+            1,
+            2
+          ],
+          "explicacion": "Valores de usuario sin validar son basura hasta que se demuestra lo contrario. Confiar en el usuario no es una validación."
+        },
+        {
+          "id": "c6-q4",
+          "tipo": "unica",
+          "codigo": "noecho();\nwmove(stdscr, 3, 8);\nwgetnstr(stdscr, clave, 10);\necho();",
+          "pregunta": "¿Qué consigue este fragmento?",
+          "opciones": [
+            "Leer la clave sin que se vea en pantalla",
+            "Borrar la clave de la pantalla al terminar",
+            "Leer la clave dos veces por seguridad",
+            "Impedir que el usuario escriba la clave"
+          ],
+          "respuesta": 0,
+          "explicacion": "noecho() apaga el eco solo durante la lectura; echo() lo restaura para los campos siguientes. Es el patrón de las contraseñas."
+        },
+        {
+          "id": "c6-q5",
+          "tipo": "texto",
+          "pregunta": "¿Qué función borra desde el cursor hasta el final de la línea? (solo el nombre)",
+          "aceptadas": [
+            "wclrtoeol",
+            "wclrtoeol()"
+          ],
+          "explicacion": "wclrtoeol(win) limpia la línea desde el cursor; con wmove antes sirve para borrar un campo inválido y volver a pedirlo."
+        },
+        {
+          "id": "c6-q6",
+          "tipo": "arrastrar",
+          "pregunta": "Lleva cada situación al modo de eco que toca.",
+          "zonas": [
+            "Modo eco normal (se ve lo que se escribe)",
+            "Modo sin eco (no se ve)"
+          ],
+          "elementos": [
+            {
+              "texto": "Campo «Nombre:»",
+              "zona": "Modo eco normal (se ve lo que se escribe)"
+            },
+            {
+              "texto": "Campo «Clave:»",
+              "zona": "Modo sin eco (no se ve)"
+            },
+            {
+              "texto": "Después de leer la clave, seguir con el formulario",
+              "zona": "Modo eco normal (se ve lo que se escribe)"
+            }
+          ],
+          "explicacion": "Los campos normales van con echo(); la contraseña con noecho() solo durante su lectura, y después se restaura echo()."
+        },
+        {
+          "id": "c6-q7",
+          "tipo": "unica",
+          "codigo": "char edad[3];\nwgetnstr(stdscr, edad, 3);",
+          "pregunta": "¿Qué le falta a este código?",
+          "opciones": [
+            "Un byte más en el buffer para el '\\0'",
+            "Nada: así está bien",
+            "Llamar a refresh antes de leer",
+            "Poner el max a −1 para leer toda la línea"
+          ],
+          "respuesta": 0,
+          "explicacion": "wgetnstr escribe max caracteres y además el '\\0': necesita max + 1 bytes. Con edad[3] y max 3 hay desbordamiento."
+        }
+      ]
+    },
+    {
+      "id": "c7",
+      "titulo": "7. Tiempo, animación y refresco",
+      "descripcion": "timeout, nodelay y halfdelay para no bloquear getch, la regla de ERR, napms y el orden de dibujo de cada frame; barra de progreso y cuenta atrás.",
+      "archivo": "capitulos/07-tiempo.md",
+      "tags": [
+        "timeout",
+        "nodelay",
+        "animacion",
+        "ERR",
+        "napms"
+      ],
+      "minutos": 25,
+      "aprobacion": 70,
+      "ejercicios": [
+        {
+          "id": "c7-e1",
+          "titulo": "Barra de progreso",
+          "enunciado": "ejercicios/barra-de-progreso-enunciado.md",
+          "solucion": "ejercicios/barra-de-progreso-solucion.md",
+          "pistas": [
+            "ejercicios/barra-de-progreso-pista-1.md",
+            "ejercicios/barra-de-progreso-pista-2.md",
+            "ejercicios/barra-de-progreso-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/barra-de-progreso-plantilla.sh",
+          "pruebas": "ejercicios/barra-de-progreso-pruebas.json"
+        },
+        {
+          "id": "c7-e2",
+          "titulo": "Cuenta atrás",
+          "enunciado": "ejercicios/cuenta-atras-enunciado.md",
+          "solucion": "ejercicios/cuenta-atras-solucion.md",
+          "pistas": [
+            "ejercicios/cuenta-atras-pista-1.md",
+            "ejercicios/cuenta-atras-pista-2.md",
+            "ejercicios/cuenta-atras-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/cuenta-atras-plantilla.sh",
+          "pruebas": "ejercicios/cuenta-atras-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c7-q1",
+          "tipo": "unica",
+          "pregunta": "¿Qué haces para que getch() espere como mucho 50 ms y devuelva ERR si no llega tecla?",
+          "opciones": [
+            "timeout(50)",
+            "sleep(50)",
+            "usleep(50) antes del bucle",
+            "refresh()"
+          ],
+          "respuesta": 0,
+          "explicacion": "timeout(ms) limita la espera de getch(). sleep() duerme el proceso entero y no lee teclas."
+        },
+        {
+          "id": "c7-q2",
+          "tipo": "vf",
+          "pregunta": "nodelay(stdscr, TRUE) hace que getch() devuelva ERR al instante si no hay tecla.",
+          "respuesta": true,
+          "explicacion": "nodelay quita la espera por completo: si no hay tecla, ERR sin consumir tiempo."
+        },
+        {
+          "id": "c7-q3",
+          "tipo": "multiple",
+          "pregunta": "¿Cuáles de estas evitan que getch() espere para siempre?",
+          "opciones": [
+            "timeout(ms)",
+            "nodelay(win, TRUE)",
+            "sleep(1)",
+            "cbreak()"
+          ],
+          "respuestas": [
+            0,
+            1
+          ],
+          "explicacion": "timeout y nodelay son los dos límites de espera de getch(). cbreak solo cambia que no esperes a Enter, y sleep no deja pasar teclas."
+        },
+        {
+          "id": "c7-q4",
+          "tipo": "unica",
+          "codigo": "timeout(1);\nint t = getch();\nif (t == ERR) {\n    /* ??? */\n}",
+          "pregunta": "En un bucle de animación, ¿qué debería ir dentro del if para que el programa avance sin teclas?",
+          "opciones": [
+            "avanzar la física: mover, borrar lo viejo y dibujar el siguiente frame",
+            "romper el bucle y terminar",
+            "no dibujar nada hasta que llegue una tecla",
+            "llamar a getch() en bucle hasta que no devuelva ERR"
+          ],
+          "respuesta": 0,
+          "explicacion": "ERR es un tick: el ERR es la señal de que pasó un instante, no una señal de fin. Si dejas el if vacío, no tienes animación, tienes un menú."
+        },
+        {
+          "id": "c7-q5",
+          "tipo": "texto",
+          "pregunta": "¿Qué función duerme milisegundos sin consumir CPU? (solo el nombre)",
+          "aceptadas": [
+            "napms",
+            "napms()"
+          ],
+          "explicacion": "napms(20) duerme 20 ms. Es el compañero de nodelay: útil entre frames cuando getch() ya no frena nada."
+        },
+        {
+          "id": "c7-q6",
+          "tipo": "arrastrar",
+          "pregunta": "Lleva cada fallo a su síntoma.",
+          "zonas": [
+            "El programa se congela esperando",
+            "Quedan rastros en pantalla",
+            "La ventana ignora las teclas mientras duerme",
+            "Solo avanza si pulso teclas"
+          ],
+          "elementos": [
+            {
+              "texto": "Bucle con getch() sin timeout",
+              "zona": "El programa se congela esperando"
+            },
+            {
+              "texto": "Animar sin borrar la celda vieja",
+              "zona": "Quedan rastros en pantalla"
+            },
+            {
+              "texto": "Usar sleep() de POSIX entre frames",
+              "zona": "La ventana ignora las teclas mientras duerme"
+            },
+            {
+              "texto": "Dejar el if (t == ERR) vacío",
+              "zona": "Solo avanza si pulso teclas"
+            }
+          ],
+          "explicacion": "Cada error tiene su arreglo: timeout, borrar antes de dibujar, napms/timeout en vez de sleep, y avanzar la física también con ERR."
+        },
+        {
+          "id": "c7-q7",
+          "tipo": "unica",
+          "pregunta": "Un bucle de 20 pasos con timeout(1) corre con la entrada en pipe vacía. ¿Qué hace getch() en cada vuelta?",
+          "opciones": [
+            "Devuelve ERR al instante (EOF), así el bucle termina sin esperar",
+            "Espera 1 ms y devuelve 0",
+            "Bloquea para siempre",
+            "Devuelve KEY_ENTER"
+          ],
+          "respuesta": 0,
+          "explicacion": "Con stdin en pipe, el fin de entrada produce ERR inmediato. Por eso los ejercicios de animación avanzan un paso por getch() y los tests pasan sin esperar."
+        }
+      ]
+    },
+    {
+      "id": "c8",
+      "titulo": "8. Geometría, tamaño y layouts",
+      "descripcion": "getmaxyx, LINES y COLS, la fórmula de centrado, resizeterm y KEY_RESIZE, dibujar solo dentro de los límites; diálogo modal centrado y rejilla de apps.",
+      "archivo": "capitulos/08-geometria.md",
+      "tags": [
+        "getmaxyx",
+        "LINES",
+        "COLS",
+        "resizeterm",
+        "layout"
+      ],
+      "minutos": 25,
+      "aprobacion": 70,
+      "ejercicios": [
+        {
+          "id": "c8-e1",
+          "titulo": "Caja centrada",
+          "enunciado": "ejercicios/caja-centrada-enunciado.md",
+          "solucion": "ejercicios/caja-centrada-solucion.md",
+          "pistas": [
+            "ejercicios/caja-centrada-pista-1.md",
+            "ejercicios/caja-centrada-pista-2.md",
+            "ejercicios/caja-centrada-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/caja-centrada-plantilla.sh",
+          "pruebas": "ejercicios/caja-centrada-pruebas.json"
+        },
+        {
+          "id": "c8-e2",
+          "titulo": "Rejilla de apps",
+          "enunciado": "ejercicios/rejilla-de-apps-enunciado.md",
+          "solucion": "ejercicios/rejilla-de-apps-solucion.md",
+          "pistas": [
+            "ejercicios/rejilla-de-apps-pista-1.md",
+            "ejercicios/rejilla-de-apps-pista-2.md",
+            "ejercicios/rejilla-de-apps-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/rejilla-de-apps-plantilla.sh",
+          "pruebas": "ejercicios/rejilla-de-apps-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c8-q1",
+          "tipo": "unica",
+          "pregunta": "getmaxyx(win, y, x) rellena y con...",
+          "opciones": [
+            "el alto (número de filas)",
+            "el ancho (número de columnas)",
+            "la fila donde está el cursor",
+            "la fila de origen de la ventana"
+          ],
+          "respuesta": 0,
+          "explicacion": "El primer valor es el alto y el segundo el ancho. No es el orden fila/columna de dibujo: es el orden alto/ancho."
+        },
+        {
+          "id": "c8-q2",
+          "tipo": "vf",
+          "pregunta": "getmaxyx es una macro: hay que pasarle variables, no una expresión con efectos como getmaxyx(win, y++, x).",
+          "respuesta": true,
+          "explicacion": "Al ser macro, los argumentos pueden expandirse más de una vez. Pasa siempre variables limpias."
+        },
+        {
+          "id": "c8-q3",
+          "tipo": "unica",
+          "codigo": "resizeterm(10, 40);\nint alto, ancho;\ngetmaxyx(stdscr, alto, ancho);",
+          "pregunta": "¿Qué valores quedan en alto y ancho?",
+          "opciones": [
+            "alto=10, ancho=40",
+            "alto=40, ancho=10",
+            "alto y ancho siguen valiendo lo del arranque",
+            "ninguno: getmaxyx no funciona sobre stdscr"
+          ],
+          "respuesta": 0,
+          "explicacion": "resizeterm actualiza LINES, COLS y getmaxyx(stdscr, …). El orden de getmaxyx es alto, ancho."
+        },
+        {
+          "id": "c8-q4",
+          "tipo": "unica",
+          "codigo": "int y = (LINES - 5) / 2;   /* LINES vale 10 */",
+          "pregunta": "¿En qué fila empieza una caja de 5 filas centrada en una pantalla de 10 filas?",
+          "opciones": [
+            "2",
+            "3",
+            "5",
+            "0"
+          ],
+          "respuesta": 0,
+          "explicacion": "(10 - 5) / 2 = 2. Con división entera sobra una fila, y sobra siempre hacia abajo."
+        },
+        {
+          "id": "c8-q5",
+          "tipo": "multiple",
+          "pregunta": "En un stdscr de 24 filas, ¿cuáles de estas operaciones terminan en ERR?",
+          "opciones": [
+            "mvprintw(99, 99, \"x\")",
+            "mvaddch(24, 0, 'x')",
+            "refresh()",
+            "getmaxyx(win, y, x)"
+          ],
+          "respuestas": [
+            0,
+            1
+          ],
+          "explicacion": "Las funciones que dibujan en una posición devuelven ERR si la posición está fuera de rango. refresh y getmaxyx no dependen de coordenadas."
+        },
+        {
+          "id": "c8-q6",
+          "tipo": "arrastrar",
+          "pregunta": "Lleva cada fórmula a lo que resuelve en un layout.",
+          "zonas": [
+            "Centrar en vertical",
+            "Centrar en horizontal",
+            "Barra de estado",
+            "Recalcular al redimensionar"
+          ],
+          "elementos": [
+            {
+              "texto": "(LINES - alto) / 2",
+              "zona": "Centrar en vertical"
+            },
+            {
+              "texto": "(COLS - ancho) / 2",
+              "zona": "Centrar en horizontal"
+            },
+            {
+              "texto": "LINES - 1",
+              "zona": "Barra de estado"
+            },
+            {
+              "texto": "resizeterm(filas, cols)",
+              "zona": "Recalcular al redimensionar"
+            }
+          ],
+          "explicacion": "La fórmula de centrado es resta y división entre 2. La última fila de la pantalla es LINES - 1, y resizeterm es lo que recalcula el layout."
+        },
+        {
+          "id": "c8-q7",
+          "tipo": "texto",
+          "pregunta": "Macro que rellena el alto y el ancho de una ventana (solo el nombre)",
+          "aceptadas": [
+            "getmaxyx"
+          ],
+          "explicacion": "getmaxyx(ventana, alto, ancho) rellena dos variables con el tamaño de la ventana. Es el punto de partida de todo cálculo de layout."
+        }
+      ]
+    },
+    {
+      "id": "c9",
+      "titulo": "9. Aplicaciones reales: datos, scroll y estado",
+      "descripcion": "Separar modelo y vista, cargar un fichero con fopen y fgets, barra de estado, scroll con clamp y ordenar con qsort; visor de logs e inventario ordenable.",
+      "archivo": "capitulos/09-aplicaciones.md",
+      "tags": [
+        "arquitectura",
+        "fopen",
+        "scroll",
+        "qsort",
+        "barra-de-estado"
+      ],
+      "minutos": 30,
+      "aprobacion": 70,
+      "ejercicios": [
+        {
+          "id": "c9-e1",
+          "titulo": "Visor de logs",
+          "enunciado": "ejercicios/visor-de-logs-enunciado.md",
+          "solucion": "ejercicios/visor-de-logs-solucion.md",
+          "pistas": [
+            "ejercicios/visor-de-logs-pista-1.md",
+            "ejercicios/visor-de-logs-pista-2.md",
+            "ejercicios/visor-de-logs-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/visor-de-logs-plantilla.sh",
+          "pruebas": "ejercicios/visor-de-logs-pruebas.json"
+        },
+        {
+          "id": "c9-e2",
+          "titulo": "Tabla ordenable (inventario)",
+          "enunciado": "ejercicios/tabla-ordenable-enunciado.md",
+          "solucion": "ejercicios/tabla-ordenable-solucion.md",
+          "pistas": [
+            "ejercicios/tabla-ordenable-pista-1.md",
+            "ejercicios/tabla-ordenable-pista-2.md",
+            "ejercicios/tabla-ordenable-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/tabla-ordenable-plantilla.sh",
+          "pruebas": "ejercicios/tabla-ordenable-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c9-q1",
+          "tipo": "unica",
+          "pregunta": "En una TUI bien organizada, ¿quién lee a quién?",
+          "opciones": [
+            "El dibujo lee el modelo, nunca al revés",
+            "El modelo lee la pantalla para saber qué dibujar",
+            "getch() decide qué datos guarda el modelo",
+            "Las funciones de dibujo actualizan los datos"
+          ],
+          "respuesta": 0,
+          "explicacion": "El modelo son los datos en memoria (arrays, structs, fichero cargado) y la vista solo los pinta. Si el dibujo modifica datos o lee teclas, mezclas las dos piezas y el programa se vuelve imposible de depurar."
+        },
+        {
+          "id": "c9-q2",
+          "tipo": "vf",
+          "pregunta": "qsort ordena el array in-place: si el usuario quiere volver al orden original del fichero, hay que guardar ese orden antes de ordenar.",
+          "respuesta": true,
+          "explicacion": "qsort reordena el propio array y destruye el orden anterior. Para poder volver atrás hay que guardar el orden original (una copia del array o un índice aparte)."
+        },
+        {
+          "id": "c9-q3",
+          "tipo": "unica",
+          "pregunta": "Este scroll se sale del array y dibuja basura. ¿Qué le falta?",
+          "codigo": "int top = 0;\nif (tecla == 'j') top++;\nif (tecla == 'k') top--;\nmvwprintw(v, 1, 1, \"%s\", lineas[top]);",
+          "opciones": [
+            "El clamp: que top no pase de 0 a n - ALTO_VIS",
+            "Un refresh() antes de getch()",
+            "Un keypad(stdscr, TRUE)",
+            "Un box(v, 0, 0)"
+          ],
+          "respuesta": 0,
+          "explicacion": "Sin clamp, top puede quedar negativo o mayor que n - alto y la ventana lee posiciones que no existen. El clamp (top entre 0 y n - ALTO_VIS) es obligatorio en todo scroll."
+        },
+        {
+          "id": "c9-q4",
+          "tipo": "multiple",
+          "pregunta": "¿Qué debes comprobar o hacer al cargar datos con fopen y fgets?",
+          "opciones": [
+            "Comprobar que fopen no devolvió NULL",
+            "Cerrar el fichero con fclose al terminar",
+            "Pasar siempre el tamaño del búfer a fgets",
+            "Llamar a refresh() después de cada fgets"
+          ],
+          "respuestas": [
+            0,
+            1,
+            2
+          ],
+          "explicacion": "fopen devuelve NULL si el fichero no existe, fgets necesita el límite del búfer para no desbordar y fclose libera el descriptor. refresh() es cosa de ncurses, no de la lectura de ficheros."
+        },
+        {
+          "id": "c9-q5",
+          "tipo": "arrastrar",
+          "pregunta": "Lleva cada cosa a la fase del bucle de eventos a la que pertenece.",
+          "zonas": [
+            "Cargar los datos",
+            "Actualizar el estado",
+            "Repintar"
+          ],
+          "elementos": [
+            {
+              "texto": "fopen + fgets + sscanf",
+              "zona": "Cargar los datos"
+            },
+            {
+              "texto": "fclose al terminar la lectura",
+              "zona": "Cargar los datos"
+            },
+            {
+              "texto": "top++ / top-- con clamp",
+              "zona": "Actualizar el estado"
+            },
+            {
+              "texto": "cambiar campo_orden y llamar a qsort",
+              "zona": "Actualizar el estado"
+            },
+            {
+              "texto": "mvwprintw de las líneas visibles",
+              "zona": "Repintar"
+            },
+            {
+              "texto": "mvprintw de la barra de estado",
+              "zona": "Repintar"
+            }
+          ],
+          "explicacion": "Primero se cargan los datos una vez al arrancar; después cada tecla actualiza el estado (top, campo_orden…) y al final se repinta todo lo que depende de ese estado, barra de estado incluida."
+        },
+        {
+          "id": "c9-q6",
+          "tipo": "texto",
+          "pregunta": "¿Qué función de la biblioteca estándar ordena un array en C? (solo el nombre)",
+          "aceptadas": [
+            "qsort",
+            "qsort()"
+          ],
+          "explicacion": "qsort(array, n, sizeof(elemento), comparador) ordena el array en el sitio con un comparador que devuelve <0, 0 o >0. strcmp ya cumple ese contrato."
+        }
+      ]
+    },
+    {
+      "id": "c10",
+      "titulo": "10. Proyectos: de la librería al juego",
+      "descripcion": "Estado del juego en structs y arrays, bucle de teclas, colisiones contra pared y cuerpo, y reglas de Conway con dos matrices; snake y el Juego de la Vida.",
+      "archivo": "capitulos/10-proyectos.md",
+      "tags": [
+        "juegos",
+        "estado",
+        "colisiones",
+        "conway",
+        "proyecto"
+      ],
+      "minutos": 35,
+      "aprobacion": 70,
+      "ejercicios": [
+        {
+          "id": "c10-e1",
+          "titulo": "Serpiente determinista",
+          "enunciado": "ejercicios/snake-enunciado.md",
+          "solucion": "ejercicios/snake-solucion.md",
+          "pistas": [
+            "ejercicios/snake-pista-1.md",
+            "ejercicios/snake-pista-2.md",
+            "ejercicios/snake-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/snake-plantilla.sh",
+          "pruebas": "ejercicios/snake-pruebas.json"
+        },
+        {
+          "id": "c10-e2",
+          "titulo": "Juego de la Vida (Conway)",
+          "enunciado": "ejercicios/juego-de-la-vida-enunciado.md",
+          "solucion": "ejercicios/juego-de-la-vida-solucion.md",
+          "pistas": [
+            "ejercicios/juego-de-la-vida-pista-1.md",
+            "ejercicios/juego-de-la-vida-pista-2.md",
+            "ejercicios/juego-de-la-vida-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/juego-de-la-vida-plantilla.sh",
+          "pruebas": "ejercicios/juego-de-la-vida-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c10-q1",
+          "tipo": "unica",
+          "pregunta": "En Conway, una célula viva con 4 vecinos vivos… y una muerta con 3 vecinos vivos…",
+          "opciones": [
+            "muere; nace",
+            "sigue viva; sigue muerta",
+            "nace; muere",
+            "sigue viva; nace"
+          ],
+          "respuesta": 0,
+          "explicacion": "Viva solo sobrevive con 2 o 3 vecinos: con 4 muere (sobrepoblación). Muerta nace solo con exactamente 3. Es la única regla de todo el juego."
+        },
+        {
+          "id": "c10-q2",
+          "tipo": "vf",
+          "pregunta": "En snake, si la serpiente no comió en un paso hay que borrar la celda de la cola antigua (o no incrementar largo al desplazar); si comió, la cola se conserva y el largo crece.",
+          "respuesta": true,
+          "explicacion": "Sin comida, el array se desplaza y la posición de la cola se pierde: es lo que evita dejar rastros de 'o' por la pantalla. Con comida, largo suma 1 y la cola se conserva."
+        },
+        {
+          "id": "c10-q3",
+          "tipo": "multiple",
+          "pregunta": "¿Cuáles de estas prácticas son correctas en snake y en Conway?",
+          "opciones": [
+            "Contar los vecinos leyendo de la matriz origen y escribir la generación en una matriz destino",
+            "Comprobar la pared con y < 0 || y >= ALTO || x < 0 || x >= ANCHO",
+            "Girar 180° aunque la serpiente vaya en sentido contrario",
+            "Comprobar el auto-choque con un bucle sobre los segmentos del cuerpo"
+          ],
+          "respuestas": [
+            0,
+            1,
+            3
+          ],
+          "explicacion": "Mutear la matriz mientras cuentas vecinos contamina el resultado; la pared se compara con los límites de la rejilla y el cuerpo con un bucle. Girar 180° hace que la cabeza entre en el cuello: se ignora la tecla."
+        },
+        {
+          "id": "c10-q4",
+          "tipo": "unica",
+          "pregunta": "¿Qué hace este código cuando la nueva cabeza coincide con un segmento del cuerpo?",
+          "codigo": "for (int s = 1; s < *largo; s++)\n    if (segmentos[s].y == ny && segmentos[s].x == nx) {\n        *vivo = 0;\n        break;\n    }",
+          "opciones": [
+            "Detecta el auto-choque: la serpiente muere con la cabeza en la posición del choque",
+            "Borra la cola para que no choque consigo misma",
+            "Comprueba si la serpiente comió",
+            "Impide el giro de 180°"
+          ],
+          "respuesta": 0,
+          "explicacion": "El bucle empieza en 1 para saltarse la cabeza (segmentos[0]). Si la nueva cabeza toca el cuerpo, vivo = 0 y la posición de la muerte queda en la celda del choque, sin clamplear."
+        },
+        {
+          "id": "c10-q5",
+          "tipo": "texto",
+          "pregunta": "¿Qué función del capítulo 7 usarías para que la serpiente se mueva sola, sin esperar a que el usuario pulse teclas? (solo el nombre)",
+          "aceptadas": [
+            "timeout",
+            "timeout()"
+          ],
+          "explicacion": "timeout(ms) hace que getch() devuelva ERR tras ms milisegundos si no hay tecla: en cada vuelta del bucle mueves un paso igualmente. Aquí no se usa porque la partida es determinista y se procesa una cadena de teclas."
+        },
+        {
+          "id": "c10-q6",
+          "tipo": "arrastrar",
+          "pregunta": "Lleva cada pieza del estado de la serpiente a la estructura que la guarda.",
+          "zonas": [
+            "Cabeza",
+            "Comida",
+            "Dirección"
+          ],
+          "elementos": [
+            {
+              "texto": "segmentos[0]",
+              "zona": "Cabeza"
+            },
+            {
+              "texto": "los punteros *hy y *hx",
+              "zona": "Cabeza"
+            },
+            {
+              "texto": "comidas[comida_idx]",
+              "zona": "Comida"
+            },
+            {
+              "texto": "un par de coordenadas (y, x) en el tablero",
+              "zona": "Comida"
+            },
+            {
+              "texto": "'w', 'a', 's', 'd' o KEY_UP…",
+              "zona": "Dirección"
+            },
+            {
+              "texto": "las variables diry y dirx",
+              "zona": "Dirección"
+            }
+          ],
+          "explicacion": "El estado del juego son datos: la cabeza es el primer elemento del array de segmentos más los punteros de salida, la comida es una posición de la lista de comidas y la dirección es el par de deltas diry/dirx que suma la nueva cabeza."
         }
       ]
     }

@@ -1,10 +1,10 @@
 {
   "$schema": "../vscode-tutor-ext/schemas/curso.schema.json",
   "id": "sdl-basico",
-  "titulo": "SDL2: primeros pasos para juegos en C",
-  "descripcion": "Conoce cómo es un juego con SDL2: ventana, bucle de juego, eventos de teclado y choques entre rectángulos, con ejercicios que se prueban sin abrir ventanas. Para quien ya programa en C básico y quiere empezar con gráficos y juegos.",
-  "nivel": "principiante",
-  "version": "1.0.0",
+  "titulo": "SDL2: curso completo desde lo básico hasta aplicaciones",
+  "descripcion": "Desde conceptos básicos hasta renderizado 3D, fuentes, animaciones, eventos y callbacks. Ejercicios dinámicos con aplicaciones en la vida real. Adecuado para usuarios con TDAH: texto corto, pasos claros, muchos ejemplos de código.",
+  "nivel": "principiante a intermedio",
+  "version": "2.0.0",
   "manual": "MANUAL.md",
   "setup": "setup.sh",
   "requisitos": [
@@ -39,6 +39,39 @@
         "linux": "sudo apt install bash",
         "win32": "wsl --install"
       }
+    },
+    {
+      "comando": "sdl2_ttf-config",
+      "nombre": "SDL2_ttf (fuentes)",
+      "versionMinima": "2.0.15",
+      "obligatorio": true,
+      "instalar": {
+        "darwin": "brew install sdl2_ttf",
+        "linux": "sudo apt install libsdl2-ttf-dev",
+        "win32": "wsl --install libsdl2-ttf"
+      }
+    },
+    {
+      "comando": "sdl2_image-config",
+      "nombre": "SDL2_image (cargar imágenes PNG, JPG, etc.)",
+      "versionMinima": "2.0.5",
+      "obligatorio": true,
+      "instalar": {
+        "darwin": "brew install sdl2_image",
+        "linux": "sudo apt install libsdl2-image-dev",
+        "win32": "wsl --install libsdl2-image"
+      }
+    },
+    {
+      "comando": "sdl2_mixer-config",
+      "nombre": "SDL2_mixer (sonido y música)",
+      "versionMinima": "2.0.0",
+      "obligatorio": true,
+      "instalar": {
+        "darwin": "brew install sdl2_mixer",
+        "linux": "sudo apt install libsdl2-mixer-dev",
+        "win32": "wsl --install libsdl2-mixer"
+      }
     }
   ],
   "capitulos": [
@@ -53,7 +86,7 @@
       "ejercicios": [
         {
           "id": "c1-e1",
-          "titulo": "Choque de rectangulos",
+          "titulo": "Choque de rectángulos",
           "enunciado": "ejercicios/choque-de-rectangulos-enunciado.md",
           "solucion": "ejercicios/choque-de-rectangulos-solucion.md",
           "pistas": [
@@ -153,6 +186,563 @@
           ],
           "respuestas": [0, 1, 2],
           "explicacion": "sdl2-config da las rutas de las cabeceras y las bibliotecas. SDL puede sustituir a main, así que necesita la forma con argc y argv. ncurses es otra biblioteca."
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "titulo": "2. Fuentes y texto con SDL2",
+      "descripcion": "Cómo cargar fuentes y mostrar texto en una ventana SDL2 usando SDL_ttf. Texto estático y dinámico.",
+      "archivo": "capitulos/02-fuentes.md",
+      "tags": ["sdl2", "fuentes", "ttf", "texto", "renderizado"],
+      "minutos": 30,
+      "aprobacion": 70,
+      "ejercicios": [
+        {
+          "id": "c2-e1",
+          "titulo": "Mostrar texto en pantalla",
+          "enunciado": "ejercicios/fuentes-enunciado.md",
+          "solucion": "ejercicios/fuentes-solucion.md",
+          "pistas": [
+            "ejercicios/fuentes-pista-1.md",
+            "ejercicios/fuentes-pista-2.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/fuentes-plantilla.sh",
+          "pruebas": "ejercicios/fuentes-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c2-q1",
+          "tipo": "unica",
+          "pregunta": "¿Qué función carga una fuente en SDL2?",
+          "opciones": ["SDL_LoadFont", "TTF_OpenFont", "SDL_FontFace", "TTF_LoadFont"],
+          "respuesta": 1,
+          "explicacion": "TTF_OpenFont es la función de SDL_ttf para cargar un archivo de fuente (.ttf) con el tamaño deseado."
+        },
+        {
+          "id": "c2-q2",
+          "tipo": "unica",
+          "pregunta": "¿Qué estructura se usa para definir el color en TTF_RenderText_Solid?",
+          "opciones": ["SDL_Color", "SDL_ColorRGB", "SDL_PixelFormat", "SDL_HSV"],
+          "respuesta": 0,
+          "explicacion": "La función espera un SDL_Color con los campos r, g, b (y opcionalmente a)."
+        },
+        {
+          "id": "c2-q3",
+          "tipo": "texto",
+          "pregunta": "¿Qué debes hacer después de crear una textura desde una superficie?",
+          "opciones": ["Nada, la textura se auto-libera", "Liberar la superficie con SDL_FreeSurface", "Liberar la fuente con TTF_CloseFont", "Cerrar la ventana"],
+          "respuesta": 1,
+          "explicacion": "La superficie se creó a partir de la textura; si no la liberas, tendrás una fuga de memoria. La textura se libera con SDL_DestroyTexture."
+        },
+        {
+          "id": "c2-q4",
+          "tipo": "unica",
+          "pregunta": "¿Qué función inicializa SDL_ttf?",
+          "opciones": ["TTF_Init()", "SDL_InitTTF()", "InitTTF()", "SDL_ttf_Init()"],
+          "respuesta": 0,
+          "explicacion": "TTF_Init() inicializa la subsistema de fuentes de SDL2. Debe llamarse antes de usar cualquier función de SDL_ttf."
+        },
+        {
+          "id": "c2-q5",
+          "tipo": "multiple",
+          "pregunta": "¿Cuál es el flujo correcto para renderizar texto?",
+          "opciones": [
+            "TTF_OpenFont → SDL_RenderClear → TTF_RenderText_Solid → SDL_CreateTextureFromSurface → SDL_RenderCopy → SDL_RenderPresent",
+            "TTF_Init → TTF_OpenFont → TTF_RenderText_Solid → SDL_CreateTextureFromSurface → SDL_RenderPresent",
+            "TTF_OpenFont → TTF_RenderText_Solid → SDL_CreateTextureFromSurface → SDL_RenderCopy → SDL_RenderPresent → SDL_RenderClear",
+            "SDL_OpenFont → renderizar → presentar sin limpiar"
+          ],
+          "respuestas": [2],
+          "explicacion": "El flujo correcto es: 1. Cargar fuente, 2. Renderizar a superficie, 3. Convertir a textura, 4. Dibujar textura, 5. Presentar. También es importante borrar la pantalla antes de cada fotograma."
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "titulo": "3. Animaciones básicas con SDL2",
+      "descripcion": "Cómo crear animaciones usando SDL_GetTicks() para movimiento basado en tiempo. Objetos que se mueven y rebotan en los bordes.",
+      "archivo": "capitulos/03-animaciones.md",
+      "tags": ["sdl2", "animación", "tiempo", "juego loop"],
+      "minutos": 35,
+      "aprobacion": 70,
+      "ejercicios": [
+        {
+          "id": "c3-e1",
+          "titulo": "Pelota rebotando",
+          "enunciado": "ejercicios/animacion-boton-enunciado.md",
+          "solucion": "ejercicios/animacion-boton-solucion.md",
+          "pistas": [
+            "ejercicios/animacion-boton-pista-1.md",
+            "ejercicios/animacion-boton-pista-2.md",
+            "ejercicios/animacion-boton-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/animacion-boton-plantilla.sh",
+          "pruebas": "ejercicios/animacion-boton-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c3-q1",
+          "tipo": "unica",
+          "pregunta": "¿Por qué se usa SDL_GetTicks() en animaciones?",
+          "opciones": [
+            "Para medir la velocidad del procesador",
+            "Para que la animación corra a la misma velocidad en cualquier computadora",
+            "Para contar cuántos FPS hay",
+            "Para reiniciar el juego"
+          ],
+          "respuesta": 1,
+          "explicacion": "Usar tiempo absoluto (ticks) en lugar de FPS hace que el movimiento sea consistente en cualquier hardware."
+        },
+        {
+          "id": "c3-q2",
+          "tipo": "unica",
+          "pregunta": "¿Qué sucede si no divides ticks entre 1000.0 al calcular dt?",
+          "opciones": [
+            "El movimiento será muy lento",
+            "El movimiento será muy rápido",
+            "El movimiento será saltado o jerky",
+            "No pasará nada"
+          ],
+          "respuesta": 2,
+          "explicacion": "Sin convertir a segundos (dividir entre 1000), el multiplicador será gigantesco y el objeto se moverá fuera de la pantalla al instante."
+        },
+        {
+          "id": "c3-q3",
+          "tipo": "multiple",
+          "pregunta": "¿Cuándo debes invertir la dirección de un objeto que rebota?",
+          "opciones": [
+            "Cuando toca el borde de la pantalla",
+            "Cada vez que se dibuja un fotograma",
+            "Cuando el usuario presiona una tecla",
+            "Siempre, sin importar la posición"
+          ],
+          "respuestas": [0],
+          "explicacion": "Para que el objeto rebote, debes invertir su velocidad cuando su posición llega al límite de la ventana."
+        },
+        {
+          "id": "c3-q4",
+          "tipo": "unica",
+          "pregunta": " ¿Cuál es el orden correcto en el bucle de juego?",
+          "opciones": [
+            "Leer eventos → Dibujar → Actualizar",
+            "Actualizar → Leer eventos → Dibujar",
+            "Leer eventos → Actualizar → Dibujar",
+            "Dibujar → Actualizar → Leer eventos"
+          ],
+          "respuesta": 2,
+          "explicacion": "El orden estándar es: 1. Leer eventos (teclado, mouse, cierre), 2. Actualizar posiciones y lógica del juego, 3. Dibujar el nuevo estado y presentarlo."
+        },
+        {
+          "id": "c3-q5",
+          "tipo": "arrastrar",
+          "pregunta": "Lleva cada línea al lugar correcto del bucle de juego.",
+          "zonas": ["Leer eventos", "Actualizar", "Dibujar"],
+          "elementos": [
+            { "texto": "while (SDL_PollEvent(&e))", "zona": "Leer eventos" },
+            { "texto": "x += velx * dt", "zona": "Actualizar" },
+            { "texto": "SDL_RenderClear(pincel)", "zona": "Dibujar" },
+            { "texto": "if (e.type == SDL_QUIT) corriendo = 0;", "zona": "Leer eventos" },
+            { "texto": "SDL_RenderPresent(pincel)", "zona": "Dibujar" },
+            { "texto": "y += vely * dt", "zona": "Actualizar" }
+          ],
+          "explicacion": "Primero se procesan los eventos, luego se actualiza la posición basada en el tiempo, y al final se dibuja y muestra el fotograma."
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "titulo": "4. Manejo de eventos y callbacks",
+      "descripcion": "Cómo procesar eventos de teclado y mouse, y usar funciones callback para organizar la lógica de entrada.",
+      "archivo": "capitulos/04-eventos.md",
+      "tags": ["sdl2", "eventos", "callbacks", "entrada"],
+      "minutos": 30,
+      "aprobacion": 70,
+      "ejercicios": [
+        {
+          "id": "c4-e1",
+          "titulo": "Control de teclado con callbacks",
+          "enunciado": "ejercicios/teclado-callback-enunciado.md",
+          "solucion": "ejercicios/teclado-callback-solucion.md",
+          "pistas": [
+            "ejercicios/teclado-callback-pista-1.md",
+            "ejercicios/teclado-callback-pista-2.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/teclado-callback-plantilla.sh",
+          "pruebas": "ejercicios/teclado-callback-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c4-q1",
+          "tipo": "unica",
+          "pregunta": "¿Qué es un callback en el manejo de eventos?",
+          "opciones": [
+            "Una función que llama al sistema operativo",
+            "Una función pasada como argumento para ser llamada cuando ocurre un evento",
+            "Una función que devuelve un evento",
+            "Una función que maneja solo la grafica"
+          ],
+          "respuesta": 1,
+          "explicacion": "Un callback es una función que pasas como argumento para que sea ejecutada cuando ocurre un evento específico, ayudando a separar la lógica de entrada del bucle principal."
+        },
+        {
+          "id": "c4-q2",
+          "tipo": "unica",
+          "pregunta": "¿Cuándo se dispara SDL_KEYDOWN?",
+          "opciones": [
+            "Cuando sueltas una tecla",
+            "Cuando presionas una tecla",
+            "Cada vez que el sistema envía el evento (incluyendo repetición)",
+            "Solo la primera vez que inicia el programa"
+          ],
+          "respuesta": 2,
+          "explicacion": "SDL_KEYDOWN se genera al presionar una tecla. Si la mantienes pulsada, el sistema puede enviarlo repetidamente hasta que la sueltas."
+        },
+        {
+          "id": "c4-q3",
+          "tipo": "multiple",
+          "pregunta": "¿Qué debes tener en cuenta con SDL_KEYDOWN repetido?",
+          "opciones": [
+            "Se dispara solo una vez por pulsación",
+            "Se dispara cada vez que el sistema lo envía mientras mantienes la tecla",
+            "No se dispara nunca",
+            "Solo en modo ventana completa"
+          ],
+          "respuestas": [1],
+          "explicacion": "Si mantienes una tecla pulsada, SDL puede enviar varios eventos KEYDOWN. Si quieres una acción por pulsación, usa una bandera booleana para rastrear el estado anterior."
+        },
+        {
+          "id": "c4-q4",
+          "tipo": "unica",
+          "pregunta": "¿Qué estructura contiene las coordenadas del ratón en un evento SDL_MOUSEBUTTONDOWN?",
+          "opciones": ["e.button.x, e.button.y", "e.mouse.x, e.mouse.y", "e.position.x, e.position.y", "e.cursor.x, e.cursor.y"],
+          "respuesta": 0,
+          "explicacion": "El evento SDL_MOUSEBUTTONDOWN tiene un campo .button con .x y .y que son las coordenadas del cursor cuando ocurrió el clic."
+        },
+        {
+          "id": "c4-q5",
+          "tipo": "arrastrar",
+          "pregunta": "Lleva cada tipo de evento a su descripción.",
+          "zonas": ["Teclado", "Ratón", "Salida"],
+          "elementos": [
+            { "texto": "SDL_KEYDOWN", "zona": "Teclado" },
+            { "texto": "SDL_MOUSEBUTTONDOWN", "zona": "Ratón" },
+            { "texto": "SDL_QUIT", "zona": "Salida" }
+          ],
+          "explicacion": "Ordena los tipos de evento con sus categorías principales."
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "titulo": "5. Introducción al renderizado 3D con SDL2",
+      "descripcion": "Conceptos básicos de 3D: proyección perspectiva, rotación de vértices y transformación de coordenadas 3D a 2D usando el renderer de SDL2.",
+      "archivo": "capitulos/05-3d.md",
+      "tags": ["sdl2", "3d", "proyección", "rotación", "matrices"],
+      "minutos": 40,
+      "aprobacion": 70,
+      "ejercicios": [
+        {
+          "id": "c5-e1",
+          "titulo": "Triángulo giratorio en 3D",
+          "enunciado": "ejercicios/rotacion-3d-enunciado.md",
+          "solucion": "ejercicios/rotacion-3d-solucion.md",
+          "pistas": [
+            "ejercicios/rotacion-3d-pista-1.md",
+            "ejercicios/rotacion-3d-pista-2.md",
+            "ejercicios/rotacion-3d-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/rotacion-3d-plantilla.sh",
+          "pruebas": "ejercicios/rotacion-3d-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c5-q1",
+          "tipo": "unica",
+          "pregunta": "¿Qué fórmula se usa para proyectar un punto 3D a 2D con perspectiva?",
+          "opciones": [
+            "x_2d = x / z, y_2d = y / z",
+            "inv_z = 1 / (z + d); x_2d = x * inv_z * factor; y_2d = y * inv_z * factor",
+            "x_2d = x + z, y_2d = y + z",
+            "x_2d = x * z, y_2d = y * z"
+          ],
+          "respuesta": 1,
+          "explicacion": "La proyección perspectiva divide las coordenadas x e y entre (z + distancia de cámara) para simular profundidad. Los objetos lejos (z grande) aparecen más pequeños."
+        },
+        {
+          "id": "c5-q2",
+          "tipo": "unica",
+          "pregunta": "¿Por qué es importante usar radianes en las fórmulas trigonométricas de rotación?",
+          "opciones": [
+            "Los grados no funcionan en C",
+            "Las funciones sin() y cos() de C esperan radianes",
+            "Los radianes son más grandes",
+            "No importa, cualquier unidad sirve"
+          ],
+          "respuesta": 1,
+          "explicacion": "Las funciones sin() y cos() de la librería estándar de C esperan ángulos en radianes, no en grados."
+        },
+        {
+          "id": "c5-q3",
+          "tipo": "multiple",
+          "pregunta": "¿Cuál de estos cambios hará que el cubo parezca moverse 'hacia afuera' de la pantalla?",
+          "opciones": [
+            "Disminuir el valor de d (distancia de cámara)",
+            "Aumentar el valor de d (distancia de cámara)",
+            "Multiplicar todas las coordenadas z por -1",
+            "Cambiar el orden de los ejes x e y"
+          ],
+          "respuesta": 1,
+          "explicacion": "Aumentar d acerca los objetos al 'ojo' virtual, haciendo que parezcan más grandes y cercanos. Si d es muy pequeño o 0, los objetos muy lejanos pueden verse recortados o extraños."
+        },
+        {
+          "id": "c5-q4",
+          "tipo": "arrastrar",
+          "pregunta": "Lleva cada paso de la pipeline 3D a su descripción.",
+          "zonas": ["Definir vértices", "Rotar", "Proyectar", "Dibujar"],
+          "elementos": [
+            { "texto": "8 puntos que forman un cubo en 3D", "zona": "Definir vértices" },
+            { "texto": "Aplicar matrices de rotación a cada punto", "zona": "Rotar" },
+            { "texto": "Convertir coordenadas 3D a 2D usando perspectiva", "zona": "Proyectar" },
+            { "texto": "Dibujar líneas conectando los puntos proyectados", "zona": "Dibujar" }
+          ],
+          "explicacion": "El flujo completo: definir → rotar → proyectar → dibujar."
+        }
+      ]
+    },
+    {
+      "id": "c6",
+      "titulo": "6. Aplicaciones completas SDL2",
+      "descripcion": "Unir todos los conceptos: ventana, eventos, animación, texto, colisiones y temporizador en un pequeño juego completo.",
+      "archivo": "capitulos/06-aplicaciones.md",
+      "tags": ["sdl2", "juego completo", "bucle principal", "gestión de recursos"],
+      "minutos": 45,
+      "aprobacion": 70,
+      "ejercicios": [
+        {
+          "id": "c6-e1",
+          "titulo": "Mini juego: Captura el cuadrado",
+          "enunciado": "ejercicios/juego-mini-enunciado.md",
+          "solucion": "ejercicios/juego-mini-solucion.md",
+          "pistas": [
+            "ejercicios/juego-mini-pista-1.md",
+            "ejercicios/juego-mini-pista-2.md",
+            "ejercicios/juego-mini-pista-3.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/juego-mini-plantilla.sh",
+          "pruebas": "ejercicios/juego-mini-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c6-q1",
+          "tipo": "unica",
+          "pregunta": "¿Cuál es el orden recomendado en el bucle principal de un juego SDL2?",
+          "opciones": [
+            "Actualizar → Leer eventos → Dibujar → Presentar",
+            "Leer eventos → Actualizar → Dibujar → Presentar",
+            "Dibujar → Actualizar → Leer eventos → Presentar",
+            "Presentar → Dibujar → Actualizar → Leer eventos"
+          ],
+          "respuesta": 1,
+          "explicacion": "El orden estándar y recomendado es: 1. Leer eventos (teclado, mouse, cierre), 2. Actualizar juego (posiciones, lógica, colisiones), 3. Borrar y dibujar el nuevo estado, 4. Presentar el fotograma en pantalla."
+        },
+        {
+          "id": "c6-q2",
+          "tipo": "unica",
+          "pregunta": "¿Por qué es importante limitar los FPS en un bucle de juego?",
+          "opciones": [
+            "Para que el juego vaya más rápido en computadoras lentas",
+            "Para que el juego vaya a la misma velocidad en diferente hardware",
+            "Para reducir el uso de memoria",
+            "Para que no se sobrecaliente el computador"
+          ],
+          "respuesta": 1,
+          "explicacion": "Limitar los FPS (frames por segundo) asegura que el juego corra a una tasa consistente en cualquier computadora, evitando que vaya demasiado rápido en máquinas potentes y demasiado lento en las lentas."
+        },
+        {
+          "id": "c6-q3",
+          "tipo": "multiple",
+          "pregunta": "¿Qué debes liberar al final de un programa SDL2 con texto?",
+          "opciones": [
+            "Solo la ventana y el renderer",
+            "Fuente, texturas, superficies, ventana y renderer",
+            "Solo el archivo .c",
+            "Nada, el sistema operativo lo hace solo"
+          ],
+          "respuesta": 1,
+          "explicacion": "Para evitar fugas de memoria, siempre libera TTF_Font con TTF_CloseFont, texturas con SDL_DestroyTexture y superficies con SDL_FreeSurface, además de la ventana y el renderer."
+        },
+        {
+          "id": "c6-q4",
+          "tipo": "arrastrar",
+          "pregunta": "Lleva cada fase del juego a su descripción.",
+          "zonas": ["Inicializar", "Bucle principal", "Cerrar"],
+          "elementos": [
+            { "texto": "Cargar SDL, ventana, renderer, fuente, recursos", "zona": "Inicializar" },
+            { "texto": "Procesar eventos, actualizar lógica, dibujar, presentar, limitar FPS", "zona": "Bucle principal" },
+            { "texto": "Liberar memoria y cerrar SDL_ttf, SDL, ventana, renderer", "zona": "Cerrar" }
+          ],
+          "explicacion": "Ordena las fases principales de una aplicación SDL2 completa."
+        },
+        {
+          "id": "c6-q5",
+          "tipo": "unica",
+          "pregunta": "¿Cuál es el valor de TIEMPO_JUEGO en milisegundos para un juego de 30 segundos?",
+          "opciones": ["30000", "3000", "300", "30"],
+          "respuesta": 0,
+          "explicacion": "30 segundos = 30 * 1000 = 30000 milisegundos."
+        }
+      ]
+    },
+    {
+      "id": "c7",
+      "titulo": "7. Cargar e mostrar imágenes con SDL2_image",
+      "descripcion": "Cómo cargar imágenes (PNG, JPG, BMP) usando SDL2_image, crear texturas desde superficies y mostrar sprites en la ventana.",
+      "archivo": "capitulos/07-imagenes.md",
+      "tags": ["sdl2", "imagenes", "SDL2_image", "textura", "sprites"],
+      "minutos": 35,
+      "aprobacion": 70,
+      "ejercicios": [
+        {
+          "id": "c7-e1",
+          "titulo": "Mostrar una imagen en pantalla",
+          "enunciado": "ejercicios/imagenes-enunciado.md",
+          "solucion": "ejercicios/imagenes-solucion.md",
+          "pistas": [
+            "ejercicios/imagenes-pista-1.md",
+            "ejercicios/imagenes-pista-2.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/imagenes-plantilla.sh",
+          "pruebas": "ejercicios/imagenes-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c7-q1",
+          "tipo": "unica",
+          "pregunta": "¿Qué función de SDL2_image carga una imagen PNG a una superficie?",
+          "opciones": ["IMG_Load", "SDL_LoadImage", "SDL_CreateImage", "IMG_CreateSurface"],
+          "respuesta": 0,
+          "explicacion": "IMG_Load es la función principal de SDL2_image que carga un archivo de imagen y devuelve un SDL_Superficie, que luego se puede convertir a textura."
+        },
+        {
+          "id": "c7-q2",
+          "tipo": "unica",
+          "pregunta": "Después de crear una textura desde una superficie de imagen, qué debes liberar?",
+          "opciones": ["Nada, la textura se encarga sola", "La superficie original con SDL_FreeSurface", "El archivo de imagen", "El renderer"],
+          "respuesta": 1,
+          "explicacion": "La superficie original se creó a partir de los datos de la imagen; si no la liberas, tendrás una fuga de memoria. La textura se libera con SDL_DestroyTexture."
+        },
+        {
+          "id": "c7-q3",
+          "tipo": "multiple",
+          "pregunta": "¿Qué formatos de imagen soporta SDL2_image de forma nativa?",
+          "opciones": ["PNG y JPG solo", "BMP, PNG y JPG", "Solo formatos nativos de SDL2", "Todos los formatos sin configuración"],
+          "respuestas": [1],
+          "explicacion": "SDL2_image extiende a SDL2 para agregar soporte de formato adicional. Los más comunes son BMP, PNG y JPG, con plugins opcionales para TIFF, WebP y otros."
+        },
+        {
+          "id": "c7-q4",
+          "tipo": "unica",
+          "pregunta": "¿Qué bandera de carga es útil para imágenes que serán texturas?",
+          "opciones": ["SDL_SURFACE_FORMAT_UNKNOWN", "SDL_LOAD_AUTO", "SDL_TEXTUREACCESS_TARGET", "IMG_LOAD_RLEACCEL"],
+          "respuesta": 3,
+          "explicacion": "La bandera IMG_LOAD_RLEACCEL acelera imágenes con compresión RLE (run-length encoding), común en imágenes bitmap."
+        },
+        {
+          "id": "c7-q5",
+          "tipo": "arrastrar",
+          "pregunta": "Lleva cada paso al flujo correcto de renderizado de imagen.",
+          "zonas": ["Cargar", "Convertir", "Dibujar", "Presentar"],
+          "elementos": [
+            { "texto": "Cargar imagen con IMG_Load", "zona": "Cargar" },
+            { "texto": "SDL_CreateTextureFromSurface(renderer, superficie)", "zona": "Convertir" },
+            { "texto": "SDL_RenderCopy(renderer, textura, NULL, &rect)", "zona": "Dibujar" },
+            { "texto": "SDL_RenderPresent(renderer)", "zona": "Presentar" }
+          ],
+          "explicacion": "Ordena los pasos para cargar y mostrar una imagen en SDL2."
+        }
+      ]
+    },
+    {
+      "id": "c8",
+      "titulo": "8. Sonido y música con SDL2_mixer",
+      "descripcion": "Cómo cargar efectos de sonido (WAV) y música (MP3, OGG) usando SDL2_mixer, reproducirlos durante el juego y controlar volumen y canales.",
+      "archivo": "capitulos/08-sonido.md",
+      "tags": ["sdl2", "sonido", "SDL2_mixer", "efectos", "música"],
+      "minutos": 30,
+      "aprobacion": 70,
+      "ejercicios": [
+        {
+          "id": "c8-e1",
+          "titulo": "Reproducir un efecto de sonido",
+          "enunciado": "ejercicios/sonido-enunciado.md",
+          "solucion": "ejercicios/sonido-solucion.md",
+          "pistas": [
+            "ejercicios/sonido-pista-1.md",
+            "ejercicios/sonido-pista-2.md"
+          ],
+          "lenguaje": "bash",
+          "plantilla": "ejercicios/sonido-plantilla.sh",
+          "pruebas": "ejercicios/sonido-pruebas.json"
+        }
+      ],
+      "evaluacion": [
+        {
+          "id": "c8-q1",
+          "tipo": "unica",
+          "pregunta": "¿Qué función de SDL2_mixer carga un archivo de sonido WAV a un chunk?",
+          "opciones": ["Mix_LoadWAV", "SDL_LoadSound", "MIX_Load", "Audio_Load"],
+          "respuesta": 0,
+          "explicacion": "Mix_LoadWAV es la función principal de SDL2_mixer que carga un archivo de audio WAV y devuelve un Mix_Chunk, que se puede reproducir al instante."
+        },
+        {
+          "id": "c8-q2",
+          "tipo": "unica",
+          "pregunta": "¿Qué función carga un archivo de música MP3 u OGG para reproducirlo largamente?",
+          "opciones": ["Mix_LoadWAV", "Mix_LoadMUS", "SDL_LoadMusic", "MUS_Load"],
+          "respuesta": 1,
+          "explicacion": "Mix_LoadMUS carga archivos de música (MP3, OGG, MOD, etc.) y devuelve un Mix_Music optimizado para reproducción larga sin cargar todo en memoria de golpe."
+        },
+        {
+          "id": "c8-q3",
+          "tipo": "multiple",
+          "pregunta": "¿Cuántos canales de sonido simultáneos ofrece SDL2_mixer por defecto?",
+          "opciones": ["1 canal solo", "8 canales", "16 canales", "Ilimitados"],
+          "respuestas": [1],
+          "explicacion": "SDL2_mixer ofrece 8 canales de sonido simultáneo por defecto (canales 1-8), más 1 canal especial para música que se mezcla en un canal dedicado."
+        },
+        {
+          "id": "c8-q4",
+          "tipo": "unica",
+          "pregunta": "Después de reproducir un Mix_Chunk, qué debes hacer para liberar la memoria?",
+          "opciones": ["Nada, se auto-libera", "Mix_FreeChunk(chunk)", "SDL_FreeSound(chunk)", "CloseAudio()"],
+          "respuesta": 1,
+          "explicacion": "Es responsabilidad del programador liberar los recursos de audio con Mix_FreeChunk() cuando ya no los necesites, al igual que con superficies y texturas en SDL2."
+        },
+        {
+          "id": "c8-q5",
+          "tipo": "arrastrar",
+          "pregunta": "Lleva cada paso al flujo correcto de reproducción de sonido.",
+          "zonas": ["Cargar", "Reproducir", "Liberar", "Establecer volumen"],
+          "elementos": [
+            { "texto": "Cargar con Mix_LoadWAV", "zona": "Cargar" },
+            { "texto": "Mix_PlayChannel(-1, chunk, 0)", "zona": "Reproducir" },
+            { "texto": "Mix_FreeChunk(chunk)", "zona": "Liberar" },
+            { "texto": "Mix_VolumeChunk(chunk, 64)", "zona": "Establecer volumen" }
+          ],
+          "explicacion": "Ordena los pasos para cargar y reproducir un efecto de sonido en SDL2_mixer."
         }
       ]
     }

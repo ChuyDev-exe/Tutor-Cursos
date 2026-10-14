@@ -1,0 +1,1 @@
+Cada vuelta del bucle tiene el mismo esqueleto: `erase()`, un `for` sobre las `n` opciones dibujando la `i` en la fila `i + 1`, `refresh()` y solo después `getch()`. La opción seleccionada lleva `attron(A_REVERSE)` alrededor de su `mvprintw` y `attroff(A_REVERSE)` al terminar.

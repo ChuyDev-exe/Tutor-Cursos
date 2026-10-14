@@ -1,0 +1,5 @@
+[
+  { "nombre": "4 dobla a 8", "entrada": "4\n", "esperado": "objeto: U _doble\nejecutable: T _doble\nmapa: __TEXT __text\nprograma: 8" },
+  { "nombre": "cinco", "entrada": "5\n", "esperado": "objeto: U _doble\nejecutable: T _doble\nmapa: __TEXT __text\nprograma: 10" },
+  { "nombre": "negativo", "entrada": "-7\n", "esperado": "objeto: U _doble\nejecutable: T _doble\nmapa: __TEXT __text\nprograma: -14" }
+]

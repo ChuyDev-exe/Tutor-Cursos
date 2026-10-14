@@ -1,0 +1,1 @@
+El paso 3 es `-c`: deja el archivo objeto. `nm doble.o` enseña la tabla de símbolos y con `awk '$3=="_doble"{print $2" "$3}'` te quedas con la letra y el nombre. El paso 4 necesita los dos `.o` en la línea de enlace.

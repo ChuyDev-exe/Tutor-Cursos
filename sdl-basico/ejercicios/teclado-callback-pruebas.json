@@ -1,0 +1,6 @@
+[
+  { "nombre": "rectangulo se mueve izquierda", "entrada": "SDLK_LEFT", "esperado": "x disminuye en 5" },
+  { "nombre": "rectangulo se mueve derecha", "entrada": "SDLK_RIGHT", "esperado": "x aumenta en 5" },
+  { "nombre": "rectangulo se mueve arriba", "entrada": "SDLK_UP", "esperado": "y disminuye en 5" },
+  { "nombre": "rectangulo se mueve abajo", "entrada": "SDLK_DOWN", "esperado": "y aumenta en 5" }
+]

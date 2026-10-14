@@ -1,0 +1,1 @@
+Guarda la tecla en un `int` y comprueba las dos formas a la vez: `if (tecla == 'k' || tecla == KEY_UP)` sube, `if (tecla == 'j' || tecla == KEY_DOWN)` baja. Límites con `if (sel > 0)` y `if (sel < n - 1)`: así nunca te sales de la lista.

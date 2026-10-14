@@ -1,0 +1,5 @@
+[
+  { "nombre": "script completo", "entrada": "", "esperado": "secciones: ok\ndireccion: ok\ntext: ok\ncomodin text: ok\nrodata: ok\ndiscard: ok\nllaves: ok\nscript: valido" },
+  { "nombre": "ignora stdin", "entrada": "basura\n", "esperado": "secciones: ok\ndireccion: ok\ntext: ok\ncomodin text: ok\nrodata: ok\ndiscard: ok\nllaves: ok\nscript: valido" },
+  { "nombre": "otra basura", "entrada": "{}\n", "esperado": "secciones: ok\ndireccion: ok\ntext: ok\ncomodin text: ok\nrodata: ok\ndiscard: ok\nllaves: ok\nscript: valido" }
+]

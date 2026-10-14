@@ -1,0 +1,7 @@
+[
+  { "nombre": "info y errores", "entrada": "2 1\narranque ok\ncpu 90%\nfallo de disco\n", "esperado": "info=titulo:INFO;arranque ok;cpu 90%\nerrores=titulo:ERRORES;fallo de disco" },
+  { "nombre": "sin errores", "entrada": "1 0\nsolo info\n", "esperado": "info=titulo:INFO;solo info\nerrores=titulo:ERRORES;" },
+  { "nombre": "sin info", "entrada": "0 1\nerror unico\n", "esperado": "info=titulo:INFO;\nerrores=titulo:ERRORES;error unico" },
+  { "nombre": "mas de 6 lineas se cortan", "entrada": "8 0\nl1\nl2\nl3\nl4\nl5\nl6\nl7\nl8\n", "esperado": "info=titulo:INFO;l1;l2;l3;l4;l5;l6\nerrores=titulo:ERRORES;" },
+  { "nombre": "varias lineas en los dos", "entrada": "3 2\nalpha\nbeta\ngamma\nerr1\nerr2\n", "esperado": "info=titulo:INFO;alpha;beta;gamma\nerrores=titulo:ERRORES;err1;err2" }
+]

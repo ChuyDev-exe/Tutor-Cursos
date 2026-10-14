@@ -1,0 +1,7 @@
+[
+  { "nombre": "sin teclas: se queda arriba del todo", "entrada": "", "esperado": "primera=2026-01-03 10:00 INFO servicio 00\nultima=2026-01-03 10:03 INFO servicio 03\nestado=linea 1-4 de 25" },
+  { "nombre": "dos lineas hacia abajo", "entrada": "jj", "esperado": "primera=2026-01-03 10:02 INFO servicio 02\nultima=2026-01-03 10:05 INFO servicio 05\nestado=linea 3-6 de 25" },
+  { "nombre": "k en el tope no sube de 0", "entrada": "kkkkk", "esperado": "primera=2026-01-03 10:00 INFO servicio 00\nultima=2026-01-03 10:03 INFO servicio 03\nestado=linea 1-4 de 25" },
+  { "nombre": "clamp: 21 j no pasa de la linea 25", "entrada": "jjjjjjjjjjjjjjjjjjjjj", "esperado": "primera=2026-01-03 10:21 INFO servicio 21\nultima=2026-01-03 10:24 INFO servicio 24\nestado=linea 22-25 de 25" },
+  { "nombre": "q termina enseguida", "entrada": "jqj", "esperado": "primera=2026-01-03 10:01 INFO servicio 01\nultima=2026-01-03 10:04 INFO servicio 04\nestado=linea 2-5 de 25" }
+]

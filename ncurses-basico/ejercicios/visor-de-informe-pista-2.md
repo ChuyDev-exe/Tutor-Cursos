@@ -1,0 +1,1 @@
+El viewport son las filas 0..4 y las columnas 0..14 de la pantalla: `prefresh(pad, top, 0, 0, 0, 4, 14)`. Con `top = 3` se ven las líneas 04 a 08. El máximo de `top` es 25, porque 30 líneas de pad menos 5 visibles.

@@ -1,0 +1,8 @@
+[
+  { "nombre": "sin teclas: entra con ERR", "entrada": "", "esperado": "elegida=terminal\nfila=0\ncol=0" },
+  { "nombre": "una derecha", "entrada": "l\n", "esperado": "elegida=editor\nfila=0\ncol=1" },
+  { "nombre": "tres derechas no pasan de la columna 2", "entrada": "lll\n", "esperado": "elegida=navegador\nfila=0\ncol=2" },
+  { "nombre": "una bajada", "entrada": "j\n", "esperado": "elegida=archivos\nfila=1\ncol=0" },
+  { "nombre": "dos bajadas y una derecha", "entrada": "jjl\n", "esperado": "elegida=musica\nfila=1\ncol=1" },
+  { "nombre": "q termina en la primera", "entrada": "q", "esperado": "elegida=terminal\nfila=0\ncol=0" }
+]

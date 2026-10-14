@@ -1,0 +1,1 @@
+El bucle es: comparar `x0` con `x1` (`cmp x0, x1`), saltar al principio mientras sea menor (`b.lo`) y salir con `ret` cuando `x0` alcance a `x1`. Etiquetas tipo `1:` / `b 1b` van bien para no necesitar nombres.

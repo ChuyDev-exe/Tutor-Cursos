@@ -1,0 +1,5 @@
+[
+  { "nombre": "pelota rebota 5 segundos", "entrada": "", "esperado": "OK" },
+  { "nombre": "pelota no se sale de ventana", "entrada": "", "esperado": "OK" },
+  { "nombre": "dirección se invierte al chocar", "entrada": "", "esperado": "OK" }
+]

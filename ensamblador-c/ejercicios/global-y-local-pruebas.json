@@ -1,0 +1,5 @@
+[
+  { "nombre": "lista del objeto", "entrada": "objeto\n", "esperado": "objeto: T _saluda t _interna" },
+  { "nombre": "lista del ejecutable", "entrada": "enlace\n", "esperado": "enlace: T _saluda" },
+  { "nombre": "las dos listas", "entrada": "todo\n", "esperado": "objeto: T _saluda t _interna\nenlace: T _saluda" }
+]

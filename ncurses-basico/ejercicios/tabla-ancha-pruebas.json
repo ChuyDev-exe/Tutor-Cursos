@@ -1,0 +1,7 @@
+[
+  { "nombre": "sin teclas: se ve desde la columna A", "entrada": "", "esperado": "izq=0\ncab=A0|B0|C0|D0|E0|F0|G0|H0|I0|J0|K0|L0" },
+  { "nombre": "tres celdas a la derecha", "entrada": "lll\n", "esperado": "izq=12\ncab=D0|E0|F0|G0|H0|I0|J0|K0|L0|||" },
+  { "nombre": "dos a la izquierda no pasan de cero", "entrada": "hh\n", "esperado": "izq=0\ncab=A0|B0|C0|D0|E0|F0|G0|H0|I0|J0|K0|L0" },
+  { "nombre": "l, h y l de nuevo", "entrada": "lhl\n", "esperado": "izq=4\ncab=B0|C0|D0|E0|F0|G0|H0|I0|J0|K0|L0|" },
+  { "nombre": "clamp: no pasa de la columna 36", "entrada": "llllllllllllllllll\n", "esperado": "izq=36\ncab=J0|K0|L0|||||||||" }
+]

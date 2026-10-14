@@ -1,0 +1,5 @@
+[
+  { "nombre": "el main llama a helper", "entrada": "llama\n", "esperado": "helper: si" },
+  { "nombre": "nadie lo usa", "entrada": "sin\n", "esperado": "helper: no" },
+  { "nombre": "carga forzada con -u", "entrada": "fuerza\n", "esperado": "helper: si" }
+]

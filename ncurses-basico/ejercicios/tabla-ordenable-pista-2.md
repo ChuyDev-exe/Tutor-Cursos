@@ -1,0 +1,1 @@
+El comparador no recibe «qué campo» como argumento: usa la variable global `campo_orden` que ya está declarada (1 = nombre, 2 = cantidad, 3 = precio). La tecla `n`, `c` o `p` pone ese valor y en la siguiente vuelta `qsort` ordena por el campo nuevo.

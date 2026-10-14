@@ -1,0 +1,7 @@
+[
+  { "nombre": "dos productos", "entrada": "2\npan,5,2\nleche,3,4\n", "esperado": "cab=Nombre|Cant.|Precio\nfila=pan|5|2\nfila=leche|3|4\nseparador=si" },
+  { "nombre": "un producto", "entrada": "1\ncafe,7,9\n", "esperado": "cab=Nombre|Cant.|Precio\nfila=cafe|7|9\nseparador=si" },
+  { "nombre": "tabla vacia", "entrada": "0\n", "esperado": "cab=Nombre|Cant.|Precio\nseparador=si" },
+  { "nombre": "tres productos", "entrada": "3\nazucar,10,1\nharina,4,3\narroz,8,5\n", "esperado": "cab=Nombre|Cant.|Precio\nfila=azucar|10|1\nfila=harina|4|3\nfila=arroz|8|5\nseparador=si" },
+  { "nombre": "nombre largo", "entrada": "1\nmantequilla,2,3\n", "esperado": "cab=Nombre|Cant.|Precio\nfila=mantequilla|2|3\nseparador=si" }
+]

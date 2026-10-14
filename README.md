@@ -17,8 +17,8 @@ Si ya tienes un curso y aquí hay una versión nueva, la ficha muestra **Actuali
 
 | Curso | Nivel | Capítulos | Duración | Versión | Carpeta |
 |---|---|---|---|---|---|
-| Ensamblador y C: de instrucciones a ejecutables | intermedio | 6 | 2 h 8 min | 1.1.0 | [`ensamblador-c`](ensamblador-c/) |
-| ncurses: interfaces de texto en C | principiante | 1 | 25 min | 1.0.0 | [`ncurses-basico`](ncurses-basico/) |
+| Ensamblador y C: de instrucciones a ejecutables | intermedio | 12 | 4 h 8 min | 1.2.0 | [`ensamblador-c`](ensamblador-c/) |
+| ncurses: interfaces de texto en C | principiante | 10 | 4 h 30 min | 2.0.0 | [`ncurses-basico`](ncurses-basico/) |
 | React desde cero | principiante | 11 | 4 h 15 min | 1.2.0 | [`react-basico`](react-basico/) |
 | SDL2: primeros pasos para juegos en C | principiante | 1 | 25 min | 1.0.0 | [`sdl-basico`](sdl-basico/) |
 

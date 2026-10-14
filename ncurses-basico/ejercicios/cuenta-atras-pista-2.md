@@ -1,0 +1,1 @@
+La barra se borra con `mvhline(3, 1, ' ', COLS - 1)` antes de repintarla, porque cada vuelta es más corta que la anterior. Lo mismo al final: borra antes de escribir `¡Tiempo!`, o quedarán caracteres sueltos del mensaje viejo.

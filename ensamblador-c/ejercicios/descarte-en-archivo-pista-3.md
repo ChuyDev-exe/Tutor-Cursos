@@ -1,0 +1,1 @@
+Las dos funciones están en el mismo archivo y aun así se pueden separar: `piezas.s` empieza con `.subsections_via_symbols`. Sin esa línea, todo el `__text` del archivo es un bloque indivisible y no se descarta nada.

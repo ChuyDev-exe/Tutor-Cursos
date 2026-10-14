@@ -1,0 +1,7 @@
+[
+  { "nombre": "cinco segundos", "entrada": "5\n", "esperado": "mensaje=¡Tiempo!\nbarra=\nrestante=0" },
+  { "nombre": "un segundo", "entrada": "1\n", "esperado": "mensaje=¡Tiempo!\nbarra=\nrestante=0" },
+  { "nombre": "noventa y nueve segundos", "entrada": "99\n", "esperado": "mensaje=¡Tiempo!\nbarra=\nrestante=0" },
+  { "nombre": "sin numero: segundos <= 0", "entrada": "", "esperado": "mensaje=¡Tiempo!\nbarra=\nrestante=0" },
+  { "nombre": "las teclas no cortan la cuenta", "entrada": "3\nxxx", "esperado": "mensaje=¡Tiempo!\nbarra=\nrestante=0" }
+]
